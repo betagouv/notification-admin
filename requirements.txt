@@ -72,7 +72,7 @@ lml==0.1.0
 lxml==4.9.1
 MarkupSafe==2.0.1
 marshmallow==3.17.0
-mistune==0.8.4
+mistune==2.0.3
 openpyxl==3.0.10
 orderedset==2.0.3
 packaging==21.3
