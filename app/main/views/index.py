@@ -279,13 +279,13 @@ def welcome():
     return render_template("views/welcome.html", default_limit=current_app.config["DEFAULT_SERVICE_LIMIT"])
 
 
-@main.route("/activity", endpoint="activity")
-def activity():
-    return render_template("views/activity.html", **get_latest_stats(get_current_locale(current_app)))
+@main.route("/stats", endpoint="stats")
+def stats():
+    return render_template("views/stats.html", **get_latest_stats(get_current_locale(current_app)))
 
 
-@main.route("/activity/download", endpoint="activity_download")
-def activity_download():
+@main.route("/stats/download", endpoint="stats_download")
+def stats_download():
     stats = get_latest_stats(get_current_locale(current_app))["monthly_stats"]
 
     csv_data = [["date", "sms_count", "email_count", "total"]]
@@ -297,7 +297,7 @@ def activity_download():
         200,
         {
             "Content-Type": "text/csv; charset=utf-8",
-            "Content-Disposition": 'inline; filename="{} activity.csv"'.format(
+            "Content-Disposition": 'inline; filename="{} stats.csv"'.format(
                 datetime.utcnow().strftime("%Y-%m-%d"),
             ),
         },

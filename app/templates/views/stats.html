@@ -18,14 +18,18 @@
       <div class="font-bold text-title extra-tight font-sans h-20">{{ _('Total notifications sent') }}</div>
       <div class="font-sans text-xxl lg:text-3xl font-bold mb-4">{{ notifications_total | format_number }}</div>
       <div class="w-56 h-1 bg-gray-border mb-6"></div>
-      <div class="font-sans">{{ _('This includes status updates, appointment reminders, and password resets sent by email and text message.') }}</div>
+      <div class="font-sans">
+        {{ _('This includes status updates, appointment reminders, and password resets sent by email and text message.') }}
+      </div>
     </div>
 
     <div class="w-full lg:w-1/2 bg-gray py-10 px-6 lg:ml-3">
       <div class="font-bold text-title extra-tight font-sans h-20">{{ _('Programs and services using GC Notify') }}</div>
       <div class="font-sans text-xxl lg:text-3xl font-bold mb-4">{{ live_services | format_number }}</div>
       <div class="w-56 h-1 bg-gray-border mb-6"></div>
-      <div class="font-sans">{{ _('This includes services offered by federal departments, and provinces and territories.') }}</div>
+      <div class="font-sans">
+        {{ _('This includes services offered by federal departments, and provinces and territories.') }}
+      </div>
     </div>
   </div>
 
@@ -43,17 +47,17 @@
   <h2 class="heading-medium">{{ _('Notifications sent over time') }}</h2>
 
   <div class="text-right">
-    <a id="link-activity-download" href="{{ url_for('main.activity_download') }}" class="text-small">
+    <a id="link-stats-download" href="{{ url_for('main.stats_download') }}" class="text-small">
       {{ _('Download data as CSV') }}
     </a>
   </div>
 
   {% call mapping_table(
     field_headings=[
-      _('Month'),
-      _('Total'),
-      _('Emails'),
-      _('Text messages'),
+    _('Month'),
+    _('Total'),
+    _('Emails'),
+    _('Text messages'),
     ],
     field_headings_visible=True,
     equal_length=True,
@@ -62,10 +66,10 @@
 
     {% for month, data in monthly_stats.items() %}
       {% call row() %}
-        {{ index_field(month) }}
-        {{ text_field(data['total'] | format_number) }}
-        {{ text_field(data['email'] | format_number) }}
-        {{ text_field(data['sms'] | format_number) }}
+      {{ index_field(month) }}
+      {{ text_field(data['total'] | format_number) }}
+      {{ text_field(data['email'] | format_number) }}
+      {{ text_field(data['sms'] | format_number) }}
       {% endcall %}
     {% endfor %}
   {% endcall %}
