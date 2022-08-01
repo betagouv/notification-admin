@@ -7,26 +7,26 @@ module.exports = {
   // mode: "development", //development
   mode: "production",
   entry: {
-    main: ["./app/assets/javascripts/index.js", "./app/assets/stylesheets/tailwind/style.css"],
+    main: ["./app/assets/javascripts/index.js"],
     scheduler: {
-      import: './app/assets/javascripts/scheduler/scheduler.js',
+      import: "./app/assets/javascripts/scheduler/scheduler.js",
       library: {
-        name: 'Scheduler',
-        type: 'window',
+        name: "Scheduler",
+        type: "window",
       },
     },
   },
   watch: false,
   output: {
     filename: "javascripts/[name].min.js",
-    path: path.resolve(__dirname, "app/assets")
+    path: path.resolve(__dirname, "app/assets"),
   },
 
   plugins: [
     new webpack.ProgressPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'stylesheets/index.css',
-      path: path.resolve(__dirname, "app/assets/stylesheets")
+      filename: "stylesheets/index.css",
+      path: path.resolve(__dirname, "app/assets/stylesheets"),
     }),
   ],
 
@@ -34,21 +34,13 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        include: [
-          path.resolve(__dirname, "app/assets/javascripts")
-        ],
-        use: ["style-loader", "css-loader"]
+        include: [path.resolve(__dirname, "app/assets/javascripts")],
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.css$/i,
-        include: [
-          path.resolve(__dirname, "app/assets/stylesheets/tailwind")
-        ],
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "postcss-loader"
-        ]
+        include: [path.resolve(__dirname, "app/assets/stylesheets/tailwind")],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
       { test: /\.(png|svg|jpg|gif|ico)$/, use: ["file-loader"] },
       {
@@ -62,12 +54,12 @@ module.exports = {
             [
               "@babel/preset-env",
               {
-                modules: false
-              }
-            ]
-          ]
-        }
+                modules: false,
+              },
+            ],
+          ],
+        },
       },
-    ]
+    ],
   },
 };
