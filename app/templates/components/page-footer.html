@@ -12,13 +12,8 @@
   <div class="page-footer">
     {% if button_text %}
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      <button
-        data-button-id={{button_id}}
-        type="submit"
-        class="button text-base outline-none focus:shadow-outline {% if destructive %}button-red{% endif %}"
-        {% if button_name %}name="{{ button_name }}"{% endif %}
-        {% if button_value %}value="{{ button_value }}"{% endif %}
-      >
+      <button data-button-id={{button_id}} type="submit" class="fr-btn {% if destructive %}button-red{% endif %}" {% if
+        button_name %}name="{{ button_name }}" {% endif %} {% if button_value %}value="{{ button_value }}" {% endif %}>
         {{- button_text -}}
       </button>
     {% endif %}
@@ -43,13 +38,8 @@
   <div class="js-stick-at-bottom-when-scrolling">
     <div class="page-footer">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      <button
-        data-button-id="btn1"
-        type="submit"
-        class="button text-base outline-none focus:shadow-outline"
-        name="button_pressed"
-        value="{{ button1_value }}"
-      >
+      <button data-button-id="btn1" type="submit" class="button text-base outline-none focus:shadow-outline"
+        name="button_pressed" value="{{ button1_value }}">
         {{- button1_text -}}
       </button>
 
@@ -58,8 +48,7 @@
         type="submit"
         class="button button-secondary text-base outline-none focus:shadow-outline"
         name="button_pressed"
-        value="{{ button2_value }}"
-      >
+        value="{{ button2_value }}">
         {{- button2_text -}}
       </button>
     </div>

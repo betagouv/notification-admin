@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% set withnav = True %}
-{% set extra_title = ' - ' + current_service.name if current_service.name and current_user.has_permissions() else ''  %}
+{% set extra_title = ' - ' + current_service.name if current_service.name and current_user.has_permissions() else '' %}
 
 {% block page_title %}
-   {% block per_page_title %}{% endblock %} {% block service_page_title %}{% endblock %} {{ extra_title }} – {{ _('Notify') }}
+  {% block per_page_title %}{% endblock %} {% block service_page_title %}{% endblock %} {{ extra_title }} – {{ _('Notify')}}
 {% endblock %}
 
 {% block content %}

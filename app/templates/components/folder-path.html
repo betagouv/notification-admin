@@ -8,7 +8,7 @@
   sending_view=false
 ) %}
   {% if folders | length > 1 %}
-    <nav class="folder-heading" aria-label="{{_('Current folder path')}}">
+    <nav class="fr-breadcrumb" aria-label="{{_('Current folder path')}}">
       {% for folder in folders %}
         {% if loop.last and not link_current_item %}
           {% if folder.template_type or not folder.id %}
@@ -20,12 +20,7 @@
           <span class="folder-heading-folder-group">
           {% if folder.id %}
             {% if current_user.has_template_folder_permission(folder) %}
-              {% if loop.index < (loop.length - 1) %}
-                <a href="{{ url_for('.choose_template', service_id=service_id, template_type=template_type, template_folder_id=folder.id, view='sending' if sending_view else None) }}" class="folder-heading-folder folder-heading-folder-truncated" title="{{ folder.name }}">{{ folder.name }}</a>
-              {% else %}
-                <a href="{{ url_for('.choose_template', service_id=service_id, template_type=template_type, template_folder_id=folder.id, view='sending' if sending_view else None) }}" class="folder-heading-folder">{{ folder.name }}</a>
-              {% endif %}
-              
+              <a href="{{ url_for('.choose_template', service_id=service_id, template_type=template_type, template_folder_id=folder.id, view='sending' if sending_view else None) }}" class="fr-breadcrumb__link" title="{{ folder.name }}">{{ folder.name }}</a>
             {% else %}
               <span class="folder-heading-folder">{{ folder.name }}</span>
             {% endif %}
