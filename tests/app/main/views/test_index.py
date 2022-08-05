@@ -129,14 +129,14 @@ def test_static_pages(
     assert not page.select_one("meta[name=description]")
 
 
-def test_activity_page(mocker, client):
+def test_stats_page(mocker, client):
     mocker.patch("app.service_api_client.get_live_services_data", return_value={"data": service})
     mocker.patch(
         "app.service_api_client.get_stats_by_month",
         return_value={"data": [("2020-11-01", "email", 20)]},
     )
 
-    response = client.get(url_for("main.activity"))
+    response = client.get(url_for("main.stats"))
     assert response.status_code == 200
 
 

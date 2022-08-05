@@ -305,7 +305,7 @@ def get_notifications(service_id, message_type, status_override=None):
     return {
         "service_data_retention_days": service_data_retention_days,
         "counts": render_template(
-            "views/activity/counts.html",
+            "views/stats/counts.html",
             status=request.args.get("status"),
             status_filters=get_status_filters(
                 current_service,
@@ -314,7 +314,7 @@ def get_notifications(service_id, message_type, status_override=None):
             ),
         ),
         "notifications": render_template(
-            "views/activity/notifications.html",
+            "views/stats/notifications.html",
             notifications=list(add_preview_of_content_to_notifications(notifications["notifications"])),
             page=page,
             limit_days=service_data_retention_days,

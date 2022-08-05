@@ -1,0 +1,77 @@
+{% from "components/table.html" import mapping_table, row, text_field, index_field %}
+{% extends "content_template.html" %}
+
+
+{% block per_page_title %}
+  {{ _('Activity on GC Notify') }}
+{% endblock %}
+
+{% block maincolumn_content %}
+  <h1>{{ _('Activity on GC Notify') }}</h1>
+
+  <p>
+    {{ _('GC Notify is helping a growing number of government teams keep their clients informed. The following dashboard highlights its activity since November 2019.') }}
+  </p>
+
+  <div>
+    <div>
+      <div>{{ _('Total notifications sent') }}</div>
+      <div>{{ notifications_total | format_number }}</div>
+      <div>
+        {{ _('This includes status updates, appointment reminders, and password resets sent by email and text message.') }}
+      </div>
+    </div>
+
+    <div>
+      <div>{{ _('Programs and services using GC Notify') }}</div>
+      <div>{{ live_services | format_number }}</div>
+      <div>
+        {{ _('This includes services offered by federal departments, and provinces and territories.') }}
+      </div>
+    </div>
+  </div>
+
+  <div>
+      <div>{{ _('Emails') }}</div>
+      <div>{{ emails_total | format_number }}</div>
+    </div>
+    <div>
+      <div>{{ _('Text messages') }}</div>
+      <div>{{ sms_total | format_number }}</div>
+  </div>
+
+  <h2>{{ _('Notifications sent over time') }}</h2>
+
+  <div>
+    <a id="link-stats-download" href="{{ url_for('main.stats_download') }}">
+      {{ _('Download data as CSV') }}
+    </a>
+  </div>
+
+  {% call mapping_table(
+    field_headings=[
+      _('Month'),
+      _('Total'),
+      _('Emails'),
+      _('Text messages'),
+    ],
+    field_headings_visible=True,
+    equal_length=True,
+    caption_visible=False
+  ) %}
+
+    {% for month, data in monthly_stats.items() %}
+      {% call row() %}
+        {{ index_field(month) }}
+        {{ text_field(data['total'] | format_number) }}
+        {{ text_field(data['email'] | format_number) }}
+        {{ text_field(data['sms'] | format_number) }}
+      {% endcall %}
+    {% endfor %}
+  {% endcall %}
+
+  <div>
+    {{ _('Updated daily') }}
+  </div>
+
+{% endblock %}
