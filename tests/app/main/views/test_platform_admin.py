@@ -1082,7 +1082,7 @@ def test_get_live_services_report(platform_admin_client, mocker):
                     "consent_to_research": True,
                     "contact_name": "Forest fairy",
                     "organisation_type": "Ecosystem",
-                    "contact_email": "forest.fairy@digital.cabinet-office.canada.ca",
+                    "contact_email": "forest.fairy@digital.cabinet-office.beta.gouv.fr",
                     "contact_mobile": "+16132532223",
                     "live_date": "Sat, 29 Mar 2014 00:00:00 GMT",
                     "sms_volume_intent": 100,
@@ -1121,7 +1121,7 @@ def test_get_live_services_report(platform_admin_client, mocker):
         "Service ID,Organisation,Organisation type,Service name,Consent to research,Main contact,Contact email,"
         + "Contact mobile,Live date,SMS volume intent,Email volume intent,Letter volume intent,SMS sent this year,"
         + "Emails sent this year,Letters sent this year,Free sms allowance\r\n"
-        + "1,Forest,Ecosystem,jessie the oak tree,True,Forest fairy,forest.fairy@digital.cabinet-office.canada.ca,"
+        + "1,Forest,Ecosystem,jessie the oak tree,True,Forest fairy,forest.fairy@digital.cabinet-office.beta.gouv.fr,"
         + "+16132532223,29-03-2014,100,50,20,300,1200,0,100\r\n"
         + "2,Forest,Ecosystem,james the pine tree,,,,,,,60,0,0,0,0,200"
     )
@@ -1139,7 +1139,7 @@ def test_get_performance_platform_report(platform_admin_client, mocker):
                     "consent_to_research": True,
                     "contact_name": "Forest fairy",
                     "organisation_type": "Ecosystem",
-                    "contact_email": "forest.fairy@digital.cabinet-office.canada.ca",
+                    "contact_email": "forest.fairy@digital.cabinet-office.beta.gouv.fr",
                     "contact_mobile": "+16132532223",
                     "live_date": "Sat, 29 Mar 2014 00:00:00 GMT",
                     "sms_volume_intent": 100,

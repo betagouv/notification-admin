@@ -18,7 +18,7 @@ def test_user(app_):
     user_data = {
         "id": 1,
         "name": "Test User",
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "+4412341234",
         "state": "pending",
         "failed_login_count": 0,
@@ -28,7 +28,7 @@ def test_user(app_):
 
     assert user.id == 1
     assert user.name == "Test User"
-    assert user.email_address == "test@user.canada.ca"
+    assert user.email_address == "test@user.beta.gouv.fr"
     assert user.mobile_number == "+4412341234"
     assert user.state == "pending"
 

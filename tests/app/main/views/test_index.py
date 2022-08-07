@@ -15,7 +15,7 @@ service = [
         "consent_to_research": True,
         "contact_name": "Forest fairy",
         "organisation_type": "Ecosystem",
-        "contact_email": "forest.fairy@digital.cabinet-office.canada.ca",
+        "contact_email": "forest.fairy@digital.cabinet-office.beta.gouv.fr",
         "contact_mobile": "+16132532223",
         "live_date": "Sat, 29 Mar 2014 00:00:00 GMT",
         "sms_volume_intent": 100,

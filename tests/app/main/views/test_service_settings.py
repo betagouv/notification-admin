@@ -1182,7 +1182,7 @@ def test_submit_go_live_request(
         "service_name": "service one",
         "intended_recipients": "public",
         "main_use_case": "Purpose",
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "notification_types": "email",
     }
 
@@ -1621,7 +1621,7 @@ def test_service_verify_reply_to_address(
     notification = {
         "id": fake_uuid,
         "status": status,
-        "to": "email@example.canada.ca",
+        "to": "email@example.beta.gouv.fr",
         "service_id": SERVICE_ONE_ID,
         "template_id": TEMPLATE_ONE_ID,
         "notification_type": "email",
@@ -1671,7 +1671,7 @@ def test_add_reply_to_email_address_fails_if_notification_not_delivered_in_45_se
     notification = {
         "id": fake_uuid,
         "status": "sending",
-        "to": "email@example.canada.ca",
+        "to": "email@example.beta.gouv.fr",
         "service_id": SERVICE_ONE_ID,
         "template_id": TEMPLATE_ONE_ID,
         "notification_type": "email",
@@ -1820,14 +1820,14 @@ def test_edit_reply_to_email_address_sends_verification_notification_if_address_
         return_value={"data": {"id": "123"}},
     )
     mocker.patch("app.service_api_client.get_reply_to_email_address", return_value=reply_to_address)
-    data["email_address"] = "test@tbs-sct.gc.ca"
+    data["email_address"] = "test@tbs-sct.beta.gouv.fr"
     client_request.post(
         "main.service_edit_email_reply_to",
         service_id=SERVICE_ONE_ID,
         reply_to_email_id=fake_uuid,
         _data=data,
     )
-    mock_verify.assert_called_once_with(SERVICE_ONE_ID, "test@tbs-sct.gc.ca")
+    mock_verify.assert_called_once_with(SERVICE_ONE_ID, "test@tbs-sct.beta.gouv.fr")
 
 
 @pytest.mark.parametrize(
@@ -4058,7 +4058,7 @@ def test_submit_email_branding_request(
         ).format(expected_organisation, requested_branding),
         subject="Email branding request - service one",
         ticket_type="question",
-        user_email="test@user.canada.ca",
+        user_email="test@user.beta.gouv.fr",
         user_name="Test User",
         tags=["notify_action_add_branding"],
     )

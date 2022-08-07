@@ -29,11 +29,12 @@ def test_find_users_by_email_displays_users_found(client_request, platform_admin
     )
 
     assert any(
-        element.text.strip() == "test@canada.ca" for element in document.find_all("a", {"class": "browse-list-link"}, href=True)
+        element.text.strip() == "test@beta.gouv.fr"
+        for element in document.find_all("a", {"class": "browse-list-link"}, href=True)
     )
     assert any(element.text.strip() == "Test User" for element in document.find_all("p", {"class": "browse-list-hint"}))
 
-    assert document.find("a", {"class": "browse-list-link"}).text.strip() == "test@canada.ca"
+    assert document.find("a", {"class": "browse-list-link"}).text.strip() == "test@beta.gouv.fr"
     assert document.find("p", {"class": "browse-list-hint"}).text.strip() == "Test User"
 
 
@@ -102,7 +103,7 @@ def test_user_information_page_shows_information_about_user(client, platform_adm
     document = html.fromstring(response.get_data(as_text=True))
 
     assert document.xpath("//h1/text()[normalize-space()='Apple Bloom']")
-    assert document.xpath("//p/text()[normalize-space()='test@canada.ca']")
+    assert document.xpath("//p/text()[normalize-space()='test@beta.gouv.fr']")
     assert document.xpath("//p/text()[normalize-space()='+16502532222']")
 
     assert document.xpath("//h2/text()[normalize-space()='Live services']")

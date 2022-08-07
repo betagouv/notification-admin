@@ -58,7 +58,7 @@ def test_register_creates_new_user_and_redirects_to_continue_page(
 ):
     user_data = {
         "name": "Some One Valid",
-        "email_address": "notfound@example.canada.ca",
+        "email_address": "notfound@example.beta.gouv.fr",
         "mobile_number": phone_number_to_register_with,
         "password": password,
         "auth_type": "sms_auth",
@@ -68,7 +68,7 @@ def test_register_creates_new_user_and_redirects_to_continue_page(
     assert response.status_code == 200
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    assert page.select("main p")[0].text == "An email has been sent to notfound@example.canada.ca."
+    assert page.select("main p")[0].text == "An email has been sent to notfound@example.beta.gouv.fr."
 
     mock_send_verify_email.assert_called_with(ANY, user_data["email_address"])
     mock_register_user.assert_called_with(
@@ -99,7 +99,7 @@ def test_process_register_returns_200_when_mobile_number_is_invalid(
         url_for("main.register"),
         data={
             "name": "Bad Mobile",
-            "email_address": "bad_mobile@example.canada.ca",
+            "email_address": "bad_mobile@example.beta.gouv.fr",
             "mobile_number": "not good",
             "password": "rZXdoBkuz6U37DDXIaAfpBR1OTJcSZOGICLCz4dMtmopS3KsVauIrtcgqs1eU02",
         },
@@ -133,7 +133,7 @@ def test_should_return_200_when_email_is_not_gov_uk(
 @pytest.mark.parametrize(
     "email_address",
     (
-        "notfound@example.canada.ca",
+        "notfound@example.beta.gouv.fr",
         "example@lsquo.net",
         pytest.param("example@ellipsis.com", marks=pytest.mark.xfail(raises=AssertionError)),
     ),
@@ -177,7 +177,7 @@ def test_should_return_200_if_password_is_blocked(
         url_for("main.register"),
         data={
             "name": "Bad Mobile",
-            "email_address": "bad_mobile@example.canada.ca",
+            "email_address": "bad_mobile@example.beta.gouv.fr",
             "mobile_number": "+16502532222",
             "password": "password",
         },
@@ -333,7 +333,7 @@ def test_register_from_invite_when_user_registers_in_another_browser(
     assert response.location == url_for("main.verify", _external=True)
 
 
-@pytest.mark.parametrize("invite_email_address", ["gov-user@canada.ca", "non-gov-user@example.com"])
+@pytest.mark.parametrize("invite_email_address", ["gov-user@beta.gouv.fr", "non-gov-user@example.com"])
 def test_register_from_email_auth_invite(
     client,
     sample_invite,
@@ -440,7 +440,7 @@ def test_cannot_register_with_sms_auth_and_missing_mobile_number(
         url_for("main.register"),
         data={
             "name": "Missing Mobile",
-            "email_address": "missing_mobile@example.canada.ca",
+            "email_address": "missing_mobile@example.beta.gouv.fr",
             "password": "rZXdoBkuz6U37DDXIaAfpBR1OTJcSZOGICLCz4dMtmopS3KsVauIrtcgqs1eU02",
         },
     )

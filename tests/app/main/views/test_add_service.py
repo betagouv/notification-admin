@@ -221,8 +221,8 @@ def test_wizard_flow_with_junk_step_info_should_fallback_to_step1(client_request
     "email_address",
     (
         # User’s email address doesn’t matter when the organisation is known
-        "test@tbs-sct.gc.ca",
-        "test@canada.ca",
+        "test@tbs-sct.beta.gouv.fr",
+        "test@beta.gouv.fr",
     ),
 )
 @pytest.mark.parametrize(
@@ -331,10 +331,10 @@ def test_add_service_has_to_choose_org_type(
 @pytest.mark.parametrize(
     "email_address",
     (
-        "test@canada.ca",
-        "test@tbs-sct.gc.ca",
-        "test@canada.ca",
-        pytest.param("test@not-canada.ca", marks=pytest.mark.xfail(raises=AssertionError)),
+        "test@beta.gouv.fr",
+        "test@tbs-sct.beta.gouv.fr",
+        "test@beta.gouv.fr",
+        pytest.param("test@not-beta.gouv.fr", marks=pytest.mark.xfail(raises=AssertionError)),
     ),
 )
 def test_get_should_only_show_nhs_org_types_radios_if_user_has_nhs_email(

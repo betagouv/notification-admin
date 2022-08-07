@@ -28,7 +28,7 @@ def test_should_render_forgot_password(password_expired, api_user_active, client
         assert "Forgot your password?" in response.get_data(as_text=True)
 
 
-@pytest.mark.parametrize("email_address", ["test@user.canada.ca", "someuser@notonsafelist.com"])
+@pytest.mark.parametrize("email_address", ["test@user.beta.gouv.fr", "someuser@notonsafelist.com"])
 def test_should_redirect_to_password_reset_sent_for_valid_email(
     api_user_active,
     client,

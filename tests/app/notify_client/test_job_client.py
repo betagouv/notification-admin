@@ -98,7 +98,7 @@ def test_client_parses_job_stats(mocker):
             ],
             "original_file_name": "test-notify-email.csv",
             "created_by": {
-                "name": "test-user@digital.cabinet-office.canada.ca",
+                "name": "test-user@digital.cabinet-office.beta.gouv.fr",
                 "id": "3571f2ae-7a39-4fb4-9ad7-8453f5257072",
             },
             "created_at": "2016-08-24T08:09:56.371073+00:00",
@@ -136,7 +136,7 @@ def test_client_parses_empty_job_stats(mocker):
             "statistics": [],
             "original_file_name": "test-notify-email.csv",
             "created_by": {
-                "name": "test-user@digital.cabinet-office.canada.ca",
+                "name": "test-user@digital.cabinet-office.beta.gouv.fr",
                 "id": "3571f2ae-7a39-4fb4-9ad7-8453f5257072",
             },
             "created_at": "2016-08-24T08:09:56.371073+00:00",
@@ -185,7 +185,7 @@ def test_client_parses_job_stats_for_service(mocker):
                 ],
                 "original_file_name": "test-notify-email.csv",
                 "created_by": {
-                    "name": "test-user@digital.cabinet-office.canada.ca",
+                    "name": "test-user@digital.cabinet-office.beta.gouv.fr",
                     "id": "3571f2ae-7a39-4fb4-9ad7-8453f5257072",
                 },
                 "created_at": "2016-08-24T08:09:56.371073+00:00",
@@ -212,7 +212,7 @@ def test_client_parses_job_stats_for_service(mocker):
                 ],
                 "original_file_name": "test-notify-email.csv",
                 "created_by": {
-                    "name": "test-user@digital.cabinet-office.canada.ca",
+                    "name": "test-user@digital.cabinet-office.beta.gouv.fr",
                     "id": "3571f2ae-7a39-4fb4-9ad7-8453f5257072",
                 },
                 "created_at": "2016-08-24T08:09:56.371073+00:00",
@@ -259,7 +259,7 @@ def test_client_parses_empty_job_stats_for_service(mocker):
                 "statistics": [],
                 "original_file_name": "test-notify-email.csv",
                 "created_by": {
-                    "name": "test-user@digital.cabinet-office.canada.ca",
+                    "name": "test-user@digital.cabinet-office.beta.gouv.fr",
                     "id": "3571f2ae-7a39-4fb4-9ad7-8453f5257072",
                 },
                 "created_at": "2016-08-24T08:09:56.371073+00:00",
@@ -277,7 +277,7 @@ def test_client_parses_empty_job_stats_for_service(mocker):
                 "statistics": [],
                 "original_file_name": "test-notify-email.csv",
                 "created_by": {
-                    "name": "test-user@digital.cabinet-office.canada.ca",
+                    "name": "test-user@digital.cabinet-office.beta.gouv.fr",
                     "id": "3571f2ae-7a39-4fb4-9ad7-8453f5257072",
                 },
                 "created_at": "2016-08-24T08:09:56.371073+00:00",

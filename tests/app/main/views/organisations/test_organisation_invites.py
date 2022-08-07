@@ -59,13 +59,13 @@ def test_invite_org_user(
     client_request.post(
         ".invite_org_user",
         org_id=ORGANISATION_ID,
-        _data={"email_address": "test@tbs-sct.gc.ca"},
+        _data={"email_address": "test@tbs-sct.beta.gouv.fr"},
     )
 
     mock_invite_org_user.assert_called_once_with(
         sample_org_invite["invited_by"],
         "{}".format(ORGANISATION_ID),
-        "test@tbs-sct.gc.ca",
+        "test@tbs-sct.beta.gouv.fr",
     )
 
 
@@ -76,7 +76,7 @@ def test_invite_org_user_errors_when_same_email_as_inviter(
     sample_org_invite,
 ):
     new_org_user_data = {
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
     }
 
     mock_invite_org_user = mocker.patch(
@@ -154,7 +154,7 @@ def test_existing_user_invite_already_is_member_of_organisation(
 
     mock_check_org_invite_token.assert_called_once_with("thisisnotarealtoken")
     mock_accept_org_invite.assert_called_once_with(ORGANISATION_ID, ANY)
-    mock_get_user_by_email.assert_called_once_with("invited_user@test.canada.ca")
+    mock_get_user_by_email.assert_called_once_with("invited_user@test.beta.gouv.fr")
     mock_get_users_for_organisation.assert_called_once_with(ORGANISATION_ID)
 
 
@@ -174,7 +174,7 @@ def test_existing_user_invite_not_a_member_of_organisation(
 
     mock_check_org_invite_token.assert_called_once_with("thisisnotarealtoken")
     mock_accept_org_invite.assert_called_once_with(ORGANISATION_ID, ANY)
-    mock_get_user_by_email.assert_called_once_with("invited_user@test.canada.ca")
+    mock_get_user_by_email.assert_called_once_with("invited_user@test.beta.gouv.fr")
     mock_get_users_for_organisation.assert_called_once_with(ORGANISATION_ID)
     mock_add_user_to_organisation.assert_called_once_with(
         ORGANISATION_ID,
@@ -194,7 +194,7 @@ def test_user_accepts_invite(
     assert response.location == url_for("main.register_from_org_invite", _external=True)
 
     mock_check_org_invite_token.assert_called_once_with("thisisnotarealtoken")
-    mock_dont_get_user_by_email.assert_called_once_with("invited_user@test.canada.ca")
+    mock_dont_get_user_by_email.assert_called_once_with("invited_user@test.beta.gouv.fr")
     mock_get_users_for_organisation.assert_called_once_with(ORGANISATION_ID)
 
 

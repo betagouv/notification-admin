@@ -933,13 +933,13 @@ def test_send_test_doesnt_show_file_contents(
             create_active_user_with_permissions(),
             "main.send_test_step",
             create_email_template(),
-            "test@user.canada.ca",
+            "test@user.beta.gouv.fr",
         ),
         (
             create_active_caseworking_user(),
             "main.send_test_step",
             create_email_template(),
-            "caseworker@example.canada.ca",
+            "caseworker@example.beta.gouv.fr",
         ),
         (
             create_active_user_with_permissions(),
@@ -3335,12 +3335,12 @@ def test_reply_to_is_previewed_if_chosen(
         "app.main.views.send.s3download",
         return_value="""
         email_address,date,thing
-        notify@digital.cabinet-office.canada.ca,foo,bar
+        notify@digital.cabinet-office.beta.gouv.fr,foo,bar
     """,
     )
 
     with client_request.session_transaction() as session:
-        session["recipient"] = "notify@digital.cabinet-office.canada.ca"
+        session["recipient"] = "notify@digital.cabinet-office.beta.gouv.fr"
         session["placeholders"] = {}
         session["file_uploads"] = {fake_uuid: {"template_id": fake_uuid}}
         session["sender_id"] = reply_to_address
@@ -3374,7 +3374,7 @@ def test_preview_is_translated(client_request, mocker, get_default_reply_to_emai
     mocker.patch("app.get_current_locale", return_value=lang)
 
     with client_request.session_transaction() as session:
-        session["recipient"] = "notify@digital.cabinet-office.canada.ca"
+        session["recipient"] = "notify@digital.cabinet-office.beta.gouv.fr"
         session["placeholders"] = {}
         session["sender_id"] = uuid4()
 
