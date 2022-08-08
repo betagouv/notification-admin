@@ -16,8 +16,8 @@ generate-version-file: ## Generates the app version file
 	printf "__commit_sha__ = \"${GIT_COMMIT}\"\n__time__ = \"${DATE}\"\n" > ${APP_VERSION_FILE}
 
 .PHONY: test
-test:
-	./scripts/run_tests.sh
+test: test-requirements
+	py.test -n4 --maxfail=1 tests/ --strict -p no:warnings
 
 .PHONY: babel-test
 test-translations: babel
@@ -65,6 +65,30 @@ coverage: venv ## Create coverage report
 .PHONY: run-dev
 run-dev:
 	flask run -p 6012 --host=localhost
+
+.PHONY: lint-black
+lint-black:
+	black ./app ./tests --check
+
+.PHONY: lint-flake
+lint-flake:
+	flake8 .
+
+.PHONY: lint-js
+lint-js:
+	npm run lint
+
+.PHONY: order-check
+order-check:
+	isort --check-only ./app ./tests
+
+.PHONY: type-check
+type-check:
+	mypy ./
+
+.PHONY: js-tests
+js-tests:
+	npm test
 
 .PHONY: format
 format:

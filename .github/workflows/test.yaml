@@ -1,0 +1,29 @@
+on: push
+name: Test
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9' # FIXME: use .python-version
+        cache: 'pip'
+        cache-dependency-path: './requirements_for_test.txt'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14.x'
+        cache: 'npm'
+    - run: make generate-version-file
+    - run: pip install -r requirements_for_test.txt
+    - run: make babel # FIXME: remove unless we want to translate too
+    - run: npm install
+    - run: npm run build
+    - run: make lint-black
+    - run: make lint-flake
+    - run: make lint-js
+    - run: make order-check
+    - run: make type-check
+    - run: make js-tests
+    - run: make test
+    - run: make test-translations
