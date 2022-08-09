@@ -27,7 +27,7 @@ def test_identity_step_logged_in(client_request, mocker):
         _expected_status=200,
     )
 
-    assert set(input["name"] for input in page.select("input")) == set(["support_type", "csrf_token"])
+    assert set(input["name"] for input in page.select("input")) == set(["support_type", "csrf_token", "search-473-input"])
 
     # Select a contact reason and submit the form
     page = client_request.post(".contact", _expected_status=200, _data={"support_type": "other"})
