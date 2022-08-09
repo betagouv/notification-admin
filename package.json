@@ -31,7 +31,7 @@
     "hogan": "1.0.2",
     "jquery": "^3.6.0",
     "jquery-migrate": "^3.3.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "node-polyglot": "^2.4.2",
     "prettier": "^2.7.1",
     "query-command-supported": "1.0.0",
