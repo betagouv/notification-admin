@@ -345,7 +345,7 @@ def get_status_filters(service, message_type, statistics):
         ("failed", "failed", "failed"),
     ]
     return [
-        # return list containing label, option, link, count
+        # return a list containing label, option, link, count
         (
             label,
             option,
