@@ -86,10 +86,6 @@
 </head>
 
 <body class="{% block body_classes %}{% endblock %}">
-  {% if isHome %}
-    {% include 'partials/cds_ascii_art.html' %}
-  {% endif %}
-  {% include 'partials/google-tag-manager-body.html' %}
   <script nonce="{{ request_nonce }}">
     document.body.className = document.body.className
       ? document.body.className + " js-enabled"
@@ -99,10 +95,6 @@
   {% block body_start %}{% endblock %}
 
   {% block gc_header %}
-
-    {% if g.preview_url %}
-      <div class="preview-fullpage-border"></div>
-    {% endif %}
 
     <header role="banner" class="fr-header">
 
@@ -123,14 +115,12 @@
 
     {% block content %}{% endblock %}
   </div>
-  <div id="global-app-error" class="app-error hidden"></div>
+  <div id="global-app-error"></div>
 
   <!-- start section 9 -->
   {% include 'partials/nav/footer.html' %}
 
   {% block body_end %}{% endblock %}
-
-  {% include 'partials/google-analytics.html' %}
 
   {% block page_script %}
   <script nonce="{{ request_nonce }}" type="text/javascript" src="{{ asset_url('javascripts/main.min.js') }}"></script>

@@ -10,7 +10,7 @@
 
 {% set file_contents_header_id = 'file-preview' %}
 {% macro skip_to_file_contents() %}
-  <p class="visually-hidden">
+  <p>
     <a href="#{{ file_contents_header_id }}">{{ _('Skip to file contents') }}</a>
   </p>
 {% endmacro %}
@@ -136,7 +136,7 @@
   </div>
 
 
-  <div class="js-stick-at-top-when-scrolling">
+  <div>
     <div class="form-group contain-floats box-border mb-gutterHalf md:mb-gutter">
       {% set button_txt = _('Re-upload your file') %}
       {% if not request.args.from_test %}
@@ -147,14 +147,14 @@
         ) }}
       {% endif %}
     </div>
-    <a href="#content" class="back-to-top-link">{{ _('Back to top') }}</a>
+    <a href="#content">{{ _('Back to top') }}</a>
   </div>
 
   {% if not request.args.from_test %}
-    <section class="clear-both contain-floats">
+    <section>
       {% set column_headers = recipients._raw_column_headers if recipients.duplicate_recipient_column_headers else recipients.column_headers %}
 
-      <h2 class="heading-medium" id="{{ file_contents_header_id }}">{{ original_file_name }}</h2>
+      <h2 id="{{ file_contents_header_id }}">{{ original_file_name }}</h2>
 
       <div class="fullscreen-content{{ ' table-truncated' if count_of_displayed_recipients < count_of_recipients }}" data-module="fullscreen-table">
         {% call(item, row_number) list_table(
@@ -162,7 +162,7 @@
           caption=original_file_name,
           caption_visible=False,
           field_headings=[
-            '<span class="visually-hidden">Row in file</span><span aria-hidden="true">1</span>'|safe
+            '<span>Row in file</span><span aria-hidden="true">1</span>'|safe
           ] + column_headers
         ) %}
           {% call index_field() %}
@@ -183,7 +183,7 @@
             {% if item[column].error and not recipients.missing_column_headers %}
               {% call field() %}
                 <span>
-                  <span class="table-field-error-label">{{ _(item[column].error) }}</span>
+                  <span>{{ _(item[column].error) }}</span>
                   {{ item[column].data if item[column].data != None }}
                 </span>
               {% endcall %}
@@ -203,7 +203,7 @@
     </div>
 
     {% if recipients.too_many_rows %}
-      <p class="table-show-more-link">
+      <p>
           {{ _('Only showing the first') }} {{ count_of_displayed_recipients }} {{ _('rows') }}.
       </p>
     {% elif count_of_displayed_recipients < count_of_recipients %}
@@ -222,7 +222,7 @@
     {% endif %}
   </section>
   <section>
-    <h2 class="heading-medium">{{ _('Preview of') }} {{ template.name }}</h2>
+    <h2>{{ _('Preview of') }} {{ template.name }}</h2>
     {{ template|string|translate_preview_template }}
   </section>
 {% endblock %}

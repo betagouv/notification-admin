@@ -1,7 +1,7 @@
 {% from "components/table.html" import list_table, field, right_aligned_field_heading, row_heading, notification_status_field %}
 {% from "components/page-footer.html" import page_footer %}
 
-<div class="ajax-block-container" aria-labelledby='pill-selected-item'>
+<div aria-labelledby='pill-selected-item'>
   <div class="dashboard-table mb-12 clear-both contain-floats">
   {% set heading_1 = _('Recipient') %}
   {% set heading_2 = _('Status') %}
@@ -23,7 +23,7 @@
   {% endcall %}
 
   {% if more_than_one_page %}
-    <p class="table-show-more-link">
+    <p>
       {{ _('Only showing the first 50 rows') }}
     </p>
   {% endif %}

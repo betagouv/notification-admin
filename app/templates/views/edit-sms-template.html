@@ -17,15 +17,15 @@
   ) }}
 
   {% call form_wrapper() %}
-    <div class="md:w-5/6 form-group mb-gutterHalf md:mb-gutter">
+    <div:mb-gutter">
       {{ _("A template allows you to send the same message to many people. To tailor messages for each recipient, visit the <a href='{}' target='_blank'>Personalisation guide<span class='sr-only'> (Opens in a new tab)</span><img aria-hidden='true' role='presentation' class='inline w-6 h-6 ml-2 self-center' src='{}'/></a>.").format(gca_url_for('personalisation_guide'), asset_url('images/external.svg')) }}
     </div>
 
-    <div class="grid-row contain-floats">
-      <div class="md:w-2/3 px-gutterHalf">
+    <div>
+      <div>
         {{ textbox(form.name, width='w-full', hint=_('Your recipients will not see this template name.')) }}
       </div>
-      <div class="md:w-2/3 px-gutterHalf">
+      <div>
         {{ textbox(form.template_content, highlight_tags=True, width='w-full', rows=5) }}
         {% if current_user.platform_admin %}
           {{ radios(form.process_type, hint=_('This is only manageable by platform admins')) }}

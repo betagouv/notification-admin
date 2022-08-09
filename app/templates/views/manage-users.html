@@ -11,7 +11,7 @@
 
 {% block maincolumn_content %}
 
-  <h1 class="heading-medium">
+  <h1>
     {{ _('Team members') }}
   </h1>
 
@@ -29,33 +29,33 @@
 
   {% if current_user.has_permissions('manage_service') %}
     <div>
-      <a href="{{ url_for('.invite_user', service_id=current_service.id) }}" class="button button-secondary">{{ _('Invite someone to join your team') }}</a>
+      <a href="{{ url_for('.invite_user', service_id=current_service.id) }}">{{ _('Invite someone to join your team') }}</a>
     </div>
   {% endif %}
 
-  <div class="user-list">
+  <div>
 
 
     {% for user in users %}
-      <div class="user-list-item">
+      <div>
 
         <h2 title="{{ user.email_address }}">
           {%- if user.name -%}
-            <span class="heading-small inline">{{ user.name }}</span>&ensp;
+            <span>{{ user.name }}</span>&ensp;
           {%- endif -%}
-          <span class="hint">
+          <span>
             {%- if user.status == 'pending' -%}
-              <span class="inline">{{ user.email_address }}</span> ({{ _('invited') }})
+              <span>{{ user.email_address }}</span> ({{ _('invited') }})
             {%- elif user.status == 'cancelled' -%}
-              <span class="inline">{{ user.email_address }}</span> ({{ _('cancelled invite') }})
+              <span>{{ user.email_address }}</span> ({{ _('cancelled invite') }})
             {%- elif user.id == current_user.id -%}
-              <span class="inline">({{ _('you') }})</span>
+              <span>({{ _('you') }})</span>
             {% else %}
-              <span class="inline">{{ user.email_address }}</span>
+              <span>{{ user.email_address }}</span>
             {% endif %}
           </span>
         </h2>
-        <div class="tick-cross-list grid-row contain-floats relative">
+        <div>
           <div class="tick-cross-list-permissions md:w-3/4 float-left py-0 px-0 px-gutterHalf box-border">
             <ul>
               {% for permission, label in permissions %}
@@ -67,7 +67,7 @@
             </ul>
             {# only show if the service has folders #}
             {% if current_service.all_template_folders %}
-              <div class="tick-cross-list-hint">
+              <div>
                 {% set folder_count = user.template_folders_for_service(current_service) | length %}
 
                 {% if folder_count == 0 %}
@@ -80,7 +80,7 @@
               </div>
             {% endif %}
             {% if current_service.has_permission('email_auth') %}
-              <div class="tick-cross-list-hint">
+              <div>
                 {% if user.security_keys|length > 0  %}
                 {{ _('Signs in with a Fido2 key') }}
                 {% elif user.auth_type == 'sms_auth'  %}
@@ -93,7 +93,7 @@
           </div>
           {% if current_user.has_permissions('manage_service') %}
             <ul>
-              <li class="tick-cross-list-edit-link">
+              <li>
                 {% if user.status == 'pending' %}
                   <a href="{{ url_for('.cancel_invited_user', service_id=current_service.id, invited_user_id=user.id)}}">{{ _('Cancel invitation') }}</a>
                 {% elif user.state == 'active' and current_user.id != user.id %}

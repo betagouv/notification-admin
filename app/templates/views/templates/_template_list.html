@@ -13,7 +13,7 @@
 {%- endmacro %}
 
 {% if template_list.template_folder_id and not template_list.templates_to_show %}
-  <p class="template-list-empty">
+  <p>
     {% if template_list.folder_is_empty %}
       {{ _('This folder is empty') }}
     {% else %}
@@ -26,7 +26,7 @@
   <nav id="template-list" class="{{ 'top-gutter-5px contain-floats' if (not show_template_nav and not show_search_box) else '' }}">
     {% if display_checkboxes %}
       <fieldset>
-        <legend class="sr-only">{{ _("Select templates and folders")}}</legend>
+        <legend>{{ _("Select templates and folders")}}</legend>
     {% endif %}
     {% for item in template_list %}
       <div class="template-list-item {% if display_checkboxes %}template-list-item-with-checkbox{% endif %} {% if item.ancestors %}template-list-item-hidden-by-default{% endif %} {% if not item.ancestors %}template-list-item-without-ancestors{% endif %}">
@@ -39,23 +39,23 @@
             label=_("Select the {name} {type}").format(name=item.name, type=_("folder") if item.is_folder else item.hint)
           ) }}
         {% endif %}
-        <p class="message-name">
+        <p>
           {% for ancestor in item.ancestors %}
-            <a href="{{ url_for('.choose_template', service_id=current_service.id, template_type=template_type, template_folder_id=ancestor.id, view='sending' if sending_view else None) }}" class="template-list-folder">
+            <a href="{{ url_for('.choose_template', service_id=current_service.id, template_type=template_type, template_folder_id=ancestor.id, view='sending' if sending_view else None) }}">
               {{- format_item_name(ancestor.name) -}}
-            </a> <span class="message-name-separator"></span>
+            </a> <span></span>
           {% endfor %}
           {% if item.is_folder %}
-            <a href="{{ url_for('.choose_template', service_id=current_service.id, template_type=template_type, template_folder_id=item.id, view='sending' if sending_view else None) }}" class="template-list-folder">
-              <span class="live-search-relevant">{{ format_item_name(item.name) }}</span>
+            <a href="{{ url_for('.choose_template', service_id=current_service.id, template_type=template_type, template_folder_id=item.id, view='sending' if sending_view else None) }}">
+              <span>{{ format_item_name(item.name) }}</span>
             </a>
           {% else %}
-            <a href="{{ url_for('.view_template', service_id=current_service.id, template_id=item.id) }}" class="template-list-template">
-              <span class="live-search-relevant">{{ format_item_name(item.name) }}</span>
+            <a href="{{ url_for('.view_template', service_id=current_service.id, template_id=item.id) }}">
+              <span>{{ format_item_name(item.name) }}</span>
             </a>
           {% endif %}
         </p>
-        <p class="message-type">
+        <p>
           {{ _(item.hint) }}
         </p>
       </div>

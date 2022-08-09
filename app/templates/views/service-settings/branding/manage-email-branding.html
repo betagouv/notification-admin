@@ -28,11 +28,11 @@
       back_link=url_for('main.service_settings', service_id=current_service.id)
     ) }}
 
-    <div class="grid-row contain-floats">
-      <div class="md:w-3/4 float-left py-0 px-0 px-gutterHalf box-border">
+    <div>
+      <div>
         <p>{{ _('Consistent branding helps instill trust in the email messages you send.') }}</p>
 
-        <h2 class="heading-medium">{{ _('Change the default language of email branding') }}</h2>
+        <h2>{{ _('Change the default language of email branding') }}</h2>
         <p>{{ _('GC Notify offers the Government of Canada signatures by default.') }}</p>
 
         {% call form_wrapper() %}
@@ -50,9 +50,9 @@
         {% endcall %}
 
         {% if using_custom_branding %}
-          <h2 class="heading-medium">{{ _('Replace custom logo') }}</h2>
+          <h2>{{ _('Replace custom logo') }}</h2>
         {% else %}
-          <h2 class="heading-medium">{{ _('Upload new custom logo') }}</h2>
+          <h2>{{ _('Upload new custom logo') }}</h2>
         {% endif %}
         <p>{{ _('Make sure your logo is a PNG file and exactly 108 pixels tall to fit correctly in email messages.') }}</p>
 

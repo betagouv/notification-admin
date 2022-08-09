@@ -1,6 +1,6 @@
 <p>{{ _('GC Notify displays your service name:') }}</p>
 <p>
-<ul class="list-bullet">
+<ul>
   <li>{{ _('as the ‘from’ address on emails you send.') }}</li>
   <li>{{ _('at the start of every text message.') }}</li>
 </ul>
@@ -11,12 +11,12 @@
   {{ _('For example:') }} {{ _('Renew your passport | Renouveler votre passeport') }}
 </p>
 
-<h2 class="heading-medium">{{ _('What’s your service called?') }}</h2>
+<h2>{{ _('What’s your service called?') }}</h2>
 <p>
   {{ _('Make it something people would search for in their inbox.') }}
 </p>
 
-<div class="form-wrap">
+<div>
   {% call form_wrapper() %}
     {% set hint_txt = _('Up to 255 characters') %}
 

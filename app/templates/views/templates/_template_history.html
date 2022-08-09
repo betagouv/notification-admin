@@ -1,11 +1,11 @@
 <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
-  <h2 class="message-name">{{ template.name }}</h2>
-  <p class="hint">
+  <h2>{{ template.name }}</h2>
+  <p>
     {% if template.get_raw('version', 1) > 1 %}
-      {{ _('Edit made') }} {% if template.get_raw('updated_at', None) %}<span class="local-datetime-full">{{ template.get_raw('updated_at') }}</span>{% endif %}
+      {{ _('Edit made') }} {% if template.get_raw('updated_at', None) %}<span>{{ template.get_raw('updated_at') }}</span>{% endif %}
     {% else %}
       {{ _('Created') }}
-      {% if template.get_raw('created_at', None) %}<span class="local-datetime-full">{{ template.get_raw('created_at') }}</span>{% endif %}
+      {% if template.get_raw('created_at', None) %}<span>{{ template.get_raw('created_at') }}</span>{% endif %}
     {% endif %}
     {{ _('by') }} {{ template.get_raw('created_by').name }}
   </p>

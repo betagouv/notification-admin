@@ -24,17 +24,14 @@
   {% endblock %}
 {% block maincolumn_content %}
 
-  <div class="grid-row contain-floats">
+  <div>
 
     {% if navigation_links %}
-      <div class="w-full md:w-1/4 md:float-left py-0 px-0 px-gutterHalf box-border">
+      <div>
         {{ sub_navigation(navigation_links) }}
       </div>
-      <div class="w-full md:w-5/8 md:float-left py-0 px-0 px-gutterHalf box-border">
-    {% else %}
-      <div class="w-full md:w-2/3 float-left py-0 px-0 px-gutterHalf box-border">
     {% endif %}
-
+    <div>
     {% block content_column_content %}
     {% endblock %}
 

@@ -9,7 +9,7 @@
   delete_link_text=_("Delete"),
   button_id="btn"
 ) %}
-  <div class="page-footer">
+  <div>
     {% if button_text %}
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <button data-button-id={{button_id}} type="submit" class="fr-btn {% if destructive %}button-red{% endif %}" {% if
@@ -23,20 +23,20 @@
       </span>
     {% endif %}
     {% if secondary_link and secondary_link_text %}
-      <a class="page-footer-secondary-link" href="{{ secondary_link }}">{{ secondary_link_text }}</a>
+      <a href="{{ secondary_link }}">{{ secondary_link_text }}</a>
     {% endif %}
   </div>
 {% endmacro %}
 
 {% macro sticky_page_footer(button_text=None) %}
-  <div class="js-stick-at-bottom-when-scrolling">
+  <div>
     {{ page_footer(button_text) }}
   </div>
 {% endmacro %}
 
 {% macro sticky_page_footer_two_submit_buttons(button1_text="b1", button1_value="b1", button2_text="b2", button2_value="b2") %}
-  <div class="js-stick-at-bottom-when-scrolling">
-    <div class="page-footer">
+  <div>
+    <div>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <button data-button-id="btn1" type="submit" class="button text-base outline-none focus:shadow-outline"
         name="button_pressed" value="{{ button1_value }}">

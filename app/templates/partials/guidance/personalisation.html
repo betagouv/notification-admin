@@ -1,19 +1,19 @@
-<h2 class="heading-medium">
+<h2>
   {{ _('Variables') }}
 </h2>
 <p>
  {{ _('A “variable” is a place in a template where you’ll include personal content.  In your template, use double brackets to show each variable, such as ((name)) and ((appointment date)).  For example:') }}
 </p>
-<div class="panel-container">
-  <div class="panel-input" aria-label="{{ _('An example of the input for variables. Double brackets surround placeholder text such as ((given name)) or ((appointment date)) to be replaced with recipient information.') }}">
+<div>
+  <div aria-label="{{ _('An example of the input for variables. Double brackets surround placeholder text such as ((given name)) or ((appointment date)) to be replaced with recipient information.') }}">
     <p>
-      {{ _('Hello') }} ((<span class="placeholder-no-brackets">{{ _('given name')}}</span>)),
+      {{ _('Hello') }} ((<span>{{ _('given name')}}</span>)),
     </p>
     <p>
-      {{ _('This is a confirmation message for your appointment on') }} ((<span class="placeholder-no-brackets">{{_('appointment date')}}</span>))
+      {{ _('This is a confirmation message for your appointment on') }} ((<span>{{_('appointment date')}}</span>))
     </p>
   </div>
-  <div class="panel-preview" aria-label="{{ _('A preview shows the variables filled in with given name placeholder replaced by Anna and the appointment date placeholder replaced by December 11, 2021.') }}">
+  <div aria-label="{{ _('A preview shows the variables filled in with given name placeholder replaced by Anna and the appointment date placeholder replaced by December 11, 2021.') }}">
     <p>
       {{ _('Hello Anna') }},
     </p>

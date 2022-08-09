@@ -9,7 +9,7 @@
 
 {% block platform_admin_content %}
 
-  <h1 class="heading-large">
+  <h1>
     Email complaints
   </h1>
 
@@ -29,7 +29,7 @@
 
       {{ text_field(item.complaint_type) }}
 
-      <span class="local-datetime-short">{{ text_field(item.complaint_date if item.complaint_date else None) }}</span>
+      <span>{{ text_field(item.complaint_date if item.complaint_date else None) }}</span>
 
   {% endcall %}
 

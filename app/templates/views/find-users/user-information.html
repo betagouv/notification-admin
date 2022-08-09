@@ -8,46 +8,46 @@
 {% block platform_admin_content %}
   <div class="grid-row contain-floats mb-12 clear-both contain-floats">
     <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
-      <h1 class="heading-large">
+      <h1>
         {{ user.name }}
       </h1>
       <p>{{ user.email_address }}</p>
       <p class="{{ '' if user.mobile_number else 'hint' }}">{{ user.mobile_number or 'No mobile number'}}</p>
-      <h2 class="heading-medium">{{ _('Live services') }}</h2>
-      <nav class="browse-list">
+      <h2>{{ _('Live services') }}</h2>
+      <nav>
         {% if user.live_services %}
           <ul>
           {% for service in user.live_services %}
-            <li class="browse-list-item">
-              <a class="browse-list-hint" href={{url_for('.service_dashboard', service_id=service.id)}}>{{ service.name }}</a>
+            <li>
+              <a href={{url_for('.service_dashboard', service_id=service.id)}}>{{ service.name }}</a>
             </li>
           {% endfor %}
           </ul>
         {% else %}
-          <p class="hint">
+          <p>
             {{ _('No live services') }}
           </p>
         {% endif %}
       </nav>
-      <h2 class="heading-medium">{{ _('Trial services') }}</h2>
-      <nav class="browse-list">
+      <h2>{{ _('Trial services') }}</h2>
+      <nav>
         {% if user.trial_mode_services %}
           <ul>
           {% for service in user.trial_mode_services %}
-            <li class="browse-list-item">
-              <a class="browse-list-hint" href={{url_for('.service_dashboard', service_id=service.id)}}>{{ service.name }}</a>
+            <li>
+              <a href={{url_for('.service_dashboard', service_id=service.id)}}>{{ service.name }}</a>
             </li>
           {% endfor %}
           </ul>
         {% else %}
-          <p class="hint">
+          <p>
             {{ _('No services in trial mode') }}
           </p>
         {% endif %}
       </nav>
-      <h2 class="heading-medium">{{ _('Last sign-in') }}</h2>
+      <h2>{{ _('Last sign-in') }}</h2>
       {% if not user.logged_in_at %}
-      <p class="hint">{{ _('This person has never signed in') }}</p>
+      <p>{{ _('This person has never signed in') }}</p>
       {% else %}
       <p>{{ _('Last signed in') }}
         {{ user.logged_in_at|format_delta }}
@@ -59,28 +59,28 @@
       </p>
       {% endif %}
       {% if user.state == 'active' %}
-        <h2 class="heading-medium">{{ _('Admin tools') }}</h2>
-        <nav class="browse-list">
+        <h2>{{ _('Admin tools') }}</h2>
+        <nav>
           <ul>
-            <li class="browse-list-item delete-link">
+            <li>
               <a href="{{ url_for('main.archive_user', user_id=user.id) }}">
                 {{ _('Archive user') }}
               </a>
             </li>
           {% if user.blocked %}
-            <li class="browse-list-item delete-link">
+            <li>
               <a href="{{ url_for('main.unblock_user', user_id=user.id) }}">
                 {{ _('Unblock user') }}
               </a>
             </li>
           {% else %}
-            <li class="browse-list-item delete-link">
+            <li>
               <a href="{{ url_for('main.block_user', user_id=user.id) }}">
                 {{ _('Block user') }}
               </a>
             </li>
           {% endif %}
-          <li class="browse-list-item delete-link">
+          <li>
             <a href="{{ url_for('main.reset_password', user_id=user.id) }}">
               {{ _('Request a password reset for this user') }}
             </a>

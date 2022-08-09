@@ -16,7 +16,7 @@
     <div class="mb-12">
       {% set question_txt = _('Are you sure you want to redact personalised variable content?') %}
       {% call banner_wrapper(type='dangerous', subhead=question_txt) %}
-        <ul class="list list-bullet banner-list-bullet">
+        <ul>
           <li>
             {{ _("This protects recipients' information by hiding it in the dashboard and message log.") }}
           </li>
@@ -26,7 +26,7 @@
         </ul>
         <form method='post'>
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-          <button type="submit" class="button button-red" name="delete">{{ _('Confirm') }}</button>
+          <button type="submit" name="delete">{{ _('Confirm') }}</button>
         </form>
       {% endcall %}
     </div>
@@ -79,14 +79,14 @@
           <a href="{{ url_for('.confirm_redact_template', service_id=current_service.id, template_id=template.id) }}">{{ _('Redact personalised variable content after sending') }}</a>
         </div>
       {% else %}
-        <p class="hint">
+        <p>
           {{ _("Recipients' information will be redacted from system") }}
         </p>
       {% endif %}
     {% endif %}
     {% if not template._template.archived %}
       {% set delete_txt = _('Delete this template') %}
-      <div class="page-footer-delete-link block page-footer-delete-link-without-button">
+      <div>
         <a href="{{ url_for('.delete_service_template', service_id=current_service.id, template_id=template.id) }}">{{ delete_txt }}</a>
       </div>
       &emsp;

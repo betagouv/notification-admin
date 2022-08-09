@@ -10,7 +10,7 @@
 
 {% block maincolumn_content %}
     {% set button_txt = _('Continue') %}
-    <h1 class="heading-large">{{ _('What do you want to add?') }}</h1>
+    <h1>{{ _('What do you want to add?') }}</h1>
 
     {% call form_wrapper() %}
       {{ radios(form.template_type) }}

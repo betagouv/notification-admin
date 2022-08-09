@@ -17,25 +17,25 @@
     back_link=url_for('main.service_settings', service_id=current_service.id)
   ) }}
 
-  <div class="user-list">
+  <div>
     {% if not current_service.sms_senders %}
-      <div class="user-list-item">
-        <span class="hint">{{ _('You have not added any text message senders yet') }}</span>
+      <div>
+        <span>{{ _('You have not added any text message senders yet') }}</span>
       </div>
     {% endif %}
     {% for item in current_service.sms_senders_with_hints %}
-      <div class="user-list-item">
+      <div>
         <h3>
-          <span class="heading-small">{{ item.sms_sender }}</span>
+          <span>{{ item.sms_sender }}</span>
           {% if item.hint %}
             &ensp;
-            <span class="hint">
+            <span>
               {{ _(item.hint) }}
             </span>
           {% endif %}
         </h3>
         {% if current_user.has_permissions('manage_service') %}
-          <a class="user-list-edit-link" href="{{ url_for('.service_edit_sms_sender', service_id=current_service.id, sms_sender_id = item.id) }}">{{ _('Change') }}</a>
+          <a href="{{ url_for('.service_edit_sms_sender', service_id=current_service.id, sms_sender_id = item.id) }}">{{ _('Change') }}</a>
         {% endif %}
         {% if current_service.count_sms_senders > 1 %}
           {{ api_key(item.id, thing="ID") }}
@@ -47,7 +47,7 @@
   {% if current_user.has_permissions('manage_service') %}
     <div class="grid-row contain-floats mb-12 clear-both contain-floats">
       <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
-        <a href="{{ url_for('.service_add_sms_sender', service_id=current_service.id) }}" class="button">{{ _('Add text message sender') }}</a>
+        <a href="{{ url_for('.service_add_sms_sender', service_id=current_service.id) }}">{{ _('Add text message sender') }}</a>
       </div>
     </div>
   {% endif %}

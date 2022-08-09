@@ -9,12 +9,12 @@
 {% block maincolumn_content %}
 
 
-  <h1 class="heading-large">{{ template.name }}</h1>
+  <h1>{{ template.name }}</h1>
 
   {{ template|string|translate_preview_template }}
 
-  <div class="page-footer">
-    <a href="{{ url_for('.send_test', service_id=current_service.id, template_id=template.id, help=2) }}" class="button">{{ _("Continue") }} </a>
+  <div>
+    <a href="{{ url_for('.send_test', service_id=current_service.id, template_id=template.id, help=2) }}">{{ _("Continue") }} </a>
   </div>
 
 {% endblock %}

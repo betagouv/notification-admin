@@ -22,7 +22,7 @@
 
   {% if (not current_service.all_templates) and (not current_service.all_template_folders) %}
 
-    <h1 class="heading-medium">
+    <h1>
       {{ page_title }}
     </h1>
     {% if current_user.has_permissions('manage_templates') %}
@@ -51,8 +51,8 @@
 
   {% else %}
     
-    <div class="grid-row contain-floats">
-      <div class="{% if current_user.has_permissions('manage_templates') %} md:w-5/6 float-left py-0 px-0 px-gutterHalf box-border {% else %} w-full float-left py-0 px-0 px-gutterHalf box-border {% endif %}">
+    <div>
+      <div>
         {{ folder_path(
           folders=template_folder_path,
           service_id=current_service.id,
@@ -62,12 +62,12 @@
         ) }}
       </div>
       {% if current_user.has_permissions('manage_templates') and current_template_folder_id and user_has_template_folder_permission %}
-        <div class="md:w-1/6 float-left py-0 px-0 px-gutterHalf box-border">
-          <a href="{{ url_for('.manage_template_folder', service_id=current_service.id, template_folder_id=current_template_folder_id) }}" class="folder-heading-manage-link">{{ _('Manage') }}</a>
+        <div>
+          <a href="{{ url_for('.manage_template_folder', service_id=current_service.id, template_folder_id=current_template_folder_id) }}">{{ _('Manage') }}</a>
         </div>
       {% endif %}
     </div>
-    <h1 class="heading-medium">
+    <h1>
       {{ _('Browse {}').format(current_template_folder.name) }}
     </h1>
   {% endif %}
@@ -75,7 +75,7 @@
       <p>{{ _('Select template to send.') }}
     {% endif %}
     {% if show_template_nav %}
-      <div class="mb-12 clear-both contain-floats">
+      <div>
         {{ pill(template_nav_items, current_value=template_type, show_count=False) }}
       </div>
     {% endif %}

@@ -11,7 +11,7 @@
 
 {% block org_content %}
 
-  <h1 class="heading-medium">
+  <h1>
     Team members
   </h1>
 
@@ -21,14 +21,14 @@
     </div>
   {% endif %}
 
-  <div class="user-list">
+  <div>
     {% for user in users %}
-      <div class="user-list-item">
+      <div>
         <h3>
           {%- if user.name -%}
-            <span class="heading-small">{{ user.name }}</span>&ensp;
+            <span>{{ user.name }}</span>&ensp;
           {%- endif -%}
-          <span class="hint">
+          <span>
             {%- if user.status == 'pending' -%}
               {{ user.email_address }} (invited)
             {%- elif user.status == 'cancelled' -%}
@@ -40,8 +40,8 @@
             {% endif %}
           </span>
         </h3>
-        <ul class="tick-cross-list grid-row contain-floats relative">
-          <li class="tick-cross-list-edit-link">
+        <ul>
+          <li>
             {% if user.status == 'pending' %}
               <a href="{{ url_for('.cancel_invited_org_user', org_id=current_org.id, invited_user_id=user.id)}}">Cancel invitation</a>
             {% endif %}
@@ -51,8 +51,8 @@
     {% endfor %}
   </div>
 
-  <div class="js-stick-at-bottom-when-scrolling">
-    <a href="{{ url_for('.invite_org_user', org_id=current_org.id) }}" class="button button-secondary">Invite team member</a>
+  <div>
+    <a href="{{ url_for('.invite_org_user', org_id=current_org.id) }}">Invite team member</a>
   </div>
 
 {% endblock %}

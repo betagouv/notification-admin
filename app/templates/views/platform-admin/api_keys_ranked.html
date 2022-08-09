@@ -10,7 +10,7 @@
 
 {% block platform_admin_content %}
 
-  <h1 class="heading-large">
+  <h1>
     {{ page_title }}
   </h1>
 
@@ -33,10 +33,10 @@
 
         {% call row() %}
           {% call field(border=False) %}
-            <a href="{{ url_for('.api_keys', service_id=x['service_id']) }}" class="browse-list-link">{{ x['api_key_name'] }}</a>
+            <a href="{{ url_for('.api_keys', service_id=x['service_id']) }}">{{ x['api_key_name'] }}</a>
           {% endcall %}
           {% call field(border=False) %}
-            <a href="{{ url_for('main.service_dashboard', service_id=x['service_id']) }}" class="browse-list-link">{{ x['service_name'] }}</a>
+            <a href="{{ url_for('main.service_dashboard', service_id=x['service_id']) }}">{{ x['service_name'] }}</a>
           {% endcall %}
           {% call field(align='right', border=False) %}
             {{ big_number(x['total_notifications'], smallest=True) }}

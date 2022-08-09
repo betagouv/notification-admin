@@ -5,7 +5,7 @@
 {% set platform_admin_view_ind = True %}
 {% block maincolumn_content %}
 
-  <div class="flex flex-row">
+  <div>
     <div class="xs:hidden smaller:hidden sm:hidden md:flex flex-col">
           {% for link_text, view in [
           ('Your services', 'choose_account'),
@@ -25,14 +25,13 @@
           <div class="pl-10 pr-5 py-2 adminnav--{{ admin_navigation.is_selected(view) }} ">
             <a
               aria-label="{{ _(link_text) }}" 
-              href="{{ url_for('main.'+view) }}"
-              class="no-underline text-blue visited:text-blue link:text-blue text-smaller">
+              href="{{ url_for('main.'+view) }}">
               {{ _(link_text) }}
             </a>
           </div>
         {% endfor %}
     </div>
-    <div class="border-l-1 p-5 w-full">
+    <div>
       {% block platform_admin_content %}{% endblock %}
     </div>
   </div>

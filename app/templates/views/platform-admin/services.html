@@ -10,7 +10,7 @@
 {% macro stats_fields(channel, data) -%}
 
   {% call field(border=False) %}
-      <span class="heading-medium" style="margin: 0px;">{{ channel.title() }}</span>
+      <span>{{ channel.title() }}</span>
   {% endcall %}
 
   {% call field(align='right', border=False) %}
@@ -47,7 +47,7 @@
 
         {% call row() %}
           {% call field(border=False) %}
-            <a href="{{ url_for('main.service_dashboard', service_id=service['id']) }}" class="browse-list-link">{{ service['name']|truncate(35) }}</a>
+            <a href="{{ url_for('main.service_dashboard', service_id=service['id']) }}">{{ service['name']|truncate(35) }}</a>
           {% endcall %}
 
           {{ stats_fields('email', service['stats']) }}
@@ -56,15 +56,15 @@
         {% call row() %}
           {% if not service['active'] %}
             {% call field(status='default', border=False) %}
-              <span class="heading-medium" style="margin: 0px;">archived</span>
+              <span style="margin: 0px;">archived</span>
             {% endcall %}
           {% elif service['research_mode'] %}
             {% call field(border=False) %}
-              <span class="research-mode" style="margin: 0px;">research mode</span>
+              <span style="margin: 0px;">research mode</span>
             {% endcall %}
           {% elif not service['restricted'] %}
             {% call field(status='error', border=False) %}
-              <span class="heading-medium" style="margin: 0px;">Live</span>
+              <span style="margin: 0px;">Live</span>
             {% endcall %}
           {% else %}
             {% call field(border=False) %}
@@ -74,7 +74,7 @@
           {{ stats_fields('sms', service['stats']) }}
         {% endcall %}
 
-        <tr class="table-row" style="display:none;">
+        <tr style="display:none;">
 
           {% call field(border=False) %}
 
@@ -96,7 +96,7 @@
 
 {% block platform_admin_content %}
 
-  <h1 class="heading-large">
+  <h1>
     {{ page_title|capitalize }}
   </h1>
 
@@ -107,7 +107,7 @@
           {{ textbox(form.start_date, width='w-2/3', hint=_("Enter start date in format YYYY-MM-DD")) }}
           {{ textbox(form.end_date, width='w-2/3', hint=_("Enter end date in format YYYY-MM-DD")) }}
           {{ checkbox(form.include_from_test_key) }}
-          <div class="clear-left">
+          <div>
             <button type="submit" class="button mt-4">{{ _("Filter") }}</button>
           </div>
         {% endcall %}

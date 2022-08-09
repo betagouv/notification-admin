@@ -12,9 +12,9 @@
 
 {% block maincolumn_content %}
 
-  <div class="dashboard">
+  <div>
 
-    <h1 class="heading-large">{{ _('Dashboard') }}</h1>
+    <h1>{{ _('Dashboard') }}</h1>
     {% if current_user.has_permissions('manage_templates') or current_user.has_permissions('send_messages') %}
       {% include 'views/dashboard/task-shortcuts.html' %}
     {% endif %}

@@ -7,14 +7,14 @@
 
 {% block org_content %}
 
-  <h1 class="heading-medium">
+  <h1>
     {{ _('Trial services') }}
   </h1>
   {{ live_search(target_selector='.browse-list-item', show=True, form=search_form, label=_('Search by name')) }}
   <ul>
   {% for service in current_org.trial_services %}
-    <li class="browse-list-item">
-      <a href="{{ url_for('main.service_dashboard', service_id=service.id) }}" class="browse-list-link">{{ service['name'] }}</a>
+    <li>
+      <a href="{{ url_for('main.service_dashboard', service_id=service.id) }}">{{ service['name'] }}</a>
     </li>
   {% endfor %}
   </ul>

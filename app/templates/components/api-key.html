@@ -1,11 +1,11 @@
 {% macro api_key(key, name=None, thing=_("API key")) %}
   {% if name %}
-    <h2 class="api-key-name">
+    <h2>
       {% set api_data = _('API data:') %}
       {{ api_data }} {{ name }}
     </h2>
   {% endif %}
   <div data-module="api-key" data-key="{{ key }}" data-thing="{{ thing }}" aria-live="assertive">
-    <span class="api-key-key">{{ key }}</span>
+    <span>{{ key }}</span>
   </div>
 {% endmacro %}

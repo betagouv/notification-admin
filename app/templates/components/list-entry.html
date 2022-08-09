@@ -8,25 +8,25 @@
 ) %}
 
   {% if error %}
-    <div class="validation-wrapper">
+    <div>
   {% endif %}
     <fieldset class="form-group contain-floats w-full box-border{% if field.errors %} form-group-error{% endif %}" id="{{ field.name }}">
       <legend class="float-left w-full mb-4">
-        <span class="form-label">
+        <span>
           {{ field.label.text }}
           {% if hint %}
-            <span class="form-hint">
+            <span>
               {{ hint }}
             </span>
           {% endif %}
           {% if field.errors %}
-            <span class="error-message" data-module="track-error" data-error-type="{{ field.errors[0][0] }}" data-error-label="{{ field.name }}">
+            <span data-module="track-error" data-error-type="{{ field.errors[0][0] }}" data-error-label="{{ field.name }}">
               {{ field.errors[0][0] }}
             </span>
           {% endif %}
         </span>
       </legend>
-      <ol class="input-list list-decimal pl-gutter clear-left" data-list-item-name="{{ item_name }}" id="list-entry-{{ field.name }}">
+      <ol data-list-item-name="{{ item_name }}" id="list-entry-{{ field.name }}">
         {% for index in range(0, 5) %}
           <li class="list-entry mb-0">
 

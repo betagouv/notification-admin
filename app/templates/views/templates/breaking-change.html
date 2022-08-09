@@ -45,7 +45,7 @@
     {{ _('columns of data:') if column_headings|length > 1 else _('column of data:') }}
   </p>
 
-  <div class="spreadsheet fullscreen-content" data-module="fullscreen-table"">
+  <div data-module="fullscreen-table"">
     {% call(item, row_number) list_table(
       example_rows,
       caption="Example",

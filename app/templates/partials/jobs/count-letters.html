@@ -3,7 +3,7 @@
 
 <div class="grid-row contain-floats mb-12 clear-both contain-floats">
   <div class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border">
-    <div class="keyline-block">
+    <div>
       {{ big_number(
         total,
         message_count_label(total, 'letter', suffix='')|capitalize,
@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border">
-    <div class="keyline-block">
+    <div>
       {{ big_number(
         delivery_estimate|string|format_date_short,
         'Estimated delivery date',

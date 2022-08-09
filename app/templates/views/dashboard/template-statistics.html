@@ -21,15 +21,15 @@
 
     {% call row_heading() %}
       {% if item.is_precompiled_letter %}
-      <span class="file-list-filename">
+      <span>
       {{ _('Provided as PDF') }}
       </span>
-      <span class="file-list-hint">
+      <span>
         {{ _('Letter') }}
       </span>
       {% else %}
-      <a class="file-list-filename" href="{{ url_for('.view_template', service_id=current_service.id, template_id=item.template_id) }}">{{ item.template_name }}</a>
-      <span class="file-list-hint">
+      <a href="{{ url_for('.view_template', service_id=current_service.id, template_id=item.template_id) }}">{{ item.template_name }}</a>
+      <span>
         {{ template_label(item.template_type)|capitalize }}
       </span>
       {% endif %}
@@ -38,7 +38,7 @@
       {{ spark_bar_field(item.count, most_used_template_count, id=item.template_id) }}
     {% else %}
       {% call field() %}
-        <span id='{{item.template_id}}' class="heading-small">
+        <span id='{{item.template_id}}'>
           {{ big_number(
             item.count,
             smallest=True

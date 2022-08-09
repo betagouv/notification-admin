@@ -1,9 +1,9 @@
 {% macro big_number(number, label, link=None, status=None, currency='', smaller=False, smallest=False) %}
   {% if link %}
-    <a class="big-number-link" href="{{ link }}">
+    <a href="{{ link }}">
   {% endif %}
-  <div class="big-number{% if status %} big-number-dark{% endif %}{% if status and link %} bg-transparent{% endif %}">
-    <div class="big-number-number{% if smaller %} text-lg{% endif %}{% if smallest %} text-title{% endif %}">
+  <div class="{% if status %} big-number-dark{% endif %}{% if status and link %} bg-transparent{% endif %}">
+    <div class="{% if smaller %} text-lg{% endif %}{% if smallest %} text-title{% endif %}">
       {% if number is number %}
         {% if currency %}
           {{ "{}{:,.2f}".format(currency, number) }}
@@ -15,7 +15,7 @@
       {% endif %}
     </div>
     {% if label %}
-      <span class="big-number-label{% if status %} pb-0 link:text-blue visited:text-blue{% endif %}{% if link %} underline{% endif %}">{{ label }}</span>
+      <span class="{% if status %} pb-0 link:text-blue visited:text-blue{% endif %}{% if link %} underline{% endif %}">{{ label }}</span>
     {% endif %}
   </div>
   {% if link %}
@@ -36,13 +36,13 @@
   smaller=False,
   smallest=False
 ) %}
-  <div class="big-number-with-status">
+  <div>
     {{ big_number(number, label, link=link, status=True, smaller=smaller, smallest=smallest) }}
     {% if show_failures %}
-      <div class="big-number-status{% if danger_zone %} bg-red{% endif %}">
+      <div class="{% if danger_zone %} bg-red{% endif %}">
         {% if failures %}
           {% if failure_link %}
-            <a class="big-number-status-link" href="{{ failure_link }}">
+            <a href="{{ failure_link }}">
               {{ "{:,}".format(failures) }}
               {{ _('failed') }} – {{ failure_percentage }}%
             </a>
@@ -60,8 +60,8 @@
 
 
 {% macro big_number_simple(number, label) %}
-  <div class="big-number-dark mb-12 clear-both contain-floats">
-    <div class="big-number-number text-lg">
+  <div>
+    <div>
       {% if number is number %}
         {{ "{:,}".format(number) }}
       {% else %}
@@ -69,7 +69,7 @@
       {% endif %}
     </div>
     {% if label %}
-      <span class="big-number-label">{{ label }}</span>
+      <span>{{ label }}</span>
     {% endif %}
   </div>
 {% endmacro %}

@@ -16,13 +16,13 @@
       back_link=url_for('main.service_settings', service_id=current_service.id)
     ) }}
   </div>
-  <div class="user-list">
-    <div class="user-list-item">
-      <span class="hint">
+  <div>
+    <div>
+      <span>
         Blank
         {% if current_service.default_letter_contact_block %}
           {% if current_user.has_permissions('manage_service') %}
-            <a class="user-list-edit-link" href="{{ url_for('.service_make_blank_default_letter_contact', service_id =current_service.id) }}">Make default</a>
+            <a href="{{ url_for('.service_make_blank_default_letter_contact', service_id =current_service.id) }}">Make default</a>
           {% endif %}
         {% else %}
           (default)
@@ -30,17 +30,17 @@
       </span>
     </div>
     {% for item in letter_contact_details %}
-      <div class="user-list-item">
+      <div>
         <p>
           {{ item.contact_block | nl2br | safe }}
         </p>
-        <p class="hint">
+        <p>
           {%- if item.is_default -%}
             (default)
           {% endif %}
         </p>
         {% if current_user.has_permissions('manage_service') %}
-        <a class="user-list-edit-link" href="{{ url_for('.service_edit_letter_contact', service_id =current_service.id, letter_contact_id = item.id) }}">Change</a>
+        <a href="{{ url_for('.service_edit_letter_contact', service_id =current_service.id, letter_contact_id = item.id) }}">Change</a>
         {% endif %}
         {% if letter_contact_details|length  > 1 %}
           {{ api_key(item.id, thing="ID") }}
@@ -49,10 +49,10 @@
     {% endfor %}
   </div>
   {% if current_user.has_permissions('manage_service') %}
-    <div class="grid-row contain-floats">
+    <div>
       <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
-        <div class="js-stick-at-bottom-when-scrolling">
-          <a href="{{ url_for('.service_add_letter_contact', service_id=current_service.id) }}" class="button">Add a new address</a>
+        <div>
+          <a href="{{ url_for('.service_add_letter_contact', service_id=current_service.id) }}">Add a new address</a>
         </div>
       </div>
     </div>

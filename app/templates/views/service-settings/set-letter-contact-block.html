@@ -14,7 +14,7 @@
     'Letter contact details',
     back_link=None if request.args.get('from_template') else url_for('.service_settings', service_id=current_service.id)
   ) }}
-  <div class="grid-row contain-floats">
+  <div>
     {% call form_wrapper(class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border") %}
       {{ textbox(
         form.letter_contact_block,

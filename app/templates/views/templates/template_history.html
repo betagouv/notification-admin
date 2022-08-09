@@ -9,9 +9,9 @@
 {% block maincolumn_content %}
 
 
-  <h1 class="heading-large">{{ template.name }}</h1>
+  <h1>{{ template.name }}</h1>
 
-  <div class="grid-row contain-floats">
+  <div>
     {% with show_title=False %}
       {% include 'views/templates/_template_history.html' %}
     {% endwith %}

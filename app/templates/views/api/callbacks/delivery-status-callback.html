@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block maincolumn_content %}
-  <div class="grid-row contain-floats">
-    <div class="md:w-5/6 float-left py-0 px-0 px-gutterHalf box-border">
+  <div>
+    <div>
       {% set header_txt = _('Callbacks for delivery receipts') %}
       {{ page_header(
         header_txt,
@@ -20,7 +20,7 @@
       <p>
         {{ _("When you send an email or text message, find out if GC Notify was able to deliver it with callbacks. Learn more in the <a href='{}'>callbacks documentation</a>.").format(documentation_url('callbacks')) }}
       </p>
-      <h2 class="heading-small">
+      <h2>
         {{ _('Add an endpoint where GC Notify should send POST requests') }}
      </h2>
       {% set hint_txt = _('Must start with https://') %}
@@ -30,7 +30,7 @@
           width='w-full',
           hint=hint_txt
         ) }}
-        <h2 class="heading-small">
+        <h2>
           {{ _('Add a secret value for authentication') }}
        </h2>
         {% set hint_txt = _('At least 10 characters') %}

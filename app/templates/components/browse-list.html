@@ -1,13 +1,13 @@
 {% macro browse_list(items) %}
   {% if items %}
-    <nav class="browse-list">
+    <nav>
       <ul>
         {% for item in items %}
           {% if item.title and item.link %}
-            <li class="browse-list-item">
+            <li>
               <a href="{{ item.link }}" class="browse-list-link{% if item.destructive %}-destructive{% endif %}">{{ item.title }}</a>
               {% if item.hint %}
-                <div class="browse-list-hint">
+                <div>
                   {{ _(item.hint) }}
                 </div>
               {% endif %}

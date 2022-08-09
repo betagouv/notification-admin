@@ -8,36 +8,36 @@
 
 {% block maincolumn_content %}
 
-  <h1 class="heading-medium mb-12 clear-both contain-floats">
+  <h1>
     {{ _('API integration') }}
   </h1>
 
-  <div class="mb-12">
+  <div>
     <p>
       {{ _("Integrating the API into your system allows you to automate notifications and send emails with attachments. Find out more in the <a href='{}'>API documentation</a>.").format(url_for('main.documentation')) }}
     </p>
   </div>
 
-  <nav class="grid-row contain-floats mb-12 clear-both contain-floats">
-    <div class="md:w-1/3 float-left py-0 px-0 px-gutterHalf box-border">
-      <h2 class="heading-small">
-        <a class="api-header-links" href="{{ url_for('.api_keys', service_id=current_service.id) }}">{{ _('API keys') }}</a>
+  <nav>
+    <div>
+      <h2>
+        <a href="{{ url_for('.api_keys', service_id=current_service.id) }}">{{ _('API keys') }}</a>
       </h2>
       <p>
         {{ _('An API key lets you connect your application or system with GC Notify.') }}
       </p>
     </div>
-    <div class="md:w-1/3 float-left py-0 px-0 px-gutterHalf box-border">
-      <h2 class="heading-small">
-        <a class="api-header-links" href="{{ url_for('.safelist', service_id=current_service.id) }}">{{ _('Safelist') }}</a>
+    <div>
+      <h2>
+        <a href="{{ url_for('.safelist', service_id=current_service.id) }}">{{ _('Safelist') }}</a>
       </h2>
       <p>
         {{ _('A safelist lets you send test notifications to specific people.') }}
       </p>
     </div>
-    <div class="md:w-1/3 float-left py-0 px-0 px-gutterHalf box-border">
-      <h2 class="heading-small">
-        <a class="api-header-links" href="{{ url_for(callbacks_link, service_id=current_service.id) }}">{{ _('Callbacks') }}</a>
+    <div>
+      <h2>
+        <a href="{{ url_for(callbacks_link, service_id=current_service.id) }}">{{ _('Callbacks') }}</a>
       </h2>
       <p>
         {{ _('Callbacks let you know whether GC Notify was able to deliver notifications.') }}
@@ -45,8 +45,8 @@
     </div>
   </nav>
 
-  <div class="mb-12 bg-gray px-10 py-2">
-    <h2 class="heading-small">
+  <div>
+    <h2>
       {{ _('Your API rate limit is {} calls per minute').format(current_service.rate_limit | format_number) }}
     </h2>
     <p>
@@ -54,50 +54,50 @@
     </p>
   </div>
 
-  <div class="grid-row contain-floats">
-    <div class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border">
-      <h2 class="heading-small">
+  <div>
+    <div>
+      <h2>
         {{ _('Message log') }}
       </h2>
     </div>
-    <div class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border align-with-heading-copy-right">
+    <div>
       <a href="{{ url_for('.api_integration', service_id=current_service.id) }}">{{ _('Refresh') }}</a>
     </div>
   </div>
-  <div class="api-notifications">
+  <div>
     {% if not api_notifications.notifications %}
-      <div class="api-notifications-item">
-        <p class="api-notifications-item-meta">
+      <div class="notifications-api-notifications-item">
+        <p>
           {{ _('When you send messages via the API they’ll appear here.') }}
         </p>
-        <p class="api-notifications-item-meta">
+        <p>
           {{ _('GC Notify deletes messages after 7 days.') }}
         </p>
       </div>
     {% endif %}
     {% for notification in api_notifications.notifications %}
-      <details class="api-notifications-item">
-        <summary class="api-notifications-item-title">
-          <h3 class="api-notifications-item-recipient">
+      <details class="notifications-api-notifications-item">
+        <summary>
+          <h3>
             {{ notification.to }}
           </h3>
-          <span class="grid-row contain-floats api-notifications-item-meta">
-            <span class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border api-notifications-item-key">
+          <span>
+            <span>
               {{notification.key_name}}
             </span>
-            <span class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border api-notifications-item-time">
+            <span>
                 {{ notification.created_at|format_delta }}
             </span>
           </span>
         </summary>
         <div>
-          <dl id="notification-{{ notification.id }}" class="api-notifications-item-data mb-12 clear-both contain-floats">
+          <dl id="notification-{{ notification.id }}">
             {% for key in [
               'id', 'client_reference', 'notification_type', 'created_at', 'updated_at', 'sent_at', 'status'
             ] %}
               {% if notification[key] %}
                 <dt>{{ key }}:</dt>
-                <dd class="api-notifications-item-data-item local-datetime-full">{{ notification[key] }}</dd>
+                <dd>{{ notification[key] }}</dd>
               {% endif %}
             {% endfor %}
             {% if notification.status not in ('pending-virus-check', 'virus-scan-failed') %}
@@ -108,13 +108,13 @@
       </details>
     {% endfor %}
     {% if api_notifications.notifications %}
-      <div class="api-notifications-item">
+      <div class="notifications-api-notifications-item">
         {% if api_notifications.notifications|length == 50 %}
-          <p class="api-notifications-item-meta">
+          <p>
             {{ _('Only showing the first 50 messages.') }}
           </p>
         {% endif %}
-        <p class="api-notifications-item-meta">
+        <p>
           {{ _('GC Notify deletes messages after 7 days.') }}
         </p>
       </div>

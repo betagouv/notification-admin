@@ -2,8 +2,8 @@
 
 <div>
   {% if template._template.archived %}
-    <p class="hint">
-      {{ _('This template was deleted') }} <span class="relative-time-past">{{ template._template.updated_at }}</span>.
+    <p>
+      {{ _('This template was deleted') }} <span>{{ template._template.updated_at }}</span>.
     </p>
   {% elif not current_user.has_permissions('send_messages', 'manage_api_keys', 'manage_templates', 'manage_service') or not user_has_template_permission %}
     <p class="mt-4 block {% if template.template_type != 'sms' %}mb-12{% endif %}">
@@ -13,19 +13,19 @@
     </p>
   {% else %}
     {% if current_user.has_permissions('send_messages', restrict_admin_usage=True) %}
-    <h2 class="heading-medium">{{ _('Ready to send?') }}</h2>
+    <h2>{{ _('Ready to send?') }}</h2>
 
     <div class="mb-12">
-      <button href="{{ url_for('.add_recipients', service_id=current_service.id, template_id=template.id) }}" class="fr-btn">
+      <button href="{{ url_for('.add_recipients', service_id=current_service.id, template_id=template.id) }}">
         {{ _('Yes, add recipients') }}
       </button>
-      <a href="{{ url_for('.send_test', service_id=current_service.id, template_id=template.id) }}" class="fr-btn fr-btn--secondary">{{ _('No, send yourself this message') }}</a>
+      <a href="{{ url_for('.send_test', service_id=current_service.id, template_id=template.id) }}">{{ _('No, send yourself this message') }}</a>
     </div>
     {% endif %}
   {% endif %}
 </div>
 
-<div class="w-full template-container">
+<div>
   {{ template|string|translate_preview_template }}
 </div>
 

@@ -9,7 +9,7 @@
 
 {% block maincolumn_content %}
 
-    <h1 class="heading-large">
+    <h1>
       {{ uploaded_file_name }}
     </h1>
 
@@ -22,9 +22,9 @@
     {{ ajax_block(partials, updates_url, 'notifications', finished=finished) }}
 
     {% if can_cancel_letter_job %}
-      <div class="js-stick-at-bottom-when-scrolling">
-        <div class="page-footer">
-          <span class="page-footer-delete-link page-footer-delete-link-without-button">
+      <div>
+        <div>
+          <span>
               <a href="{{ url_for('main.cancel_letter_job', service_id=current_service.id, job_id=job_id) }}">Cancel sending these letters</a>
           </span>
     {% else %}
