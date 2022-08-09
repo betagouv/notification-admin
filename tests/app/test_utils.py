@@ -173,14 +173,14 @@ def test_spreadsheet_checks_for_bad_arguments(args, kwargs):
             None,
             [
                 "Recipient,Template,Type,Sent by,Sent by email,Job,Status,Time\n",
-                "foo@bar.com,foo,sms,,sender@email.canada.ca,,Delivered,1943-04-19 12:00:00\r\n",
+                "foo@bar.com,foo,sms,,sender@email.beta.gouv.fr,,Delivered,1943-04-19 12:00:00\r\n",
             ],
         ),
         (
             "Anne Example",
             [
                 "Recipient,Template,Type,Sent by,Sent by email,Job,Status,Time\n",
-                "foo@bar.com,foo,sms,Anne Example,sender@email.canada.ca,,Delivered,1943-04-19 12:00:00\r\n",
+                "foo@bar.com,foo,sms,Anne Example,sender@email.beta.gouv.fr,,Delivered,1943-04-19 12:00:00\r\n",
             ],
         ),
     ],
@@ -195,7 +195,7 @@ def test_generate_notifications_csv_without_job(
         "app.notification_api_client.get_notifications_for_service",
         side_effect=_get_notifications_csv(
             created_by_name=created_by_name,
-            created_by_email_address="sender@email.canada.ca",
+            created_by_email_address="sender@email.beta.gouv.fr",
             job_id=None,
             job_name=None,
         ),

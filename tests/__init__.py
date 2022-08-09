@@ -76,7 +76,7 @@ def created_by_json(id_, name="", email_address=""):
 def user_json(
     id_="1234",
     name="Test User",
-    email_address="test@canada.ca",
+    email_address="test@beta.gouv.fr",
     mobile_number="+16502532222",
     blocked=False,
     password_changed_at=None,
@@ -126,7 +126,7 @@ def invited_user(
     _id="1234",
     service=None,
     from_user="1234",
-    email_address="testinviteduser@canada.ca",
+    email_address="testinviteduser@beta.gouv.fr",
     permissions=None,
     status="pending",
     created_at=datetime.utcnow(),
@@ -367,7 +367,7 @@ def org_invite_json(id_, invited_by, org_id, email_address, created_at, status):
     }
 
 
-TEST_USER_EMAIL = "test@user.canada.ca"
+TEST_USER_EMAIL = "test@user.beta.gouv.fr"
 
 
 def create_test_api_user(state, permissions={}):
@@ -456,7 +456,7 @@ def notification_json(
         if template_type == "letter":
             to = "1 Example Street"
         elif template_type == "email":
-            to = "example@canada.ca"
+            to = "example@beta.gouv.fr"
         else:
             to = "6502532222"
     if sent_at is None:

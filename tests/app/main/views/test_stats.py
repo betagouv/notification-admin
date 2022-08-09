@@ -543,7 +543,7 @@ def test_html_contains_links_for_failed_notifications(
     "notification_type, expected_row_contents",
     (
         ("sms", ("6502532222 hello & welcome [hidden]")),
-        ("email", ("example@canada.ca [hidden], hello & welcome")),
+        ("email", ("example@beta.gouv.fr [hidden], hello & welcome")),
         (
             "letter",
             (

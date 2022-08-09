@@ -63,7 +63,7 @@ def test_should_redirect_after_email_change(
 ):
     client_request.post(
         "main.user_profile_email",
-        _data={"email_address": "new_notify@notify.canada.ca"},
+        _data={"email_address": "new_notify@notify.beta.gouv.fr"},
         _expected_status=302,
         _expected_redirect=url_for(
             "main.user_profile_email_authenticate",
@@ -76,7 +76,7 @@ def test_should_show_authenticate_after_email_change(
     client_request,
 ):
     with client_request.session_transaction() as session:
-        session["new-email"] = "new_notify@notify.canada.ca"
+        session["new-email"] = "new_notify@notify.beta.gouv.fr"
 
     page = client_request.get("main.user_profile_email_authenticate")
 
@@ -90,7 +90,7 @@ def test_should_render_change_email_continue_after_authenticate_email(
     mock_send_change_email_verification,
 ):
     with client_request.session_transaction() as session:
-        session["new-email"] = "new_notify@notify.canada.ca"
+        session["new-email"] = "new_notify@notify.beta.gouv.fr"
     page = client_request.post(
         "main.user_profile_email_authenticate",
         data={"password": "rZXdoBkuz6U37DDXIaAfpBR1OTJcSZOGICLCz4dMtmopS3KsVauIrtcgqs1eU02"},
@@ -107,7 +107,7 @@ def test_should_redirect_to_user_profile_when_user_confirms_email_link(
 ):
 
     token = generate_token(
-        payload=json.dumps({"user_id": api_user_active["id"], "email": "new_email@canada.ca"}),
+        payload=json.dumps({"user_id": api_user_active["id"], "email": "new_email@beta.gouv.fr"}),
         secret=app_.config["SECRET_KEY"],
         salt=app_.config["DANGEROUS_SALT"],
     )

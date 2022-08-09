@@ -15,7 +15,7 @@ def test_should_raise_validation_error_for_password(
 ):
     form = RegisterUserForm()
     form.name.data = "test"
-    form.email_address.data = "teset@example.gc.ca"
+    form.email_address.data = "teset@example.beta.gouv.fr"
     form.mobile_number.data = "16502532222"
     form.password.data = password
 
@@ -35,7 +35,7 @@ def test_valid_email_not_in_valid_domains(
 def test_valid_email_in_valid_domains(client):
     form = RegisterUserForm(
         name="test",
-        email_address="test@my.gc.ca",
+        email_address="test@my.beta.gouv.fr",
         mobile_number="6502532222",
         password="an uncommon password",
     )
@@ -71,11 +71,7 @@ def _gen_mock_field(x):
 @pytest.mark.parametrize(
     "email",
     [
-        "test@canada.ca",
-        "test@CANADA.CA",
-        "test@cds-snc.CA",
-        "test@test.test.gc.ca",
-        "test@test.gc.ca",
+        "test@beta.gouv.fr",
     ],
 )
 def test_valid_list_of_white_list_email_domains(
@@ -89,16 +85,7 @@ def test_valid_list_of_white_list_email_domains(
 @pytest.mark.parametrize(
     "email",
     [
-        "test@cacanada.ca",
-        "test@gc.ca.ca",
-        "test@gc.test.ca",
-        "test@camod.ca",
-        "test@canada.ca.ca",
-        "test@canada.test.ca",
-        "test@caddc-canada.org",
-        "test@canada.org.ca",
-        "test@canada.ca.org",
-        "test@cacanada.scot",
+        "test@canada.ca",
     ],
 )
 def test_invalid_list_of_white_list_email_domains(

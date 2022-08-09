@@ -1215,7 +1215,7 @@ def api_user_pending(fake_uuid):
         "id": fake_uuid,
         "name": "Test User",
         "password": "somepassword",
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "pending",
@@ -1236,7 +1236,7 @@ def platform_admin_user(fake_uuid):
         "id": fake_uuid,
         "name": "Platform admin user",
         "password": "somepassword",
-        "email_address": "platform@admin.canada.ca",
+        "email_address": "platform@admin.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1271,7 +1271,7 @@ def api_user_active(fake_uuid):
         "id": fake_uuid,
         "name": "Test User",
         "password": "somepassword",
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1291,7 +1291,7 @@ def api_user_active(fake_uuid):
 
 
 @pytest.fixture(scope="function")
-def api_user_active_email_auth(fake_uuid, email_address="test@user.canada.ca"):
+def api_user_active_email_auth(fake_uuid, email_address="test@user.beta.gouv.fr"):
     user_data = {
         "id": fake_uuid,
         "name": "Test User",
@@ -1354,7 +1354,7 @@ def active_user_with_permissions(fake_uuid):
         "name": "Test User",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1399,7 +1399,7 @@ def active_user_with_permission_to_two_services(fake_uuid):
         "name": "Test User",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1424,7 +1424,7 @@ def active_caseworking_user(fake_uuid):
         "name": "Test User",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "caseworker@example.canada.ca",
+        "email_address": "caseworker@example.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1452,7 +1452,7 @@ def active_user_no_mobile(fake_uuid):
         "name": "Test User",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": None,
         "blocked": False,
         "state": "active",
@@ -1485,7 +1485,7 @@ def active_user_view_permissions(fake_uuid):
         "name": "Test User With Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1507,7 +1507,7 @@ def active_user_empty_permissions(fake_uuid):
         "name": "Test User With Empty Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "07700 900763",
         "blocked": False,
         "state": "active",
@@ -1529,7 +1529,7 @@ def active_user_manage_template_permission(fake_uuid):
         "name": "Test User With Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1555,7 +1555,7 @@ def active_user_no_api_key_permission(fake_uuid):
         "name": "Test User With Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1582,7 +1582,7 @@ def active_user_no_settings_permission(fake_uuid):
         "name": "Test User With Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1608,7 +1608,7 @@ def api_user_locked(fake_uuid):
         "id": fake_uuid,
         "name": "Test User",
         "password": "somepassword",
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1630,7 +1630,7 @@ def api_user_request_password_reset(fake_uuid):
         "id": fake_uuid,
         "name": "Test User",
         "password": "somepassword",
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -1653,7 +1653,7 @@ def api_user_changed_password(fake_uuid):
         "id": fake_uuid,
         "name": "Test User",
         "password": "somepassword",
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "6502532222",
         "blocked": False,
         "state": "active",
@@ -2552,7 +2552,7 @@ def mock_get_users_by_service(mocker):
                 "state": "active",
                 "password_changed_at": str(datetime.utcnow()),
                 "name": "Test User",
-                "email_address": "notify@digital.cabinet-office.canada.ca",
+                "email_address": "notify@digital.cabinet-office.beta.gouv.fr",
                 "auth_type": "sms_auth",
                 "failed_login_count": 0,
                 "organisations": [],
@@ -2598,7 +2598,7 @@ def mock_s3_set_metadata(mocker, content=None):
 def sample_invite(mocker, service_one, status="pending", permissions=None):
     id_ = USER_ONE_ID
     from_user = service_one["users"][0]
-    email_address = "invited_user@test.canada.ca"
+    email_address = "invited_user@test.beta.gouv.fr"
     service_id = service_one["id"]
     permissions = permissions or "view_activity,send_messages,manage_service,manage_api_keys"
     created_at = str(datetime.utcnow())
@@ -2621,7 +2621,7 @@ def sample_invite(mocker, service_one, status="pending", permissions=None):
 def create_sample_invite(service_id, from_user, status="pending", permissions=None):
     id_ = USER_ONE_ID
     from_user = from_user
-    email_address = "invited_user@test.canada.ca"
+    email_address = "invited_user@test.beta.gouv.fr"
     service_id = service_id
     permissions = permissions or "view_activity,send_messages,manage_service,manage_api_keys"
     created_at = str(datetime.utcnow())
@@ -2668,7 +2668,7 @@ def mock_get_invites_for_service(mocker, service_one, sample_invite):
         data = []
         for i in range(0, 5):
             invite = copy.copy(sample_invite)
-            invite["email_address"] = "user_{}@testnotify.canada.ca".format(i)
+            invite["email_address"] = "user_{}@testnotify.beta.gouv.fr".format(i)
             data.append(invite)
         return data
 
@@ -2682,7 +2682,7 @@ def mock_get_invites_without_manage_permission(mocker, service_one, sample_invit
             invite_json(
                 id_=str(sample_uuid()),
                 from_user=service_one["users"][0],
-                email_address="invited_user@test.canada.ca",
+                email_address="invited_user@test.beta.gouv.fr",
                 service_id=service_one["id"],
                 permissions="view_activity,send_messages,manage_api_keys",
                 created_at=str(datetime.utcnow()),
@@ -3223,7 +3223,7 @@ def mock_get_notification(
             noti["created_by"] = {
                 "id": fake_uuid,
                 "name": "Test User",
-                "email_address": "test@user.canada.ca",
+                "email_address": "test@user.beta.gouv.fr",
             }
         noti["personalisation"] = personalisation or {"name": "Jo"}
         noti["template"] = template_json(
@@ -3744,7 +3744,7 @@ def mock_get_users_for_organisation(mocker):
     def _get_users_for_organisation(org_id):
         return [
             user_json(id_="1234", name="Test User 1"),
-            user_json(id_="5678", name="Test User 2", email_address="testt@canada.ca"),
+            user_json(id_="5678", name="Test User 2", email_address="testt@beta.gouv.fr"),
         ]
 
     return mocker.patch(
@@ -3768,7 +3768,7 @@ def mock_get_invited_users_for_organisation(mocker, sample_org_invite):
 def sample_org_invite(mocker, organisation_one, status="pending"):
     id_ = str(UUID(bytes=b"sample_org_invit", version=4))
     invited_by = organisation_one["users"][0]
-    email_address = "invited_user@test.canada.ca"
+    email_address = "invited_user@test.beta.gouv.fr"
     organisation = organisation_one["id"]
     created_at = str(datetime.utcnow())
 
@@ -4036,7 +4036,7 @@ def create_api_user_active(with_unique_id=False):
         "id": str(uuid4()) if with_unique_id else sample_uuid(),
         "name": "Test User",
         "password": "somepassword",
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "07700 900762",
         "state": "active",
         "failed_login_count": 0,
@@ -4057,7 +4057,7 @@ def create_active_user_empty_permissions(with_unique_id=False):
         "name": "Test User With Empty Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "07700 900763",
         "state": "active",
         "failed_login_count": 0,
@@ -4077,7 +4077,7 @@ def create_active_user_with_permissions(with_unique_id=False):
         "name": "Test User",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "07700 900762",
         "state": "active",
         "failed_login_count": 0,
@@ -4107,7 +4107,7 @@ def create_active_user_view_permissions(with_unique_id=False):
         "name": "Test User With Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "07700 900762",
         "state": "active",
         "failed_login_count": 0,
@@ -4126,7 +4126,7 @@ def create_active_caseworking_user(with_unique_id=False):
         "name": "Test User",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "caseworker@example.canada.ca",
+        "email_address": "caseworker@example.beta.gouv.fr",
         "mobile_number": "07700 900762",
         "state": "active",
         "failed_login_count": 0,
@@ -4151,7 +4151,7 @@ def create_active_user_no_api_key_permission(with_unique_id=False):
         "name": "Test User With Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "07700 900762",
         "state": "active",
         "failed_login_count": 0,
@@ -4176,7 +4176,7 @@ def create_active_user_no_settings_permission(with_unique_id=False):
         "name": "Test User With Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "07700 900762",
         "state": "active",
         "failed_login_count": 0,
@@ -4201,7 +4201,7 @@ def create_active_user_manage_template_permissions(with_unique_id=False):
         "name": "Test User With Permissions",
         "password": "somepassword",
         "password_changed_at": str(datetime.utcnow()),
-        "email_address": "test@user.canada.ca",
+        "email_address": "test@user.beta.gouv.fr",
         "mobile_number": "07700 900762",
         "state": "active",
         "failed_login_count": 0,
@@ -4469,7 +4469,7 @@ def create_notification(
     noti_content = "hello ((name))" if content is None else content
     noti["id"] = notifification_id or sample_uuid()
     if sent_one_off:
-        noti["created_by"] = {"id": sample_uuid(), "name": "Test User", "email_address": "test@user.canada.ca"}
+        noti["created_by"] = {"id": sample_uuid(), "name": "Test User", "email_address": "test@user.beta.gouv.fr"}
     if personalisation:
         noti["personalisation"] = personalisation
     else:

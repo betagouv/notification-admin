@@ -34,7 +34,7 @@ def test_form_class_not_mutated(app_):
         (False, "email address", "email", "Tom!the#taglover?@mailinator.com", None),
         (False, "email address", "email", "2+2={5*4/5}@mailinator.com", None),
         (False, "email address", "email", "test@example.com", None),
-        (False, "email address", "email", "test@tbs-sct.gc.ca", None),
+        (False, "email address", "email", "test@tbs-sct.beta.gouv.fr", None),
         (False, "phone number", "sms", "", "This cannot be empty"),
         (False, "phone number", "sms", "+4966921809", "Not a valid phone number"),
         (False, "phone number", "sms", "6502532222", None),

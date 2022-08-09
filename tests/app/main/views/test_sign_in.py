@@ -99,8 +99,8 @@ def test_logged_in_user_redirects_to_account(client_request):
 @pytest.mark.parametrize(
     "email_address, password",
     [
-        ("valid@example.canada.ca", "val1dPassw0rd!"),
-        (" valid@example.canada.ca  ", "  val1dPassw0rd!  "),
+        ("valid@example.beta.gouv.fr", "val1dPassw0rd!"),
+        (" valid@example.beta.gouv.fr  ", "  val1dPassw0rd!  "),
     ],
 )
 @pytest.mark.parametrize(
@@ -140,7 +140,7 @@ def test_process_sms_auth_sign_in_return_2fa_template(
         password,
         {"location": None, "user-agent": mock.ANY},
     )
-    mock_get_user_by_email.assert_called_with("valid@example.canada.ca")
+    mock_get_user_by_email.assert_called_with("valid@example.beta.gouv.fr")
 
 
 def test_sign_in_redirects_to_forced_password_reset(client, mocker, fake_uuid, api_user_active):
@@ -268,7 +268,7 @@ def test_process_sms_auth_sign_in_return_email_2fa_template_if_no_recent_login(
 
     response = client.post(
         url_for("main.sign_in"),
-        data={"email_address": "valid@example.canada.ca", "password": "val1dPassw0rd!"},
+        data={"email_address": "valid@example.beta.gouv.fr", "password": "val1dPassw0rd!"},
     )
     assert response.status_code == 302
     assert response.location == url_for(".two_factor_email_sent", requires_email_login=True, _external=True)
@@ -281,7 +281,7 @@ def test_process_sms_auth_sign_in_return_email_2fa_template_if_no_recent_login(
         {"location": None, "user-agent": mock.ANY},
     )
     mock_register_email_login.assert_called_with(api_user_active["id"])
-    mock_get_user_by_email.assert_called_with("valid@example.canada.ca")
+    mock_get_user_by_email.assert_called_with("valid@example.beta.gouv.fr")
     assert mock_last_email_login.call_count == 4
 
 
@@ -299,7 +299,7 @@ def test_process_email_auth_sign_in_return_2fa_template(
 
     response = client.post(
         url_for("main.sign_in"),
-        data={"email_address": "valid@example.canada.ca", "password": "val1dPassw0rd!"},
+        data={"email_address": "valid@example.beta.gouv.fr", "password": "val1dPassw0rd!"},
     )
     assert response.status_code == 302
     assert response.location == url_for(".two_factor_email_sent", _external=True)
@@ -319,7 +319,7 @@ def test_should_return_locked_out_true_when_user_is_locked(
     resp = client.post(
         url_for("main.sign_in"),
         data={
-            "email_address": "valid@example.canada.ca",
+            "email_address": "valid@example.beta.gouv.fr",
             "password": "whatIsMyPassword!",
         },
     )
@@ -333,7 +333,7 @@ def test_should_return_200_when_user_does_not_exist(
 ):
     response = client.post(
         url_for("main.sign_in"),
-        data={"email_address": "notfound@canada.ca", "password": "doesNotExist!"},
+        data={"email_address": "notfound@beta.gouv.fr", "password": "doesNotExist!"},
     )
     assert response.status_code == 200
     assert "The email address or password you entered is incorrect" in response.get_data(as_text=True)
@@ -347,7 +347,7 @@ def test_should_return_redirect_when_user_is_pending(
     response = client.post(
         url_for("main.sign_in"),
         data={
-            "email_address": "pending_user@example.canada.ca",
+            "email_address": "pending_user@example.beta.gouv.fr",
             "password": "val1dPassw0rd!",
         },
         follow_redirects=True,
@@ -366,7 +366,7 @@ def test_should_attempt_redirect_when_user_is_pending(
     response = client.post(
         url_for("main.sign_in"),
         data={
-            "email_address": "pending_user@example.canada.ca",
+            "email_address": "pending_user@example.beta.gouv.fr",
             "password": "val1dPassw0rd!",
         },
     )
@@ -384,7 +384,7 @@ def test_email_address_is_treated_case_insensitively_when_signing_in_as_invited_
     mock_send_verify_code,
     mock_get_security_keys,
 ):
-    sample_invite["email_address"] = "TEST@user.canada.ca"
+    sample_invite["email_address"] = "TEST@user.beta.gouv.fr"
 
     mocker.patch("app.user_api_client.get_user_by_email_or_none", return_value=None)
 
@@ -398,7 +398,7 @@ def test_email_address_is_treated_case_insensitively_when_signing_in_as_invited_
 
     response = client.post(
         url_for("main.sign_in"),
-        data={"email_address": "test@user.canada.ca", "password": "val1dPassw0rd!"},
+        data={"email_address": "test@user.beta.gouv.fr", "password": "val1dPassw0rd!"},
     )
 
     assert mock_accept_invite.called
@@ -429,7 +429,7 @@ def test_sign_in_security_center_notification_for_non_NA_signins(
 
     response = client.post(
         url_for("main.sign_in"),
-        data={"email_address": "valid@example.canada.ca", "password": "val1dPassw0rd!"},
+        data={"email_address": "valid@example.beta.gouv.fr", "password": "val1dPassw0rd!"},
     )
     assert response.status_code == 302
 
@@ -454,7 +454,7 @@ def test_sign_in_geolookup_disabled_in_dev(
     response = client.post(
         url_for("main.sign_in"),
         data={
-            "email_address": "valid@example.canada.ca",
+            "email_address": "valid@example.beta.gouv.fr",
             "password": "val1dPassw0rd!",
         },
     )
