@@ -17,7 +17,7 @@ generate-version-file: ## Generates the app version file
 
 .PHONY: test
 test: test-requirements
-	py.test -n4 --maxfail=1 tests/ --strict -p no:warnings
+	py.test --maxfail=1 -n4 --strict -p no:warnings $(TEST-FLAGS) tests/
 
 .PHONY: babel-test
 test-translations: babel
