@@ -9,6 +9,5 @@
 .pytest_cache
 __pycache__
 README.md
-requirements-app.txt
 node_modules
 app/static
