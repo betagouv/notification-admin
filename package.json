@@ -11,7 +11,7 @@
     "build": "gulp",
     "lint": "prettier --check app/assets/javascripts app/assets/stylesheets",
     "watch": "gulp watch",
-    "heroku-postbuild": "gulp && make generate-version-file && export ADMIN_BASE_URL=${HEROKU_APP_NAME}.herokuapp.com",
+    "heroku-postbuild": "gulp && export ADMIN_BASE_URL=${HEROKU_APP_NAME}.herokuapp.com",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
