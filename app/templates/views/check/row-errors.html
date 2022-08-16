@@ -7,7 +7,7 @@
 
 {% set file_contents_header_id = 'file-preview' %}
 {% macro skip_to_file_contents() %}
-  <p class="visually-hidden">
+  <p class="notifications-visually-hidden">
     <a href="#{{ file_contents_header_id }}">{{ _('Skip to file contents') }}</a>
   </p>
 {% endmacro %}
@@ -38,7 +38,7 @@
         <p>
           {{ _('You need to:') }}
         </p>
-        <ul class="list-bullet">
+        <ul>
           {% for error in row_errors %}
             <li>{{ error }}</li>
           {% endfor %}
@@ -47,7 +47,7 @@
     {% endcall %}
   </div>
 
-  <div class="js-stick-at-top-when-scrolling">
+  <div>
     <div class="form-group contain-floats box-border mb-gutterHalf md:mb-gutter">
       {% set button_txt = _('Re-upload your file') %}
       {{ file_upload(
@@ -56,17 +56,17 @@
         button_text=button_txt
       ) }}
     </div>
-    <a href="#main_content" class="back-to-top-link">{{ _('Back to top') }}</a>
+    <a href="#main_content">{{ _('Back to top') }}</a>
   </div>
 
-  <section class="clear-both contain-floats">
+  <section>
     <div class="fullscreen-content{{ ' table-truncated' if count_of_displayed_recipients < count_of_recipients }}" data-module="fullscreen-table">
       {% call(item, row_number) list_table(
         recipients.displayed_rows,
         caption=original_file_name,
         caption_visible=False,
         field_headings=[
-          '<span class="visually-hidden">Row in file</span><span aria-hidden="true" class="table-field-invisible-error">1</span>'|safe
+          '<span>Row in file</span><span aria-hidden="true">1</span>'|safe
         ] + recipients.column_headers
       ) %}
         {% call index_field() %}
@@ -78,7 +78,7 @@
           {% if item[column].error and not recipients.missing_column_headers %}
             {% call field() %}
               <span>
-                <span class="table-field-error-label">{{ _(item[column].error) }}</span>
+                <span>{{ _(item[column].error) }}</span>
                 {{ item[column].data if item[column].data != None }}
               </span>
             {% endcall %}

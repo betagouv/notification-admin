@@ -12,8 +12,8 @@
 
 {% block maincolumn_content %}
 
-<div class="grid-row contain-floats">
-  <div class="md:w-5/6 float-left py-0 px-0 px-gutterHalf box-border">
+<div>
+  <div>
     {% set txt = _('Accept the GC Notify data sharing and financial agreement') %}
     {{ page_header(
       txt,
@@ -27,7 +27,7 @@
           {{ radio(option, data_target='on-behalf-of' if option.data == 'someone-else' else None) }}
         {% endfor %}
       {% endcall %}
-      <div class="conditional-radio-panel contain-floats js-hidden" id="on-behalf-of">
+      <div id="on-behalf-of" class="notifications-conditional-radio-panel">
         {{ textbox(form.on_behalf_of_name, width='w-full') }}
         {{ textbox(form.on_behalf_of_email, width='w-full') }}
       </div>

@@ -633,7 +633,7 @@ class CreateServiceStepLogoForm(StripWhitespaceForm):
         self.default_branding.choices = self._getSelectBilingualChoices()
 
     default_branding = RadioField(
-        _l("Default language <span class='sr-only'>&nbsp;used in the Government of Canada signature</span>"),
+        _l("Default language <span class='notifications-sr-only'>&nbsp;used in the Government of Canada signature</span>"),
         choices=[  # Choices by default, override to get more refined options.
             (FieldWithLanguageOptions.ENGLISH_OPTION_VALUE, _l("English-first")),
             (FieldWithLanguageOptions.FRENCH_OPTION_VALUE, _l("French-first")),
@@ -914,19 +914,19 @@ class SetUpDemoPrimaryPurpose(SetUpDemoOrgDetails):
             (
                 "status_updates",
                 _l(
-                    "Information specific for each recipient (<span aria-hidden='true'>e.g.</span><span class='sr-only'>For example: </span> status update)"
+                    "Information specific for each recipient (<span aria-hidden='true'>e.g.</span><span class='notifications-sr-only'>For example: </span> status update)"
                 ),
             ),
             (
                 "transactional_messages",
                 _l(
-                    "Action required by each recipient (<span aria-hidden='true'>e.g.</span><span class='sr-only'>For example: </span> password reset)"
+                    "Action required by each recipient (<span aria-hidden='true'>e.g.</span><span class='notifications-sr-only'>For example: </span> password reset)"
                 ),
             ),
             (
                 "newsletters",
                 _l(
-                    "News or information sent in bulk to many recipients (<span aria-hidden='true'>e.g.</span><span class='sr-only'>For example: </span> newsletter)"
+                    "News or information sent in bulk to many recipients (<span aria-hidden='true'>e.g.</span><span class='notifications-sr-only'>For example: </span> newsletter)"
                 ),
             ),
             ("other", _l("Other")),

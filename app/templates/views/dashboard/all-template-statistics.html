@@ -10,7 +10,7 @@
 
 {% block maincolumn_content %}
 
-  <h1 class="heading-large">{{ _('Templates used') }}</h1>
+  <h1>{{ _('Templates used') }}</h1>
 
   <div class="mb-6">
     {{ pill(
@@ -20,11 +20,11 @@
     ) }}
   </div>
 
-  <div class="dashboard">
+  <div>
     {% for month in months %}
       <h2>{{ _(month.name) }}</h2>
       {% if not month.templates_used %}
-        <p class="table-no-data">
+        <p class="notifications-table-no-data">
           {{ _('No messages sent') }}
         </p>
       {% else %}
@@ -43,8 +43,8 @@
             field_headings_visible=False
           ) %}
             {% call row_heading() %}
-              <a class="file-list-filename" href="{{ url_for('.view_template', service_id=current_service.id, template_id=item.id) }}">{{ item.name }}</a>
-              <span class="file-list-hint">
+              <a href="{{ url_for('.view_template', service_id=current_service.id, template_id=item.id) }}">{{ item.name }}</a>
+              <span>
                 {{ template_label(item.type)|capitalize }}
               </span>
             {% endcall %}
@@ -55,7 +55,7 @@
     {% endfor %}
   </div>
 
-  <p class="align-with-heading-copy">
+  <p>
     {{ _('Fiscal year ends 31 March.') }}
   </p>
 

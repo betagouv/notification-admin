@@ -9,18 +9,18 @@
 
 {% block maincolumn_content %}
 
-<div class="grid-row contain-floats">
-  <div class="md:w-2/3 float-left py-0 px-0 px-gutterHalf box-border">
-    <h1 class="heading-large">{{ _('Create an account') }}</h1>
+<div>
+  <div>
+    <h1>{{ _('Create an account') }}</h1>
     <p>
       {{ _('Your account will be created with this email address:') }}
-      <span class="whitespace-no-wrap">{{invited_user.email_address}}</span>
+      <span>{{invited_user.email_address}}</span>
     </p>
     {% call form_wrapper() %}
       {{ textbox(form.name, width='w-full md:w-3/4') }}
       {% if invited_user.auth_type == 'sms_auth' %}
         {% set txt = _('We’ll send you a security code by text message') %}
-        <div class="extra-tracking">
+        <div>
           {{ textbox(form.mobile_number, width='w-full md:w-3/4', hint=txt) }}
         </div>
       {% endif %}

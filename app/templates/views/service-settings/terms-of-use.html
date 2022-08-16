@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block maincolumn_content %}
-  <div class="grid-row contain-floats">
+  <div>
     <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
     {{ page_header(
       _('Accepting the terms of use'),
@@ -19,11 +19,11 @@
       {{ _("Before going live, review the GC Notify <a href='{}'>terms of use</a>.").format(gca_url_for('terms')) }}
     </p>
 
-    <p class="font-bold">
+    <p>
       {{ _("What you need to know:") }}
     </p>
 
-    <ul class="list list-bullet">
+    <ul>
       <li>{{ _("Get consent from people before sending them notifications.") }}</li>
       <li>{{ _("Follow your organisation’s privacy and security requirements.") }}</li>
       <li>{{ _("Send information that is either unclassified or Protected A only.") }}</li>

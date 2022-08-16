@@ -17,23 +17,23 @@
     back_link=url_for('main.service_settings', service_id=current_service.id)
   ) }}
 
-  <div class="user-list">
+  <div class="notifications-user-list">
     {% if not current_service.email_reply_to_addresses %}
-      <div class="user-list-item">
-        <span class="hint">{{ _('You have not added any reply-to email addresses yet' ) }}</span>
+      <div class="notifications-user-list-item">
+        <span>{{ _('You have not added any reply-to email addresses yet' ) }}</span>
       </div>
     {% endif %}
     {% for item in current_service.email_reply_to_addresses %}
-      <div class="user-list-item">
+      <div class="notifications-user-list-item">
         <h3>
-          <span class="heading-small">{{ item.email_address }}</span>&ensp;<span class="hint">
+          <span>{{ item.email_address }}</span>&ensp;<span>
             {%- if item.is_default -%}
               ({{ _('default') }})
             {% endif %}
           </span>
         </h3>
         {% if current_user.has_permissions('manage_service') %}
-          <a class="user-list-edit-link" href="{{ url_for('.service_edit_email_reply_to', service_id =current_service.id, reply_to_email_id = item.id) }}">{{ _('Change') }}</a>
+          <a href="{{ url_for('.service_edit_email_reply_to', service_id =current_service.id, reply_to_email_id = item.id) }}">{{ _('Change') }}</a>
         {% endif %}
         {% if current_service.count_email_reply_to_addresses > 1 %}
           {{ api_key(item.id, thing="ID") }}
@@ -41,22 +41,22 @@
       </div>
     {% endfor %}
   </div>
-  <div class="grid-row contain-floats">
+  <div>
     <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
       {% if current_user.has_permissions('manage_service') %}
-        <div class="js-stick-at-bottom-when-scrolling">
-          <a href="{{ url_for('.service_add_email_reply_to', service_id=current_service.id) }}" class="button">{{ _('Add reply-to address') }}</a>
+        <div>
+          <a href="{{ url_for('.service_add_email_reply_to', service_id=current_service.id) }}">{{ _('Add reply-to address') }}</a>
         </div>
       {% endif %}
     </div>
-    <div class="md:w-5/6 float-left py-0 px-0 px-gutterHalf box-border">
+    <div>
       <p>
         {{ _('Add a reply-to address so recipients can reply to your email messages.') }}
       </p>
       <p>
         {{ _('Emails with a reply-to address:') }}
       </p>
-      <ul class="list list-bullet">
+      <ul>
         <li>{{ _('are less likely to be labelled as spam') }}</li>
         <li>{{ _('appear more trustworthy') }}</li>
       </ul>

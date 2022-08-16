@@ -26,7 +26,7 @@ class _MockS3Object:
             True,
             [
                 (
-                    ["back-link"],
+                    ["notifications-back-link"],
                     partial(url_for, "main.request_to_go_live", service_id=SERVICE_ONE_ID),
                 ),
                 (
@@ -44,7 +44,7 @@ class _MockS3Object:
             False,
             [
                 (
-                    ["back-link"],
+                    ["notifications-back-link"],
                     partial(url_for, "main.request_to_go_live", service_id=SERVICE_ONE_ID),
                 ),
                 (
@@ -56,7 +56,7 @@ class _MockS3Object:
                     ),
                 ),
                 (
-                    ["button"],
+                    ["notifications-button"],
                     partial(
                         url_for,
                         "main.service_accept_agreement",
@@ -70,7 +70,7 @@ class _MockS3Object:
             True,
             [
                 (
-                    ["back-link"],
+                    ["notifications-back-link"],
                     partial(url_for, "main.request_to_go_live", service_id=SERVICE_ONE_ID),
                 ),
                 (
@@ -82,7 +82,7 @@ class _MockS3Object:
                     ),
                 ),
                 (
-                    ["button"],
+                    ["notifications-button"],
                     partial(
                         url_for,
                         "main.service_accept_agreement",
@@ -96,7 +96,7 @@ class _MockS3Object:
             None,
             [
                 (
-                    ["back-link"],
+                    ["notifications-back-link"],
                     partial(url_for, "main.request_to_go_live", service_id=SERVICE_ONE_ID),
                 ),
                 (
@@ -120,7 +120,7 @@ def test_show_agreement_page(
     mocker.patch("app.organisations_client.get_service_organisation", return_value=org)
 
     page = client_request.get("main.service_agreement", service_id=SERVICE_ONE_ID)
-    links = page.select("main .md\\:w-5\\/6 a")
+    links = page.select("main .notifications-agreement-container a")
     assert len(links) == len(expected_links)
     for index, link in enumerate(links):
         classes, url = expected_links[index]
@@ -216,7 +216,7 @@ def test_show_accept_agreement_page(
     assert page.select("input[name=who]")[1]["value"] == "someone-else"
     assert "checked" not in page.select("input[name=who]")[1]
     assert page.select(".multiple-choice")[1]["data-target"] == "on-behalf-of"
-    assert [field["name"] for field in page.select("#on-behalf-of.conditional-radio-panel input")] == [
+    assert [field["name"] for field in page.select("#on-behalf-of.notifications-conditional-radio-panel input")] == [
         "on_behalf_of_name",
         "on_behalf_of_email",
     ]
@@ -327,7 +327,7 @@ def test_accept_agreement_page_validates(
         _data=data,
         _expected_status=200,
     )
-    assert [error.text.strip() for error in page.select(".error-message")] == expected_errors
+    assert [error.text.strip() for error in page.select(".fr-error-text")] == expected_errors
 
 
 @pytest.mark.parametrize(

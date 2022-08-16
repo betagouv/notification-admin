@@ -1,7 +1,7 @@
 {% from "components/big-number.html" import big_number %}
 
 {% macro mapping_table(caption='', field_headings=[], field_headings_visible=True, caption_visible=True, equal_length=False) -%}
-  <table class="table table-font-xsmall">
+  <table>
     <caption class="heading-medium table-heading{{ ' visuallyhidden' if not caption_visible}}">
       {{ caption }}
     </caption>
@@ -12,7 +12,7 @@
             {% if field_headings_visible %}
               {{ field_heading }}
             {% else %}
-              <span class="visuallyhidden">{{ field_heading }}</span>
+              <span>{{ field_heading }}</span>
             {% endif %}
           </th>
         {% endfor %}
@@ -35,7 +35,7 @@
     {% endfor %}
     {% if not items %}
       {% call row() %}
-        <td class="table-empty-message" colspan="10">
+        <td colspan="10">
           {{ empty_message }}
         </td>
       {% endcall %}
@@ -45,13 +45,13 @@
 {%- endmacro %}
 
 {% macro row(id=None) -%}
-  <tr class="table-row" {% if id and id is string %}id="{{id}}"{% endif %}>
+  <tr {% if id and id is string %}id="{{id}}"{% endif %}>
     {{ caller() }}
   </tr>
 {%- endmacro %}
 
 {% macro row_group(id=None) %}
-  <tbody class="table-row-group" {% if id %}id="{{id}}"{% endif %}>
+  <tbody {% if id %}id="{{id}}"{% endif %}>
     {{ caller() }}
   </tbody>
 {%- endmacro %}
@@ -67,16 +67,16 @@
 
 {% macro field(align='left', status='', border=True) -%}
 
-    {% set field_alignment = 'table-field-right-aligned' if align == 'right' else 'table-field-left-aligned' %}
+    {% set field_alignment = 'table-field-right-aligned' if align == 'right' else 'notifications-table-field-left-aligned' %}
     {% set border = '' if border else 'table-field-noborder' %}
 
     <td class="{{ [field_alignment, border]|join(' ') }}">
-      <div class="{{ 'table-field-status-' + status if status }}">{{ caller() }}</div>
+      <div class="{{ 'notifications-table-field-status-' + status if status }}">{{ caller() }}</div>
     </td>
 {%- endmacro %}
 
 {% macro row_heading() -%}
-  <th class="table-field">
+  <th>
     {{ caller() }}
   </th>
 {%- endmacro %}
@@ -99,9 +99,9 @@
       </ul>
     {% else %}
       {% if truncate %}
-        <div class="truncate-text" title="{{ text }}">{{text}}</div>
+        <div title="{{ text }}">{{text}}</div>
       {% else %}
-        <div class="do-not-truncate-text" title="{{ text }}">{{text}}</div>
+        <div title="{{ text }}">{{text}}</div>
       {% endif %}
     {% endif %}
   {% endcall %}
@@ -124,7 +124,7 @@
 {% macro edit_field(text, link, permissions=[], attributes="", for=false) -%}
   {% call field(align='right') %}
     {% if not permissions or current_user.has_permissions(*permissions) %}
-      <a {{attributes}} href="{{ link }}">{{ text }}{% if for %}<span class="sr-only"> {{ for }}</span>{% endif %}</a>
+      <a {{attributes}} href="{{ link }}">{{ text }}{% if for %}<span class="notifications-sr-only"> {{ for }}</span>{% endif %}</a>
     {% endif %}
   {% endcall %}
 {%- endmacro %}
@@ -138,11 +138,11 @@
 {%- endmacro %}
 
 {% macro right_aligned_field_heading(text) %}
-  <span class="table-field-heading-right-aligned">{{ text }}</span>
+  <span>{{ text }}</span>
 {%- endmacro %}
 
 {% macro hidden_field_heading(text) %}
-  <span class="visuallyhidden">{{ text }}</span>
+  <span>{{ text }}</span>
 {%- endmacro %}
 
 
@@ -157,7 +157,7 @@
       status=notification.status|format_notification_status_as_field_status(notification.notification_type),
       align='right'
     ) %}
-      {% if displayed_on_single_line %}<span class="align-with-message-body">{% endif %}
+      {% if displayed_on_single_line %}<span class="notifications-displayed-on-single-line">{% endif %}
       {% if notification.status|format_notification_status_as_url(notification.notification_type) %}
         <a href="{{ notification.status|format_notification_status_as_url(notification.notification_type) }}">
       {% endif %}
@@ -165,7 +165,7 @@
       {% if notification.status|format_notification_status_as_url(notification.notification_type) %}
         </a>
       {% endif %}
-      <span class="status-hint">
+      <span>
         {% if notification['notification_type'] == "letter" %}
           {% if notification.status == 'permanent-failure' %}
             {{ (notification.updated_at) }}
@@ -191,7 +191,7 @@
   id=None
 ) %}
   {% call field(align='right') %}
-    <span {% if id %}id="{{ id }}"{% endif %} class="spark-bar">
+    <span {% if id %}id="{{ id }}"{% endif %}>
       <span style="width: {{ count / max_count * 100 }}%">
         {{ big_number(
           count,

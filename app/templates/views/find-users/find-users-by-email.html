@@ -9,7 +9,7 @@
 
 {% block platform_admin_content %}
 
-  <h1 class="heading-large">
+  <h1>
     {{ _('Search for user') }}
   </h1>
 
@@ -19,7 +19,7 @@
       class='grid-row contain-floats'
   ) %}
     {% set label_txt = _('Find users by email, or partial email') %}
-    <div class="md:w-full float-left py-0 px-0 px-gutterHalf box-border">
+    <div>
       {{ textbox_search(
         form.search,
         width='w-full',
@@ -33,18 +33,18 @@
   {% endcall %}
 
   {% if users_found %}
-  <nav class="browse-list">
+  <nav>
     <ul>
     {% for user in users_found %}
-      <li class="browse-list-item">
-        <a href="{{url_for('.user_information', user_id=user.id)}}" class="browse-list-link">{{ user.email_address }}</a>
-        <p class="browse-list-hint">{{ user.name }}</p>
+      <li>
+        <a class="notifications-browse-list-link" href="{{url_for('.user_information', user_id=user.id)}}">{{ user.email_address }}</a>
+        <p class="notifications-browse-list-hint">{{ user.name }}</p>
       </li>
       <hr>
     {% endfor %}
     </ul>
   </nav>
   {% elif users_found == [] %}
-    <p class="browse-list-hint">{{ _('No users found.') }}</p>
+    <p class="notifications-browse-list-hint">{{ _('No users found.') }}</p>
   {% endif %}
 {% endblock %}

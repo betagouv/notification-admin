@@ -6,13 +6,13 @@
   Modules.ApiKey = function () {
     const states = {
       keyVisible: (key, thing) => `
-        <span class="api-key-key">${key}</span>
+        <span class="notifications-api-key-key">${key}</span>
         <input type='button' class='js-api-key-button-copy absolute bottom-2 active:top-auto button button-secondary' value='${window.polyglot.t(
           "copy"
         )} ${thing} ${window.polyglot.t("to_clipboard")}' />
       `,
       keyCopied: (thing) => `
-        <span class="api-key-key">${window.polyglot.t(
+        <span class="notifications-api-key-key">${window.polyglot.t(
           "copied_to_clipboard"
         )}</span>
         <input type='button' class='js-api-key-button-show absolute bottom-2 active:top-auto button button-secondary' value='${window.polyglot.t(
@@ -45,7 +45,7 @@
         .html(states.keyVisible(key, thing))
         .attr("aria-live", "polite")
         .on("click", ".js-api-key-button-copy", () =>
-          this.copyKey($(".api-key-key", component)[0], () =>
+          this.copyKey($(".notifications-api-key-key", component)[0], () =>
             $component.html(states.keyCopied(thing))
           )
         )

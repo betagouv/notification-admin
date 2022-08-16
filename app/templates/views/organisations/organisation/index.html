@@ -6,13 +6,13 @@
 
 {% block org_content %}
 
-  <h1 class="heading-medium">
+  <h1>
     Usage
   </h1>
   <ul>
   {% for service in current_org.live_services %}
-    <li class="browse-list-item">
-      <a href="{{ url_for('main.usage', service_id=service.id) }}" class="browse-list-link">{{ service['name'] }}</a>
+    <li class="notifications-browse-list-item">
+      <a class="notifications-browse-list-link" href="{{ url_for('main.usage', service_id=service.id) }}">{{ service['name'] }}</a>
     </li>
   {% endfor %}
   </ul>

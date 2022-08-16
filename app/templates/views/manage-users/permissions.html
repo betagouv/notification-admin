@@ -1,11 +1,11 @@
 {% from "components/checkbox.html" import checkbox, checkboxes_nested %}
 {% from "components/radios.html" import radio, radios %}
 
-<fieldset class="form-group contain-floats w-full">
-  <legend class="form-label heading-small">
+<fieldset>
+  <legend>
     {{ _('Permissions') }} 
   </legend>
-  <span class="hint">
+  <span>
     {{ _('All team members can see sent messages.') }}
   </span>
   {% for field in form.permissions_fields %}

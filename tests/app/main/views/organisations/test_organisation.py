@@ -34,11 +34,11 @@ def test_organisation_page_shows_all_organisations(platform_admin_client, mocker
     expected_hints = ("0 live service(s)", "1 live service(s)", "2 live service(s)")
 
     for index, org in enumerate(orgs):
-        assert page.select("a.browse-list-link")[index].text == org["name"]
+        assert page.select("a.notifications-browse-list-link")[index].text == org["name"]
         if not org["active"]:
-            assert page.select_one(".table-field-status-default,heading-medium").text == "- archived"
-        assert normalize_spaces(page.select(".browse-list-hint")[index].text) == (expected_hints[index])
-    assert normalize_spaces(page.select_one("a.button-secondary").text) == "New organisation"
+            assert page.select_one(".notifications-table-field-status-default,heading-medium").text == "- archived"
+        assert normalize_spaces(page.select(".notifications-browse-list-hint")[index].text) == (expected_hints[index])
+    assert normalize_spaces(page.select_one(".fr-btn--secondary").text) == "New organisation"
     get_organisations.assert_called_once_with()
 
 
@@ -125,7 +125,7 @@ def test_create_new_organisation_validates(
         ".add_organisation",
         _expected_status=200,
     )
-    assert [(error["data-error-label"], normalize_spaces(error.text)) for error in page.select(".error-message")] == [
+    assert [(error["data-error-label"], normalize_spaces(error.text)) for error in page.select(".fr-error-text")] == [
         ("name", "This cannot be empty"),
         ("organisation_type", "You need to choose an option"),
         ("crown_status", "You need to choose an option"),
@@ -154,7 +154,7 @@ def test_organisation_services_shows_live_services_only(
     client_request.login(active_user_with_permissions)
     page = client_request.get(".organisation_dashboard", org_id=ORGANISATION_ID)
 
-    services = page.select(".browse-list-item")
+    services = page.select(".notifications-browse-list-item")
     assert len(services) == 2
 
     assert normalize_spaces(services[0].text) == "1"
@@ -186,7 +186,7 @@ def test_organisation_trial_mode_services_shows_all_non_live_services(
         _test_page_title=False,
     )
 
-    services = page.select(".browse-list-item")
+    services = page.select(".notifications-browse-list-item")
     assert len(services) == 2
 
     assert normalize_spaces(services[0].text) == "2"
@@ -474,7 +474,7 @@ def test_update_organisation_with_incorrect_input(
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
-    assert normalize_spaces(page.select_one(".error-message").text) == "This cannot be empty"
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == "This cannot be empty"
 
 
 def test_update_organisation_with_non_unique_name(
@@ -491,7 +491,7 @@ def test_update_organisation_with_non_unique_name(
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
-    assert normalize_spaces(page.select_one(".error-message").text) == "This organisation name is already in use"
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == "This organisation name is already in use"
 
     assert mock_organisation_name_is_not_unique.called
 
@@ -534,7 +534,7 @@ def test_confirm_update_organisation_with_incorrect_password(
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
-    assert normalize_spaces(page.select_one(".error-message").text) == "Invalid password"
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == "Invalid password"
 
 
 def test_confirm_update_organisation_with_name_already_in_use(

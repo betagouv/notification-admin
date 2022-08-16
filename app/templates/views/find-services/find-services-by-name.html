@@ -9,7 +9,7 @@
 
 {% block platform_admin_content %}
 
-  <h1 class="heading-large">
+  <h1>
     {{ _('Search for service') }}
   </h1>
 
@@ -33,17 +33,17 @@
   {% endcall %}
 
   {% if services_found %}
-  <nav class="browse-list">
+  <nav>
     <ul>
     {% for service in services_found %}
-      <li class="browse-list-item">
-        <a href="{{url_for('.service_dashboard', service_id=service.id)}}" class="browse-list-link">{{ service.name }}</a>
+      <li>
+        <a class="notifications-browse-list-link" href="{{url_for('.service_dashboard', service_id=service.id)}}">{{ service.name }}</a>
       </li>
       <hr>
     {% endfor %}
     </ul>
   </nav>
   {% elif services_found == [] %}
-    <p class="browse-list-hint">{{ _('No services found.') }}</p>
+    <p class="notifications-browse-list-hint">{{ _('No services found.') }}</p>
   {% endif %}
 {% endblock %}

@@ -535,7 +535,7 @@ def test_html_contains_links_for_failed_notifications(
     )
     notifications = response.tbody.find_all("tr")
     for tr in notifications:
-        link_text = tr.find("div", class_="table-field-status-error").find("a").text
+        link_text = tr.find("div", class_="notifications-table-field-status-error").find("a").text
         assert normalize_spaces(link_text) == "Technical failure"
 
 
@@ -698,7 +698,7 @@ def test_sending_status_hint_displays_correctly_on_notifications_page(
     )
 
     assert normalize_spaces(page.select(".table-field-right-aligned")[0].text) == expected_hint_status
-    assert bool(page.select(".align-with-message-body")) is single_line
+    assert bool(page.select(".notifications-displayed-on-single-line")) is single_line
 
 
 @pytest.mark.skip(reason="letters: unused functionality")

@@ -12,8 +12,8 @@
   {{ live_search(target_selector='.letter-brand', show=True, form=search_form) }}
   <nav>
     {% for brand in letter_brandings %}
-      <div class="letter-brand">
-        <div class="message-name">
+      <div>
+        <div class="notifications-message-name">
           <a href="{{ url_for('.update_letter_branding', branding_id=brand.id) }}">
             {{ brand.name }}
           </a>
@@ -21,8 +21,8 @@
       </div>
     {% endfor %}
   </nav>
-  <div class="js-stick-at-bottom-when-scrolling">
-    <a id="create_letter_branding" href="{{ url_for('.create_letter_branding') }}" class="button button-secondary">New brand</a>
+  <div>
+    <a id="create_letter_branding" href="{{ url_for('.create_letter_branding') }}">New brand</a>
   </div>
 
 {% endblock %}

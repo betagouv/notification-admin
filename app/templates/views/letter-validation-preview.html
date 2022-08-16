@@ -12,7 +12,7 @@
 
 {% block maincolumn_content %}
 
-<div class="grid-row contain-floats">
+<div>
   <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
     {% if result %}
       {{ banner(message, with_tick=True) }}
@@ -20,7 +20,7 @@
       {{ banner(message, 'dangerous')}}
     {% endif %}
 
-      <h1 class="heading-large">Letter validation preview</h1>
+      <h1>Letter validation preview</h1>
     <div class="mb-12 clear-both contain-floats">
      {{ file_upload(
           form.file,
@@ -46,7 +46,7 @@
   <div class="w-full float-left py-0 px-0 px-gutterHalf box-border template-container" >
 
     {% for page in pages %}
-    <div class="letter">
+    <div>
       <img src="data:image/png;base64,{{ page }}">
     </div>
     {% endfor %}

@@ -82,7 +82,7 @@ def test_form_with_no_branding_should_warn_this_cant_be_empty(
         current_step="choose_logo",
         _expected_status=200,
     )
-    assert normalize_spaces(page.select_one(".error-message").text) == ("This cannot be empty")
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == ("This cannot be empty")
 
 
 def test_form_with_invalid_branding_should_request_another_valid_value(
@@ -97,7 +97,7 @@ def test_form_with_invalid_branding_should_request_another_valid_value(
         current_step="choose_logo",
         _expected_status=200,
     )
-    assert normalize_spaces(page.select_one(".error-message").text) == ("You need to choose an option")
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == ("You need to choose an option")
 
 
 def test_wizard_no_flow_information_should_go_to_step1(
@@ -322,7 +322,7 @@ def test_add_service_has_to_choose_org_type(
         },
         _expected_status=200,
     )
-    assert normalize_spaces(page.select_one(".error-message").text) == ("You need to choose an option")
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == ("You need to choose an option")
     assert mock_create_service.called is False
     assert mock_create_service_template.called is False
     assert mock_create_or_update_free_sms_fragment_limit.called is False
@@ -465,7 +465,7 @@ def test_should_return_form_errors_with_duplicate_service_name_regardless_of_cas
         },
         _expected_status=200,
     )
-    assert page.select_one(".error-message").text.strip() == ("This service name is already in use")
+    assert page.select_one(".fr-error-text").text.strip() == ("This service name is already in use")
     assert mock_service_name_is_not_unique.called is True
 
 

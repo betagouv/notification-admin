@@ -4,6 +4,7 @@
 {% from "components/tick-cross.html" import tick_cross %}
 {% from "components/textbox.html" import textbox %}
 {% from "components/live-search.html" import live_search %}
+{% from "components/buttons.html" import primary_button_blue_lighter, secondary_button_transparent_white %}
 
 {% block org_page_title %}
   Team members
@@ -11,24 +12,24 @@
 
 {% block org_content %}
 
-  <h1 class="heading-medium">
+  <h1>
     Team members
   </h1>
 
   {% if show_search_box %}
     <div data-module="autofocus">
-      {{ live_search(target_selector='.user-list-item', show=True, form=form) }}
+      {{ live_search(target_selector='.notifications-user-list-item', show=True, form=form) }}
     </div>
   {% endif %}
 
-  <div class="user-list">
+  <div class="notifications-user-list">
     {% for user in users %}
-      <div class="user-list-item">
+      <div class="notifications-user-list-item">
         <h3>
           {%- if user.name -%}
-            <span class="heading-small">{{ user.name }}</span>&ensp;
+            <span class="notifications-heading-small">{{ user.name }}</span>&ensp;
           {%- endif -%}
-          <span class="hint">
+          <span>
             {%- if user.status == 'pending' -%}
               {{ user.email_address }} (invited)
             {%- elif user.status == 'cancelled' -%}
@@ -40,10 +41,10 @@
             {% endif %}
           </span>
         </h3>
-        <ul class="tick-cross-list grid-row contain-floats relative">
-          <li class="tick-cross-list-edit-link">
+        <ul>
+          <li>
             {% if user.status == 'pending' %}
-              <a href="{{ url_for('.cancel_invited_org_user', org_id=current_org.id, invited_user_id=user.id)}}">Cancel invitation</a>
+              {{ secondary_button_transparent_white(label="Cancel invitation", href=url_for('.cancel_invited_org_user', org_id=current_org.id, invited_user_id=user.id), class="notifications-cancel-invitation-button") }}
             {% endif %}
           </li>
         </ul>
@@ -51,8 +52,8 @@
     {% endfor %}
   </div>
 
-  <div class="js-stick-at-bottom-when-scrolling">
-    <a href="{{ url_for('.invite_org_user', org_id=current_org.id) }}" class="button button-secondary">Invite team member</a>
+  <div>
+    {{ primary_button_blue_lighter(label="Invite team member", href=url_for('.invite_org_user', org_id=current_org.id)) }}
   </div>
 
 {% endblock %}

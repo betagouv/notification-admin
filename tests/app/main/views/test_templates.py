@@ -133,7 +133,7 @@ def test_should_show_create_template_button_if_service_has_folder_permission(
     assert normalize_spaces(page.select_one("main p").text) == (
         "You need to create a template to send emails or text messages. You can also create folders to organize your templates."
     )
-    assert "Create template" in page.select_one("#add_new_template_form a.button").text
+    assert "Create template" in page.select_one("#add_new_template_form .notifications-button-container").text
 
 
 @pytest.mark.parametrize(
@@ -219,7 +219,7 @@ def test_should_show_page_for_choosing_a_template(
     for index, expected_link in enumerate(expected_nav_links):
         assert links_in_page[index].text.strip() == expected_link
 
-    template_links = page.select(".message-name a")
+    template_links = page.select(".notifications-message-name a")
 
     assert len(template_links) == len(expected_templates)
 
@@ -294,7 +294,7 @@ def test_should_not_show_live_search_if_list_of_templates_fits_onscreen(
         service_id=SERVICE_ONE_ID,
     )
 
-    assert not page.select(".live-search")
+    assert not page.select(".notifications-live-search")
 
 
 def test_should_show_live_search_if_list_of_templates_taller_than_screen(
@@ -307,12 +307,12 @@ def test_should_show_live_search_if_list_of_templates_taller_than_screen(
         "main.choose_template",
         service_id=SERVICE_ONE_ID,
     )
-    search = page.select_one(".live-search")
+    search = page.select_one(".notifications-live-search")
 
     assert search["data-module"] == "live-search"
     assert search["data-targets"] == "#template-list .template-list-item"
 
-    assert len(page.select(search["data-targets"])) == len(page.select(".message-name")) == 14
+    assert len(page.select(search["data-targets"])) == len(page.select(".notifications-message-name")) == 14
 
 
 def test_should_show_live_search_if_service_has_lots_of_folders(
@@ -333,11 +333,11 @@ def test_should_show_live_search_if_service_has_lots_of_folders(
         service_id=SERVICE_ONE_ID,
     )
 
-    count_of_templates_and_folders = len(page.select(".message-name"))
-    count_of_folders = len(page.select(".template-list-folder:first-child"))
+    count_of_templates_and_folders = len(page.select(".notifications-message-name"))
+    count_of_folders = len(page.select(".notifications-template-list-folder:first-child"))
     count_of_templates = count_of_templates_and_folders - count_of_folders
 
-    assert len(page.select(".live-search")) == 1
+    assert len(page.select(".notifications-live-search")) == 1
     assert count_of_folders == 4
     assert count_of_templates == 4
 
@@ -682,15 +682,14 @@ def test_should_be_able_to_view_a_template_with_links(
 
     assert normalize_spaces(page.select_one("h1").text) == ("Two week reminder")
     assert normalize_spaces(page.select_one("title").text) == ("Two week reminder – Templates - service one – Notify")
-
-    links_in_page = page.select("a")
+    links_in_page = page.select("form")
 
     for link_to_be_shown in links_to_be_shown:
         assert url_for(
             link_to_be_shown,
             service_id=SERVICE_ONE_ID,
             template_id=fake_uuid,
-        ) in [a["href"] for a in links_in_page]
+        ) in [form["action"] for form in links_in_page]
 
     assert normalize_spaces(page.select_one("main p").text) == (permissions_warning_to_be_shown or "To: phone number")
 
@@ -707,7 +706,7 @@ def test_should_show_template_id_on_template_page(
         template_id=fake_uuid,
         _test_page_title=False,
     )
-    assert page.select(".api-key-key")[0].text == fake_uuid
+    assert page.select(".notifications-api-key-key")[0].text == fake_uuid
 
 
 def test_should_show_logos_on_template_page(
@@ -890,7 +889,7 @@ def test_choose_a_template_to_copy(
         service_id=SERVICE_ONE_ID,
     )
 
-    assert page.select(".folder-heading") == []
+    assert page.select(".fr-breadcrumb") == []
 
     expected = [
         ("Service 1 " "6 templates"),
@@ -945,7 +944,7 @@ def test_choose_a_template_to_copy_when_user_has_one_service(
         service_id=SERVICE_ONE_ID,
     )
 
-    assert page.select(".folder-heading") == []
+    assert page.select(".fr-breadcrumb") == []
 
     expected = [
         ("sms_template_one " "Text message template"),
@@ -1010,8 +1009,8 @@ def test_choose_a_template_to_copy_from_folder_within_service(
         from_folder=PARENT_FOLDER_ID,
     )
 
-    assert normalize_spaces(page.select_one(".folder-heading").text) == ("service one Parent folder")
-    breadcrumb_links = page.select(".folder-heading a")
+    assert normalize_spaces(page.select_one(".fr-breadcrumb").text) == ("service one Parent folder")
+    breadcrumb_links = page.select(".fr-breadcrumb a")
     assert len(breadcrumb_links) == 1
     assert breadcrumb_links[0]["href"] == url_for(
         "main.choose_template_to_copy",
@@ -1190,8 +1189,8 @@ def test_should_not_allow_creation_of_template_through_form_without_correct_perm
         _follow_redirects=True,
     )
     assert normalize_spaces(page.select("main p")[0].text) == expected_error
-    assert page.select(".back-link")[0].text == "Back"
-    assert page.select(".back-link")[0]["href"] == url_for(
+    assert page.select(".notifications-back-link")[0].text == "Back"
+    assert page.select(".notifications-back-link")[0]["href"] == url_for(
         ".choose_template",
         service_id=SERVICE_ONE_ID,
         template_id="0",
@@ -1217,8 +1216,8 @@ def test_should_not_allow_creation_of_a_template_without_correct_permission(
     assert page.select("main p")[0].text.strip() == "Sending {} has been disabled for your service.".format(
         template_description[type_of_template]
     )
-    assert page.select(".back-link")[0].text == "Back"
-    assert page.select(".back-link")[0]["href"] == url_for(
+    assert page.select(".notifications-back-link")[0].text == "Back"
+    assert page.select(".notifications-back-link")[0]["href"] == url_for(
         ".choose_template",
         service_id=service_one["id"],
         template_id="0",
@@ -1346,8 +1345,8 @@ def test_should_not_allow_template_edits_without_correct_permission(
     )
 
     assert page.select("main p")[0].text.strip() == "Sending text messages has been disabled for your service."
-    assert page.select(".back-link")[0].text == "Back"
-    assert page.select(".back-link")[0]["href"] == url_for(
+    assert page.select(".notifications-back-link")[0].text == "Back"
+    assert page.select(".notifications-back-link")[0]["href"] == url_for(
         ".view_template",
         service_id=SERVICE_ONE_ID,
         template_id=fake_uuid,
@@ -1480,7 +1479,7 @@ def test_should_show_interstitial_when_making_breaking_change(
     )
 
     assert page.h1.string.strip() == "Confirm changes"
-    assert page.find("a", {"class": "back-link"})["href"] == url_for(
+    assert page.find("a", {"class": "notifications-back-link"})["href"] == url_for(
         ".edit_service_template",
         service_id=SERVICE_ONE_ID,
         template_id=template_data["data"]["id"],
@@ -1790,7 +1789,7 @@ def test_preview_has_correct_back_link(
             template_folder_id="",
         )
     )
-    assert page.select(".back-link")[0]["href"] == expected_back_url
+    assert page.select(".notifications-back-link")[0]["href"] == expected_back_url
 
 
 def test_preview_should_update_and_redirect_on_save(client_request, mock_update_service_template, fake_uuid, mocker):
@@ -1883,8 +1882,8 @@ def test_should_show_delete_template_page_with_time_block(
             template_id=fake_uuid,
             _test_page_title=False,
         )
-    assert "Are you sure you want to delete ‘Two week reminder’?" in page.select(".banner-dangerous")[0].text
-    assert normalize_spaces(page.select(".banner-dangerous p")[0].text) == ("This template was last used 10 minutes ago.")
+    assert "Are you sure you want to delete ‘Two week reminder’?" in page.select(".fr-alert--error")[0].text
+    assert normalize_spaces(page.select(".fr-alert--error p")[0].text) == ("This template was last used 10 minutes ago.")
     assert normalize_spaces(page.select(".sms-message-wrapper")[0].text) == (
         "service one: Template <em>content</em> with & entity"
     )
@@ -1913,8 +1912,8 @@ def test_should_show_delete_template_page_with_time_block_for_empty_notification
             template_id=fake_uuid,
             _test_page_title=False,
         )
-    assert "Are you sure you want to delete ‘Two week reminder’?" in page.select(".banner-dangerous")[0].text
-    assert normalize_spaces(page.select(".banner-dangerous p")[0].text) == (
+    assert "Are you sure you want to delete ‘Two week reminder’?" in page.select(".fr-alert--error")[0].text
+    assert normalize_spaces(page.select(".fr-alert--error p")[0].text) == (
         "This template was last used more than seven days ago."
     )
     assert normalize_spaces(page.select(".sms-message-wrapper")[0].text) == (
@@ -1940,8 +1939,8 @@ def test_should_show_delete_template_page_with_never_used_block(
         template_id=fake_uuid,
         _test_page_title=False,
     )
-    assert "Are you sure you want to delete ‘Two week reminder’?" in page.select(".banner-dangerous")[0].text
-    assert not page.select(".banner-dangerous p")
+    assert "Are you sure you want to delete ‘Two week reminder’?" in page.select(".fr-alert--error")[0].text
+    assert not page.select(".fr-alert--error p")
     assert normalize_spaces(page.select(".sms-message-wrapper")[0].text) == (
         "service one: Template <em>content</em> with & entity"
     )
@@ -2022,7 +2021,7 @@ def test_should_show_page_for_a_deleted_template(
         not in content
     )
     assert url_for("main.send_test", service_id=SERVICE_ONE_ID, template_id=fake_uuid) not in content
-    assert page.select("p.hint")[0].text.strip() == "This template was deleted 2016-01-01 15:00:00.000000."
+    assert page.select("p.notifications-hint")[0].text.strip() == "This template was deleted 2016-01-01 15:00:00.000000."
     assert "Delete this template" not in page.select_one("main").text
 
     mock_get_deleted_template.assert_called_with(SERVICE_ONE_ID, template_id, None)
@@ -2265,9 +2264,9 @@ def test_should_show_message_before_redacting_template(
         _test_page_title=False,
     )
 
-    assert ("Are you sure you want to redact personalised variable content?") in page.select(".banner-dangerous")[0].text
+    assert ("Are you sure you want to redact personalised variable content?") in page.select(".fr-alert--error")[0].text
 
-    form = page.select(".banner-dangerous form")[0]
+    form = page.select(".fr-alert--error form")[0]
 
     assert "action" not in form
     assert form["method"] == "post"
@@ -2315,7 +2314,7 @@ def test_should_show_hint_once_template_redacted(
         _test_page_title=False,
     )
 
-    assert page.select(".hint")[0].text.strip() == "Recipients' information will be redacted from system"
+    assert page.select(".notifications-hint")[0].text.strip() == "Recipients' information will be redacted from system"
 
 
 def test_should_not_show_redaction_stuff_for_letters(
@@ -2387,8 +2386,7 @@ def test_add_sender_link_only_appears_on_services_with_no_senders(
         service_id=SERVICE_ONE_ID,
         template_id=fake_uuid,
     )
-
-    assert page.select_one(".md\\:w-3\\/4 form > a")["href"] == url_for(
+    assert page.select_one(".notifications-form-set-letter-contact a")["href"] == url_for(
         "main.service_add_letter_contact",
         service_id=SERVICE_ONE_ID,
         from_template=fake_uuid,

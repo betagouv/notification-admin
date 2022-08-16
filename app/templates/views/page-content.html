@@ -8,19 +8,22 @@
 {% endblock %}
 
 
-{% block body_classes %}wp {{ "overflow-x-hidden" if slug == "home" }}{% endblock %}
+{% block body_classes %}{% endblock %}
 {% block main_content_class %}{{ "py-10" if slug != "home" }}{% endblock %}
 
 
 {% block maincolumn_content %}
   {% if slug != "home" %}
-    <h1 class="heading-large">{{ title }}</h1>
+    <h1>{{ title }}</h1>
   {% endif %}
   <div class="{{ 'space-y-doubleGutter mb-doubleGutter' if slug == 'home' }} page-content {{ slug }}">
     {{ html_content | safe }}
   </div>
   {% if slug == "home" %}
     {% include 'partials/page-content/counter.html' %}
-    {% include 'partials/page-content/cta.html' %}
+    <section class="section-blue text-white fr-py-6w">
+
+      {% include 'partials/page-content/cta.html' %}
+    </section>
   {% endif %}
 {% endblock %}

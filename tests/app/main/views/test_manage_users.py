@@ -150,9 +150,9 @@ def test_should_show_overview_page(
     page = client_request.get("main.manage_users", service_id=SERVICE_ONE_ID)
 
     assert normalize_spaces(page.select_one("h1").text) == "Team members"
-    assert normalize_spaces(page.select(".user-list-item")[0].text) == expected_self_text
+    assert normalize_spaces(page.select(".notifications-user-list-item")[0].text) == expected_self_text
     # [1:5] are invited users
-    assert normalize_spaces(page.select(".user-list-item")[6].text) == expected_coworker_text
+    assert normalize_spaces(page.select(".notifications-user-list-item")[6].text) == expected_coworker_text
     mock_get_users.assert_called_once_with(SERVICE_ONE_ID)
 
 
@@ -185,7 +185,7 @@ def test_should_show_caseworker_on_overview_page(
     page = client_request.get("main.manage_users", service_id=SERVICE_ONE_ID)
 
     assert normalize_spaces(page.select_one("h1").text) == "Team members"
-    assert normalize_spaces(page.select(".user-list-item")[0].text) == (
+    assert normalize_spaces(page.select(".notifications-user-list-item")[0].text) == (
         "Test User With Permissions (you) "
         "Can See dashboard statistics "
         "Cannot Create and edit message templates "
@@ -194,7 +194,7 @@ def test_should_show_caseworker_on_overview_page(
         "Cannot Manage API integration"
     )
     # [1:5] are invited users
-    assert normalize_spaces(page.select(".user-list-item")[6].text) == (
+    assert normalize_spaces(page.select(".notifications-user-list-item")[6].text) == (
         "Test User zzzzzzz@example.beta.gouv.fr "
         "Cannot See dashboard statistics "
         "Cannot Create and edit message templates "
@@ -273,7 +273,7 @@ def test_manage_users_page_shows_member_auth_type_if_service_has_email_auth_acti
     if service_has_email_auth:
         service_one["permissions"].append("email_auth")
     page = client_request.get("main.manage_users", service_id=service_one["id"])
-    assert bool(page.select_one(".tick-cross-list-hint")) == displays_auth_type
+    assert bool(page.select_one(".notifications-tick-cross-list-hint")) == displays_auth_type
 
 
 def test_should_show_you_should_have_at_least_two_members_when_only_one_present_with_manage_service_permission(
@@ -285,8 +285,10 @@ def test_should_show_you_should_have_at_least_two_members_when_only_one_present_
     mock_get_security_keys,
 ):
     page = client_request.get("main.manage_users", service_id=service_one["id"])
-    assert len(page.find_all("p")) == 2
-    assert page.find_all("p")[1].text.strip() == "You should have at least two team members who can manage settings."
+    assert (
+        page.select_one("#notifications-team-members~p").text.strip()
+        == "You should have at least two team members who can manage settings."
+    )
 
 
 def test_does_not_show_you_should_have_at_least_two_members_only_when_two_members_present(
@@ -308,8 +310,10 @@ def test_does_not_show_you_should_have_at_least_two_members_only_when_two_member
     mocker.patch("app.user_api_client.get_user", return_value=current_user)
     mocker.patch("app.models.user.Users.client", return_value=[current_user, other_user])
     page = client_request.get("main.manage_users", service_id=service_one["id"])
-    assert len(page.find_all("p")) == 1
-    assert page.find_all("p")[0].text.strip() != "You should have at least two team members who can manage settings."
+    paragraphs = page.find_all("p")
+    assert all(
+        paragraph.text.strip() != "You should have at least two team members who can manage settings." for paragraph in paragraphs
+    )
 
 
 def test_does_not_show_you_should_have_at_least_two_members_when_user_does_not_have_permissions(
@@ -326,8 +330,10 @@ def test_does_not_show_you_should_have_at_least_two_members_when_user_does_not_h
     mocker.patch("app.user_api_client.get_user", return_value=current_user)
     mocker.patch("app.models.user.Users.client", return_value=[current_user])
     page = client_request.get("main.manage_users", service_id=service_one["id"])
-    assert len(page.find_all("p")) == 1
-    assert page.find_all("p")[0].text.strip() != "You should have at least two team members who can manage settings."
+    paragraphs = page.find_all("p")
+    assert all(
+        paragraph.text.strip() != "You should have at least two team members who can manage settings." for paragraph in paragraphs
+    )
 
 
 @pytest.mark.parametrize(
@@ -976,7 +982,7 @@ def test_manage_users_shows_invited_user(
 
     page = client_request.get("main.manage_users", service_id=SERVICE_ONE_ID)
     assert page.h1.string.strip() == "Team members"
-    assert normalize_spaces(page.select(".user-list-item")[0].text) == expected_text
+    assert normalize_spaces(page.select(".notifications-user-list-item")[0].text) == expected_text
 
 
 def test_manage_users_does_not_show_accepted_invite(
@@ -995,7 +1001,7 @@ def test_manage_users_does_not_show_accepted_invite(
     page = client_request.get("main.manage_users", service_id=SERVICE_ONE_ID)
 
     assert page.h1.string.strip() == "Team members"
-    user_lists = page.find_all("div", {"class": "user-list"})
+    user_lists = page.find_all("div", {"class": "notifications-user-list"})
     assert len(user_lists) == 1
     assert not page.find(text="invited_user@test.beta.gouv.fr")
 
@@ -1020,7 +1026,7 @@ def test_user_cant_invite_themselves(
         _expected_status=200,
     )
     assert page.h1.string.strip() == "Invite a team member"
-    form_error = page.find("span", class_="error-message").string.strip()
+    form_error = page.find("span", class_="fr-error-text").string.strip()
     assert form_error == "You cannot send an invitation to yourself"
     assert not mock_create_invite.called
 
@@ -1086,7 +1092,7 @@ def test_manage_user_page_shows_how_many_folders_user_can_view(
     page = client_request.get("main.manage_users", service_id=service_one["id"])
 
     user_div = page.select_one("h2[title='notify@digital.cabinet-office.beta.gouv.fr']").parent
-    assert user_div.select_one(".tick-cross-list-hint:last-child").text.strip() == expected_message
+    assert user_div.select_one(".notifications-tick-cross-list-hint:last-child").text.strip() == expected_message
 
 
 def test_manage_user_page_doesnt_show_folder_hint_if_service_has_no_folders(
@@ -1103,7 +1109,7 @@ def test_manage_user_page_doesnt_show_folder_hint_if_service_has_no_folders(
     page = client_request.get("main.manage_users", service_id=service_one["id"])
 
     user_div = page.select_one("h2[title='notify@digital.cabinet-office.beta.gouv.fr']").parent
-    assert user_div.find(".tick-cross-list-hint:last-child") is None
+    assert user_div.find(".notifications-tick-cross-list-hint:last-child") is None
 
 
 def test_manage_user_page_doesnt_show_folder_hint_if_service_cant_edit_folder_permissions(
@@ -1127,7 +1133,7 @@ def test_manage_user_page_doesnt_show_folder_hint_if_service_cant_edit_folder_pe
     page = client_request.get("main.manage_users", service_id=service_one["id"])
 
     user_div = page.select_one("h2[title='notify@digital.cabinet-office.beta.gouv.fr']").parent
-    assert user_div.find(".tick-cross-list-hint:last-child") is None
+    assert user_div.find(".notifications-tick-cross-list-hint:last-child") is None
 
 
 def test_remove_user_from_service(
@@ -1298,7 +1304,7 @@ def test_edit_user_email_cannot_change_a_gov_email_address_to_a_non_gov_email_ad
         _data={"email_address": "new_email@example.com"},
         _expected_status=200,
     )
-    assert "Enter a government email address." in page.find("span", class_="error-message").text
+    assert "Enter a government email address." in page.find("span", class_="fr-error-text").text
 
 
 def test_confirm_edit_user_email_page(
@@ -1456,7 +1462,7 @@ def test_edit_user_permissions_with_delete_query_shows_banner(
         delete=1,
     )
 
-    banner = page.find("div", class_="banner-dangerous")
+    banner = page.find("div", class_="fr-alert--error")
     assert banner.contents[0].strip() == "Are you sure you want to remove Test User?"
     assert banner.form.attrs["action"] == url_for(
         "main.remove_user_from_service",

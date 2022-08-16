@@ -321,13 +321,13 @@ def test_should_show_templates_folder_page(
 
     all_page_items = page.select(".template-list-item")
     for item in all_page_items:
-        sr_only = item.find("span", "sr-only")
+        sr_only = item.find("span", "notifications-sr-only")
         if sr_only:
             sr_only.extract()
 
     all_page_items_styled_with_checkboxes = page.select(".template-list-item-with-checkbox")
     for item in all_page_items_styled_with_checkboxes:
-        sr_only = item.find("span", "sr-only")
+        sr_only = item.find("span", "notifications-sr-only")
         if sr_only:
             sr_only.extract()
 
@@ -355,16 +355,10 @@ def test_should_show_templates_folder_page(
         assert "/" not in expected_item  # Yo dawg I heard you like tests…
         assert normalize_spaces(displayed_page_items[index].text) == expected_item
 
-    all_searchable_text = page.select("#template-list .template-list-item .live-search-relevant")
-    assert len(all_searchable_text) == len(expected_searchable_text)
-
-    for index, expected_item in enumerate(expected_searchable_text):
-        assert normalize_spaces(all_searchable_text[index].text) == expected_item
-
     if expected_empty_message:
-        assert normalize_spaces(page.select_one(".template-list-empty").text) == (expected_empty_message)
+        assert normalize_spaces(page.select_one(".notifications-template-list-empty").text) == (expected_empty_message)
     else:
-        assert not page.select(".template-list-empty")
+        assert not page.select(".notifications-template-list-empty")
 
     mock_get_service_templates.assert_called_once_with(SERVICE_ONE_ID)
 
@@ -835,14 +829,14 @@ def test_delete_template_folder_should_request_confirmation(
         template_folder_id=folder_id,
         _test_page_title=False,
     )
-    assert normalize_spaces(page.select(".banner-dangerous")[0].text) == (
+    assert normalize_spaces(page.select(".fr-alert--error")[0].text) == (
         "Are you sure you want to delete the ‘sacrifice’ folder? " "Yes, delete"
     )
 
     assert page.select_one("input[name=name]")["value"] == "sacrifice"
 
     assert len(page.select("form")) == 2
-    assert len(page.select("button")) == 6
+    assert len(page.select("button")) == 5
 
     assert "action" not in page.select("form")[0]
     assert page.select("form button")[0].text == "Yes, delete"
@@ -1287,8 +1281,7 @@ def test_no_action_if_user_fills_in_ambiguous_fields(
     assert mock_create_template_folder.called is False
 
     assert page.select_one("button[value={}]".format(data["operation"]))
-
-    assert "Create template" in page.select_one("#add_new_template_form a.button").text
+    assert "Create template" in page.select_one("#add_new_template_form .notifications-button-container").text
 
     assert [
         ROOT_FOLDER_ID,
@@ -1437,7 +1430,7 @@ def test_radio_button_with_no_value_shows_error_message(
         _expected_redirect=None,
     )
 
-    assert page.select_one("span.error-message").text.strip() == "You need to choose an option"
+    assert page.select_one("span.fr-error-text").text.strip() == "You need to choose an option"
 
 
 @pytest.mark.parametrize(
@@ -1495,7 +1488,7 @@ def test_show_custom_error_message(
         _expected_redirect=None,
     )
 
-    assert page.select_one("div.banner-dangerous").text.strip() == error_msg
+    assert page.select_one("div.fr-alert--error").text.strip() == error_msg
 
 
 @pytest.mark.parametrize(
@@ -1631,19 +1624,19 @@ def test_should_filter_templates_folder_page_based_on_user_permissions(
         )
     )
     for item in displayed_page_items:
-        sr_only = item.find("span", "sr-only")
+        sr_only = item.find("span", "notifications-sr-only")
         if sr_only:
             sr_only.extract()
     assert [[i.strip() for i in e.text.split("\n") if i.strip()] for e in displayed_page_items] == expected_displayed_items
 
     all_page_items = page.select(".template-list-item")
     for item in all_page_items:
-        sr_only = item.find("span", "sr-only")
+        sr_only = item.find("span", "notifications-sr-only")
         if sr_only:
             sr_only.extract()
     assert [[i.strip() for i in e.text.split("\n") if i.strip()] for e in all_page_items] == expected_items
 
     if expected_empty_message:
-        assert normalize_spaces(page.select_one(".template-list-empty").text) == (expected_empty_message)
+        assert normalize_spaces(page.select_one(".notifications-template-list-empty").text) == (expected_empty_message)
     else:
-        assert not page.select(".template-list-empty")
+        assert not page.select(".notifications-template-list-empty")

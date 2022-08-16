@@ -24,7 +24,7 @@ const paths = {
   dist: "app/static/",
   templates: "app/templates/",
   npm: "node_modules/",
-  toolkit: "node_modules/govuk_frontend_toolkit/"
+  toolkit: "node_modules/@gouvfr/dsfr/dist/",
 };
 
 // 3. TASKS
@@ -34,8 +34,8 @@ const paths = {
 
 const javascripts = () => {
   return src([
-    paths.toolkit + "javascripts/govuk/modules.js",
-    paths.toolkit + "javascripts/govuk/show-hide-content.js",
+    paths.toolkit + "dsfr.module.min.js",
+    paths.toolkit + "dsfr.nomodule.min.js",
     paths.src + "javascripts/utils.js",
     paths.src + "javascripts/webpackLoader.js",
     paths.src + "javascripts/stick-to-window-when-scrolling.js",
@@ -59,12 +59,12 @@ const javascripts = () => {
     paths.src + "javascripts/menu.js",
     paths.src + "javascripts/menuOverlay.js",
     paths.src + "javascripts/scopeTabNavigation.js",
-    paths.src + "javascripts/main.js"
+    paths.src + "javascripts/main.js",
   ])
     .pipe(plugins.prettyerror())
     .pipe(
       plugins.babel({
-        presets: ["@babel/preset-env"]
+        presets: ["@babel/preset-env"],
       })
     )
     .pipe(
@@ -75,55 +75,74 @@ const javascripts = () => {
         paths.npm + "jquery-migrate/dist/jquery-migrate.min.js",
         paths.npm + "query-command-supported/dist/queryCommandSupported.min.js",
         //paths.npm + "diff-dom/diffDOM.js",
-        paths.npm + "textarea-caret/index.js"
+        paths.npm + "textarea-caret/index.js",
       ])
     )
     .pipe(plugins.uglify())
     .pipe(plugins.concat("all.min.js"))
-    .pipe(plugins.addSrc.prepend([
-      paths.src + "javascripts/main.min.js",
-      paths.src + "javascripts/scheduler.min.js",
-    ]))
+    .pipe(
+      plugins.addSrc.prepend([
+        paths.src + "javascripts/main.min.js",
+        paths.src + "javascripts/scheduler.min.js",
+      ])
+    )
     .pipe(dest(paths.dist + "javascripts/"));
 };
 
 // copy static css
 const static_css = () => {
-  return src(paths.src + "/stylesheets/index.css").pipe(
+  return src([
+    paths.src + "/stylesheets/index.css",
+    paths.toolkit + "dsfr.min.css",
+    paths.toolkit + "utility/utility.min.css"
+  ]).pipe(
     dest(paths.dist + "stylesheets/")
   );
 };
 
-// Copy images
+// Copy fonts
+const fonts = () => {
+  return src([
+    paths.toolkit + "fonts/*"
+  ]).pipe(dest(paths.dist + "stylesheets/fonts/"));
+}
 
+// Copy icons
+const icons = () => {
+  return src([
+    paths.toolkit + "icons/**/*"
+  ]).pipe(dest(paths.dist + "/icons"));
+}
+
+// Copy images
 const images = () => {
   return src([
     paths.toolkit + "images/**/*",
     paths.template + "assets/images/**/*",
-    paths.src + "images/**/*"
+    paths.src + "images/**/*",
   ]).pipe(dest(paths.dist + "images/"));
 };
 
 const watchFiles = {
-  javascripts: cb => {
+  javascripts: (cb) => {
     watch([paths.src + "javascripts/**/*"], javascripts);
     cb();
   },
-  images: cb => {
+  images: (cb) => {
     watch([paths.src + "images/**/*"], images);
     cb();
   },
-  self: cb => {
+  self: (cb) => {
     watch(["gulpfile.js"], defaultTask);
     cb();
-  }
+  },
 };
 
 // Default: compile everything
 const defaultTask = parallel(
-  series(
-    images
-  ),
+  series(images),
+  series(icons),
+  series(fonts),
   series(static_css),
   series(javascripts)
 );

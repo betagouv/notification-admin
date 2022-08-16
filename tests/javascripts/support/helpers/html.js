@@ -1,6 +1,6 @@
 // helpers for generating patterns of HTML
 
-function getRadios (fields) {
+function getRadios(fields) {
   const result = '';
 
   return fields.map((field, idx) => {
@@ -9,14 +9,14 @@ function getRadios (fields) {
     return `
       <div class="multiple-choice">
         <input id="choose-${field.name}-1" name="choose-${field.name}-1" type="radio" value="${field.value}" ${field.checked ? 'checked' : ''}>
-        <label class="block-label" for="choose-${field.name}-1">
+        <label class="notifications-block-label" for="choose-${field.name}-1">
           ${field.label}
         </label>
       </div>`;
   }).join("\n");
 };
 
-function getRadioGroup (data) {
+function getRadioGroup(data) {
   let radioGroup = document.createElement('div');
 
   data.cssClasses.forEach(cssClass => radioGroup.classList.add(cssClass));
@@ -30,7 +30,7 @@ function getRadioGroup (data) {
       </fieldset>
     </div>`;
 
-    return radioGroup;
+  return radioGroup;
 };
 
 exports.getRadios = getRadios;

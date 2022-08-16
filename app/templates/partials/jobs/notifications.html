@@ -6,16 +6,16 @@
 {% set heading_1 = _('Recipient') %}
 {% set heading_2 = _('Status') %}
 
-<div class="ajax-block-container" aria-labelledby='pill-selected-item'>
+<div class="notifications-ajax-block-container" aria-labelledby='pill-selected-item'>
   {% if job.job_status == 'scheduled' %}
 
     <p>
       {{ _('Sending') }}
       <a href="{{ url_for('.view_template_version', service_id=current_service.id, template_id=template.id, version=template_version) }}">{{ template.name }}</a>
-      <span class="local-datetime-short">{{ job.scheduled_for }}</span>
+      <span>{{ job.scheduled_for }}</span>
     </p>
     {% set btn_txt = _('Cancel scheduled send') %}
-    <div class="page-footer">
+    <div class="notifications-page-footer">
       {% call form_wrapper() %}
         {{ page_footer(
           button_text=btn_txt,
@@ -39,9 +39,9 @@
           </p>
         {% elif notifications %}
           <p class="{% if template.template_type != 'letter' %}mb-12 clear-both contain-floats{% endif %}">
-            <a href="{{ download_link }}" download class="heading-small">{{ _('Download this report') }}</a>
+            <a href="{{ download_link }}" download>{{ _('Download this report') }}</a>
             &emsp;
-            {{ _("Data available until") }} <span id="time-left" class="local-datetime-short-year">{{ available_until_date }}</span>
+            {{ _("Data available until") }} <span id="time-left">{{ available_until_date }}</span>
           </p>
         {% endif %}
       {% if template.template_type == 'letter' %}
@@ -59,8 +59,8 @@
         field_headings_visible=True
       ) %}
         {% call row_heading() %}
-          <a class="file-list-filename" href="{{ url_for('.view_notification', service_id=current_service.id, notification_id=item.id, from_job=job.id) }}">{{ item.to }}</a>
-          <p class="file-list-hint">
+          <a href="{{ url_for('.view_notification', service_id=current_service.id, notification_id=item.id, from_job=job.id) }}">{{ item.to }}</a>
+          <p>
             {{ item.preview_of_content }}
           </p>
         {% endcall %}
@@ -68,7 +68,7 @@
       {% endcall %}
 
       {% if more_than_one_page %}
-        <p class="table-show-more-link">
+        <p class="notifications-table-show-more-link">
           {{ _('Only showing the first 50 rows') }}
         </p>
       {% endif %}

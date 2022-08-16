@@ -5,6 +5,7 @@
 {% from "components/textbox.html" import textbox %}
 {% from "components/api-key.html" import api_key %}
 {% from "components/page-header.html" import page_header %}
+{% from "components/buttons.html" import secondary_button_transparent_white %}
 
 {% block service_page_title %}
   {{ page_title_folder_path(current_service.get_template_path(template._template)) }}
@@ -16,7 +17,7 @@
     <div class="mb-12">
       {% set question_txt = _('Are you sure you want to redact personalised variable content?') %}
       {% call banner_wrapper(type='dangerous', subhead=question_txt) %}
-        <ul class="list list-bullet banner-list-bullet">
+        <ul>
           <li>
             {{ _("This protects recipients' information by hiding it in the dashboard and message log.") }}
           </li>
@@ -26,7 +27,7 @@
         </ul>
         <form method='post'>
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-          <button type="submit" class="button button-red" name="delete">{{ _('Confirm') }}</button>
+          <button type="submit" name="delete">{{ _('Confirm') }}</button>
         </form>
       {% endcall %}
     </div>
@@ -48,9 +49,7 @@
   <div class="flex mb-16 -mt-8{% if template.template_type != 'email' %} flex-col{% endif %}">
       <div class="{% if template.template_type == 'email' %}w-1/4{% else %}mb-6{% endif %}">
         {% if current_user.has_permissions('manage_templates') and not template._template.archived %}
-          <a href="{{ url_for(".edit_service_template", service_id=current_service.id, template_id=template.id) }}">
-            {{ _('Edit this template') }}
-          </a>
+          {{ secondary_button_transparent_white(label=_('Edit this template'), href=url_for(".edit_service_template", service_id=current_service.id, template_id=template.id)) }}
         {% endif %}
       </div>
     {% if template._template.updated_at %}
@@ -75,18 +74,18 @@
   {% if current_user.has_permissions('manage_templates') and user_has_template_permission %}
     {% if template.template_type != 'letter' %}
       {% if not template._template.redact_personalisation %}
-        <div class="page-footer-delete-link block page-footer-delete-link-without-button mb-6">
+        <div class="notifications-page-footer-delete-link block page-footer-delete-link-without-button mb-6">
           <a href="{{ url_for('.confirm_redact_template', service_id=current_service.id, template_id=template.id) }}">{{ _('Redact personalised variable content after sending') }}</a>
         </div>
       {% else %}
-        <p class="hint">
+        <p class="notifications-hint">
           {{ _("Recipients' information will be redacted from system") }}
         </p>
       {% endif %}
     {% endif %}
     {% if not template._template.archived %}
       {% set delete_txt = _('Delete this template') %}
-      <div class="page-footer-delete-link block page-footer-delete-link-without-button">
+      <div>
         <a href="{{ url_for('.delete_service_template', service_id=current_service.id, template_id=template.id) }}">{{ delete_txt }}</a>
       </div>
       &emsp;

@@ -22,7 +22,7 @@
 
 {% block maincolumn_content %}
 
-  <h1 class="heading-large">
+  <h1>
     {{ page_title }}
   </h1>
   {% if not message_type == "letter" %}
@@ -35,7 +35,7 @@
 
     {% call form_wrapper(
       action=url_for('.view_notifications', service_id=current_service.id, message_type=message_type),
-      class="grid-row contain-floats"
+     
     ) %}
       <div class="w-full float-left py-0 px-0 px-gutterHalf box-border {% if message_type == 'sms' %}extra-tracking{% endif %}">
         {{ textbox_search(
@@ -57,7 +57,7 @@
 
   {% if current_user.has_permissions('view_activity') %}
     <p class="mb-12 clear-both contain-floats">
-      <a href="{{ download_link }}" download="download" class="heading-small">{{ _('Download this report') }}</a>
+      <a href="{{ download_link }}" download="download">{{ _('Download this report') }}</a>
       &emsp;
       {{ _('Data available for') }} {{ partials.service_data_retention_days }} {{ _('days') }}
     </p>

@@ -44,21 +44,21 @@
         {% elif created_by %}
           {{ _('by') }} {{ created_by.name }}
         {% endif %}
-        {{ _('on') }} <span class="local-datetime-short">{{ created_at }}</span>
+        {{ _('on') }} <span>{{ created_at }}</span>
       </p>
     </div>
 
     {% if template.template_type == 'letter' %}
       {% if notification_status in ('permanent-failure', 'cancelled') %}
-        <p class="notification-status-cancelled">
-          Cancelled <span class="local-datetime-short">{{ updated_at }}</span>
+        <p class="notifications-notification-status-cancelled">
+          Cancelled <span>{{ updated_at }}</span>
         </p>
       {% elif notification_status == 'validation-failed' %}
-        <p class="notification-status-cancelled">
+        <p class="notifications-notification-status-cancelled">
           Validation failed – content is outside the printable area
         </p>
       {% elif notification_status == 'technical-failure' %}
-        <p class="notification-status-cancelled">
+        <p class="notifications-notification-status-cancelled">
           {{ _('Technical failure – GC Notify will re-send once the team has fixed the problem') }}
         </p>
       {% else %}
@@ -88,20 +88,20 @@
     </div>
 
     {% if template.template_type == 'letter' %}
-      <div class="js-stick-at-bottom-when-scrolling">
-        <div class="page-footer">
+      <div>
+        <div>
           {% if show_cancel_button %}
-            <span class="page-footer-delete-link page-footer-delete-link-without-button">
+            <span>
               <a href="{{ url_for('main.cancel_letter', service_id=current_service.id, notification_id=notification_id) }}">Cancel sending this letter</a>
             </span>
           {% else %}
             <div>&nbsp;</div>
           {% endif %}
-          <a class="page-footer-right-aligned-link" href="{{ url_for('main.view_letter_notification_as_preview', service_id=current_service.id, notification_id=notification_id, filetype='pdf') }}" download>Download as a PDF</a>
+          <a href="{{ url_for('main.view_letter_notification_as_preview', service_id=current_service.id, notification_id=notification_id, filetype='pdf') }}" download>Download as a PDF</a>
         </div>
       </div>
     {% elif template.template_type == 'email' %}
-      <div class="js-stick-at-bottom-when-scrolling">
+      <div>
         {{ ajax_block(partials, updates_url, 'status', finished=finished) }}
       </div>
     {% elif template.template_type == 'sms' %}
@@ -109,9 +109,9 @@
     {% endif %}
 
     {% if attachments %}
-      <h2 class="heading-small">{{ _("Attachments") }}</h2>
+      <h2>{{ _("Attachments") }}</h2>
 
-      <ul class="list list-bullet">
+      <ul>
         {% for attachment in attachments %}
           <li>
             {{ attachment['filename'] }} &mdash; {{ attachment['file_size'] | filesizeformat }}

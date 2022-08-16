@@ -42,7 +42,7 @@ def test_should_show_api_page_with_lots_of_notifications(
         "main.api_integration",
         service_id=SERVICE_ONE_ID,
     )
-    rows = page.find_all("div", {"class": "api-notifications-item"})
+    rows = page.find_all("div", {"class": "notifications-api-notifications-item"})
     assert " ".join(rows[len(rows) - 1].text.split()) == (
         "Only showing the first 50 messages. GC Notify deletes messages after 7 days."
     )
@@ -60,7 +60,7 @@ def test_should_show_api_page_with_no_notifications(
         "main.api_integration",
         service_id=SERVICE_ONE_ID,
     )
-    rows = page.find_all("div", {"class": "api-notifications-item"})
+    rows = page.find_all("div", {"class": "notifications-api-notifications-item"})
     assert "When you send messages via the API they’ll appear here." in rows[len(rows) - 1].text.strip()
 
 
@@ -242,7 +242,7 @@ def test_should_show_create_api_key_page(
     page = client_request.get("main.create_api_key", service_id=SERVICE_ONE_ID)
 
     for index, option in enumerate(expected_options):
-        assert normalize_spaces(page.select(".block-label")[index].text) == option
+        assert normalize_spaces(page.select(".notifications-block-label")[index].text) == option
 
 
 def test_should_create_api_key_with_type_normal(
@@ -267,7 +267,7 @@ def test_should_create_api_key_with_type_normal(
         _expected_status=200,
     )
 
-    assert page.select_one("span.api-key-key").text.strip() == (
+    assert page.select_one("span.notifications-api-key-key").text.strip() == (
         "some_default_key_name_12-{}-{}".format(SERVICE_ONE_ID, fake_uuid)
     )
 
@@ -313,7 +313,7 @@ def test_should_show_confirm_revoke_api_key(
         key_id=fake_uuid,
         _test_page_title=False,
     )
-    assert normalize_spaces(page.select(".banner-dangerous")[0].text) == (
+    assert normalize_spaces(page.select(".fr-alert--error")[0].text) == (
         "Are you sure you want to revoke ‘some key name’? "
         "You will not be able to use this API key to connect to GC Notify "
         "Yes, revoke this API key"
@@ -336,7 +336,7 @@ def test_should_show_confirm_revoke_api_key_for_platform_admin(
     )
     response = platform_admin_client.get(url)
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    assert normalize_spaces(page.select(".banner-dangerous")[0].text) == (
+    assert normalize_spaces(page.select(".fr-alert--error")[0].text) == (
         "Are you sure you want to revoke ‘some key name’? "
         "You will not be able to use this API key to connect to GC Notify "
         "Yes, revoke this API key"
@@ -490,7 +490,7 @@ def test_should_validate_safelist_items(
     )
 
     assert page.select_one(".banner-title").string.strip() == "There was a problem with your safelist"
-    jump_links = page.select(".banner-dangerous a")
+    jump_links = page.select(".fr-alert--error a")
 
     assert jump_links[0].string.strip() == "Enter valid email addresses"
     assert jump_links[0]["href"] == "#email_addresses"
@@ -534,7 +534,7 @@ def test_callback_forms_validation(
     }
 
     response = client_request.post(endpoint, service_id=service_one["id"], _data=data, _expected_status=200)
-    error_msgs = " ".join(msg.text.strip() for msg in response.select(".error-message"))
+    error_msgs = " ".join(msg.text.strip() for msg in response.select(".fr-error-text"))
 
     assert error_msgs == expected_errors
 
@@ -583,7 +583,7 @@ def test_callback_forms_can_be_cleared(
         ),
     )
 
-    assert not page.select(".error-message")
+    assert not page.select(".fr-error-text")
     mocked_delete.assert_called_once_with(expected_delete_url.format(service_one["id"], fake_uuid))
 
 
@@ -628,7 +628,7 @@ def test_callback_forms_can_be_cleared_when_callback_and_inbound_apis_are_empty(
         ),
     )
 
-    assert not page.select(".error-message")
+    assert not page.select(".fr-error-text")
     assert mocked_delete.call_args_list == []
 
 
@@ -655,7 +655,7 @@ def test_callbacks_button_links_straight_to_delivery_status_if_service_has_no_in
         service_id=service_one["id"],
     )
 
-    assert page.select(".api-header-links")[2]["href"] == url_for(expected_link, service_id=service_one["id"])
+    assert page.select(".notifications-api-header-links")[2]["href"] == url_for(expected_link, service_id=service_one["id"])
 
 
 def test_callbacks_page_redirects_to_delivery_status_if_service_has_no_inbound_sms(
@@ -692,7 +692,7 @@ def test_back_link_directs_to_api_integration_from_delivery_callback_if_no_inbou
         _follow_redirects=True,
     )
 
-    assert page.select_one(".back-link")["href"] == url_for(expected_link, service_id=service_one["id"])
+    assert page.select_one(".notifications-back-link")["href"] == url_for(expected_link, service_id=service_one["id"])
 
 
 @pytest.mark.parametrize(

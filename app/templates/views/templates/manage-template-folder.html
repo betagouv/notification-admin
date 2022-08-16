@@ -11,7 +11,7 @@
 
 {% block maincolumn_content %}
 
-  <div class="grid-row clear-both contain-floats">
+  <div>
     <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
       {{ folder_path(
         folders=template_folder_path,
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <h1 class="heading-medium">
+  <h1>
     {{ _('Manage {}').format(current_template_folder.name) }}
   </h1>
 

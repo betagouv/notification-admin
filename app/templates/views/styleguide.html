@@ -17,9 +17,9 @@
 
   
 
-  <h2 class="heading-large">Banner</h2>
-  <div class="grid-row contain-floats">
-    <div class="md:w-3/4 float-left py-0 px-0 px-gutterHalf box-border">
+  <h2>Banner</h2>
+  <div>
+    <div>
       <p>Used to show the status of a thing or action.</p>
 
       {{ banner("You sent 1,234 text messages", with_tick=True) }}
@@ -34,20 +34,20 @@
   </div>
 
 
-  <h2 class="heading-large">Big number</h2>
+  <h2>Big number</h2>
 
   <p>Used to show some important statistics.</p>
 
-  <div class="grid-row contain-floats">
-    <div class="md:w-1/3 float-left py-0 px-0 px-gutterHalf box-border">
+  <div>
+    <div>
       {{ big_number("567") }}
     </div>
-    <div class="md:w-1/3 float-left py-0 px-0 px-gutterHalf box-border">
+    <div>
       {{ big_number("2", "Messages delivered") }}
     </div>
   </div>
 
-  <h2 class="heading-large">Browse list</h2>
+  <h2>Browse list</h2>
 
   <p>Used to navigate to child pages.</p>
 
@@ -69,7 +69,7 @@
     }
   ]) }}
 
-  <h2 class="heading-large">Page footer</h2>
+  <h2>Page footer</h2>
 
   <p>
     Used to submit forms and optionally provide a link to go back to the
@@ -104,9 +104,9 @@
     button_text='Sign in', secondary_link='http://example.com', secondary_link_text="I’ve forgotten my password"
   ) }}
 
-  <h2 class="heading-large">Tables</h2>
-  <div class="grid-row contain-floats">
-    <div class="md:w-3/4 float-left py-0 px-0 px-gutterHalf box-border">
+  <h2>Tables</h2>
+  <div>
+    <div>
       <p>
         Used for comparing rows of data.
       </p>
@@ -168,27 +168,27 @@
           {{ item.time }}
         {% endcall %}
       {% endcall %}
-      <p class="table-show-more-link">
+      <p class="notifications-table-show-more-link">
         <a href="#">Add a job now</a>
       </p>
     </div>
   </div>
 
-  <h2 class="heading-large">Textbox</h2>
+  <h2>Textbox</h2>
   {{ textbox(form.username) }}
   {{ textbox(form.password) }}
   {{ textbox(form.message, highlight_tags=True) }}
   {{ textbox(form.code, width='w-full md:w-1/4') }}
 
-  <h2 class="heading-large">File upload</h2>
+  <h2>File upload</h2>
   {{ file_upload(form.file_upload) }}
 
-  <h2 class="heading-large">API key</h2>
+  <h2>API key</h2>
 
   {{ api_key('d30512af92e1386d63b90e5973b49a10') }}
 
 
-  <h2 class="heading-large">Formatted list</h2>
+  <h2>Formatted list</h2>
 
   <p>
     {{ 'A' | formatted_list(prefix="one item called") }}

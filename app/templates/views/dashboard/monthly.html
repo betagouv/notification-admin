@@ -12,7 +12,7 @@
 
 {% block maincolumn_content %}
 
-  <h1 class="heading-large">
+  <h1>
     {{ _('Messages sent') }}
   </h1>
 
@@ -29,7 +29,7 @@
    {% set heading_1 = _('Month') %}
    {% set heading_2 = _('Emails') %}
    {% set heading_3 = _('Text messages') %}
-    <div class="body-copy-table" id='pill-selected-item'>
+    <div id='pill-selected-item'>
       {% call(month, row_index) list_table(
         months,
         caption=spend_txt,
@@ -75,7 +75,7 @@
     </div>
   {% endif %}
 
-  <p class="align-with-heading-copy">
+  <p>
     {{ _('Fiscal year ends 31 March.') }}
   </p>
 

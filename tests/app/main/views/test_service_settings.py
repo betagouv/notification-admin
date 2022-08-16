@@ -149,7 +149,7 @@ def test_should_show_overview(
     for index, row in enumerate(expected_rows):
         formatted_row = row.format(sending_domain=sending_domain or app_.config["SENDING_DOMAIN"])
         visible = rows[index]
-        sr_only = visible.find("span", "sr-only")
+        sr_only = visible.find("span", "notifications-sr-only")
         if sr_only:
             sr_only.extract()
             assert " ".join(visible.text.split()).startswith(" ".join(sr_only.text.split()))
@@ -263,7 +263,7 @@ def test_should_show_overview_for_service_with_more_things_set(
     for index, row in enumerate(expected_rows):
         formatted_row = row.format(sending_domain=os.environ.get("SENDING_DOMAIN", "notification.alpha.canada.ca"))
         visible = rows[index + 1]
-        sr_only = visible.find("span", "sr-only")
+        sr_only = visible.find("span", "notifications-sr-only")
         if sr_only:
             sr_only.extract()
             assert " ".join(visible.text.split()).startswith(" ".join(sr_only.text.split()))
@@ -401,7 +401,7 @@ def test_show_restricted_service(
     )
 
     assert page.find("h1").text == "Settings"
-    assert page.find_all("h2")[1].text == "Your service is in trial mode"
+    assert page.find_all("h2")[0].text == "Your service is in trial mode"
 
     assert expected_text in [normalize_spaces(p.text) for p in page.select("main p")]
 
@@ -468,42 +468,6 @@ def test_show_live_service(
     assert page.find("h1").text.strip() == "Settings"
     assert "Your service is in trial mode" not in page.text
     assert url_for(".request_to_go_live", service_id=SERVICE_ONE_ID) not in page
-
-
-@pytest.mark.parametrize(
-    "restricted, go_live_user, expected_label",
-    [
-        (True, None, "Request to go live"),
-        (True, "Service Manager User", "Request being reviewed"),
-    ],
-)
-def test_show_live_banner(
-    client_request,
-    mock_get_live_service,
-    single_reply_to_email_address,
-    mock_get_service_organisation,
-    single_sms_sender,
-    mock_get_service_settings_page_common,
-    platform_admin_user,
-    service_one,
-    restricted,
-    go_live_user,
-    expected_label,
-):
-    service_one["restricted"] = restricted
-    service_one["go_live_user"] = go_live_user
-    client_request.login(platform_admin_user, service_one)
-
-    page = client_request.get(
-        "main.service_settings",
-        service_id=SERVICE_ONE_ID,
-    )
-
-    request_link = page.select_one('a[href*="request-to-go-live"]')
-    assert expected_label in request_link.text.strip()
-
-    live_banner = page.find("div", attrs={"id": "live-banner"})
-    assert live_banner.text.strip() == "Trial"
 
 
 @pytest.mark.parametrize(
@@ -815,7 +779,7 @@ def test_request_to_go_live_page(
     page = client_request.get("main.request_to_go_live", service_id=SERVICE_ONE_ID)
     assert page.h1.text == "Request to go live"
 
-    tasks_links = [a["href"] for a in page.select(".task-list .task-list-item a")]
+    tasks_links = [a["href"] for a in page.select(".notifications-task-list .notifications-task-list-item a")]
 
     assert tasks_links == [
         url_for("main.use_case", service_id=SERVICE_ONE_ID),
@@ -824,7 +788,7 @@ def test_request_to_go_live_page(
         url_for("main.terms_of_use", service_id=SERVICE_ONE_ID),
     ]
 
-    checklist_items = [normalize_spaces(i.text) for i in page.select(".task-list .task-list-item")]
+    checklist_items = [normalize_spaces(i.text) for i in page.select(".notifications-task-list .notifications-task-list-item")]
 
     assert checklist_items == [
         expected_use_case_checklist_item,
@@ -870,10 +834,10 @@ def test_request_to_go_live_page_without_manage_service_permission(
     assert page.h1.text == "Request to go live"
     assert page.select_one("#main_content p").text.strip() == expected_sentence
 
-    tasks_links = [a["href"] for a in page.select(".task-list .task-list-item a")]
+    tasks_links = [a["href"] for a in page.select(".notifications-task-list .notifications-task-list-item a")]
     assert tasks_links == []
 
-    checklist_items = [normalize_spaces(i.text) for i in page.select(".task-list .task-list-item")]
+    checklist_items = [normalize_spaces(i.text) for i in page.select(".notifications-task-list .notifications-task-list-item")]
     assert checklist_items == []
 
 
@@ -885,7 +849,7 @@ def test_request_to_go_live_terms_of_use_page(
     page = client_request.get("main.terms_of_use", service_id=SERVICE_ONE_ID)
     assert page.h1.text == "Accepting the terms of use"
 
-    assert page.select_one(".back-link")["href"] == url_for("main.request_to_go_live", service_id=SERVICE_ONE_ID)
+    assert page.select_one(".notifications-back-link")["href"] == url_for("main.request_to_go_live", service_id=SERVICE_ONE_ID)
 
     # Form posts to the same endpoint
     assert page.select_one("form")["method"] == "post"
@@ -927,7 +891,7 @@ def test_request_to_go_live_use_case_page(
     page = client_request.get(".use_case", service_id=SERVICE_ONE_ID)
     assert page.h1.text == "About your service"
 
-    assert page.select_one(".back-link")["href"] == url_for(".request_to_go_live", service_id=SERVICE_ONE_ID)
+    assert page.select_one(".notifications-back-link")["href"] == url_for(".request_to_go_live", service_id=SERVICE_ONE_ID)
 
     # Form posts to the same endpoint
     assert page.select_one("form")["method"] == "post"
@@ -946,7 +910,7 @@ def test_request_to_go_live_use_case_page(
 
     assert submit_use_case_mock.call_count == 0
     assert store_mock.call_count == 1
-    assert [(error["data-error-label"], normalize_spaces(error.text)) for error in page.select(".error-message")] == [
+    assert [(error["data-error-label"], normalize_spaces(error.text)) for error in page.select(".fr-error-text")] == [
         ("department_org_name", "This field is required."),
         ("purpose", "This field is required."),
         ("intended_recipients", "This field is required."),
@@ -990,7 +954,9 @@ def test_request_to_go_live_use_case_page(
     assert page.select_one("form")["method"] == "post"
     assert "action" not in page.select_one("form")
 
-    assert page.select_one(".back-link")["href"] == url_for(".use_case", service_id=SERVICE_ONE_ID, current_step="about-service")
+    assert page.select_one(".notifications-back-link")["href"] == url_for(
+        ".use_case", service_id=SERVICE_ONE_ID, current_step="about-service"
+    )
 
     # Submitting second and final step
     page = client_request.post(
@@ -1048,7 +1014,9 @@ def test_request_to_go_live_can_resume_use_case_page(
     # Can go back to use case form form request to go live page
     page = client_request.get(".request_to_go_live", service_id=SERVICE_ONE_ID)
 
-    assert url_for(".use_case", service_id=SERVICE_ONE_ID) in [a["href"] for a in page.select(".task-list .task-list-item a")]
+    assert url_for(".use_case", service_id=SERVICE_ONE_ID) in [
+        a["href"] for a in page.select(".notifications-task-list .notifications-task-list-item a")
+    ]
 
     # Going back to the use case page goes directly to step 2
     page = client_request.get(".use_case", service_id=SERVICE_ONE_ID)
@@ -1347,7 +1315,7 @@ def test_api_ids_dont_show_on_option_pages_with_a_single_sender(
     index,
     expected_output,
 ):
-    rows = client_request.get(sender_list_page, service_id=SERVICE_ONE_ID).select(".user-list-item")
+    rows = client_request.get(sender_list_page, service_id=SERVICE_ONE_ID).select(".notifications-user-list-item")
 
     assert normalize_spaces(rows[index].text) == expected_output
     assert len(rows) == index + 1
@@ -1407,7 +1375,7 @@ def test_default_option_shows_for_default_sender(
     if is_platform_admin:
         client_request.login(platform_admin_user)
 
-    rows = client_request.get(sender_list_page, service_id=SERVICE_ONE_ID).select(".user-list-item")
+    rows = client_request.get(sender_list_page, service_id=SERVICE_ONE_ID).select(".notifications-user-list-item")
 
     assert [normalize_spaces(row.text) for row in rows] == expected_items
 
@@ -1424,7 +1392,7 @@ def test_remove_default_from_default_letter_contact_block(
         _external=True,
     )
 
-    link = client_request.get_url(letter_contact_details_page).select_one(".user-list-item a")
+    link = client_request.get_url(letter_contact_details_page).select_one(".notifications-user-list-item a")
     assert link.text == "Make default"
     assert link["href"] == url_for(
         ".service_make_blank_default_letter_contact",
@@ -1477,7 +1445,7 @@ def test_no_senders_message_shows(
     if is_platform_admin:
         client_request.login(platform_admin_user)
 
-    rows = client_request.get(sender_list_page, service_id=SERVICE_ONE_ID).select(".user-list-item")
+    rows = client_request.get(sender_list_page, service_id=SERVICE_ONE_ID).select(".notifications-user-list-item")
 
     assert normalize_spaces(rows[0].text) == expected_output
     assert len(rows) == 1
@@ -1498,7 +1466,7 @@ def test_incorrect_reply_to_email_address_input(reply_to_input, expected_error, 
         _expected_status=200,
     )
 
-    assert normalize_spaces(page.select_one(".error-message").text) == expected_error
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == expected_error
 
 
 @pytest.mark.parametrize(
@@ -1519,7 +1487,7 @@ def test_incorrect_letter_contact_block_input(contact_block_input, expected_erro
         _expected_status=200,
     )
 
-    assert normalize_spaces(page.select_one(".error-message").text) == expected_error
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == expected_error
 
 
 @pytest.mark.parametrize(
@@ -1551,7 +1519,7 @@ def test_incorrect_sms_sender_input(
         _expected_status=(200 if expected_error else 302),
     )
 
-    error_message = page.select_one(".error-message")
+    error_message = page.select_one(".fr-error-text")
     count_of_api_calls = len(mock_add_sms_sender.call_args_list)
 
     if not expected_error:
@@ -1643,7 +1611,7 @@ def test_service_verify_reply_to_address(
     else:
         assert "/email-reply-to/add" in page.find("a", text="Back").attrs["href"]
 
-    assert len(page.find_all("div", class_="banner-dangerous")) == expected_failure
+    assert len(page.find_all("div", class_="fr-alert--error")) == expected_failure
     assert len(page.find_all("div", class_="banner-default-with-tick")) == expected_success
 
     if status == "delivered":
@@ -1686,7 +1654,7 @@ def test_add_reply_to_email_address_fails_if_notification_not_delivered_in_45_se
         notification_id=notification["id"],
         _optional_args="?is_default={}".format(False),
     )
-    expected_banner = page.find_all("div", class_="banner-dangerous")[0]
+    expected_banner = page.find_all("div", class_="fr-alert--error")[0]
     assert "There’s a problem with your reply-to address" in expected_banner.text.strip()
     mock_add_reply_to_email_address.assert_not_called()
 
@@ -1723,7 +1691,7 @@ def test_add_letter_contact_when_coming_from_template(
         from_template=fake_uuid,
     )
 
-    assert page.select_one(".back-link")["href"] == url_for(
+    assert page.select_one(".notifications-back-link")["href"] == url_for(
         "main.view_template",
         service_id=SERVICE_ONE_ID,
         template_id=fake_uuid,
@@ -1904,18 +1872,18 @@ def test_shows_delete_link_for_email_reply_to_address(
         reply_to_email_id=sample_uuid(),
     )
 
-    assert page.select_one(".back-link").text.strip() == "Back"
-    assert page.select_one(".back-link")["href"] == url_for(
+    assert page.select_one(".notifications-back-link").text.strip() == "Back"
+    assert page.select_one(".notifications-back-link")["href"] == url_for(
         ".service_email_reply_to",
         service_id=SERVICE_ONE_ID,
     )
 
     if expected_link_text:
-        link = page.select_one(".page-footer a")
+        link = page.select_one(".notifications-page-footer a")
         assert normalize_spaces(link.text) == expected_link_text
         assert link["href"] == partial_href(service_id=SERVICE_ONE_ID)
     else:
-        assert not page.select(".page-footer a")
+        assert not page.select(".notifications-page-footer a")
 
 
 def test_confirm_delete_reply_to_email_address(fake_uuid, client_request, get_non_default_reply_to_email_address):
@@ -1927,11 +1895,11 @@ def test_confirm_delete_reply_to_email_address(fake_uuid, client_request, get_no
         _test_page_title=False,
     )
 
-    assert normalize_spaces(page.select_one(".banner-dangerous").text) == (
+    assert normalize_spaces(page.select_one(".fr-alert--error").text) == (
         "Are you sure you want to delete this reply-to email address? " "Yes, delete"
     )
-    assert "action" not in page.select_one(".banner-dangerous form")
-    assert page.select_one(".banner-dangerous form")["method"] == "post"
+    assert "action" not in page.select_one(".fr-alert--error form")
+    assert page.select_one(".fr-alert--error form")["method"] == "post"
 
 
 def test_delete_reply_to_email_address(
@@ -2004,11 +1972,11 @@ def test_confirm_delete_letter_contact_block(
         _test_page_title=False,
     )
 
-    assert normalize_spaces(page.select_one(".banner-dangerous").text) == (
+    assert normalize_spaces(page.select_one(".fr-alert--error").text) == (
         "Are you sure you want to delete this contact block? " "Yes, delete"
     )
-    assert "action" not in page.select_one(".banner-dangerous form")
-    assert page.select_one(".banner-dangerous form")["method"] == "post"
+    assert "action" not in page.select_one(".fr-alert--error form")
+    assert page.select_one(".fr-alert--error form")["method"] == "post"
 
 
 def test_delete_letter_contact_block(
@@ -2195,8 +2163,8 @@ def test_shows_delete_link_for_sms_sender(
         sms_sender_id=sample_uuid(),
     )
 
-    link = page.select_one(".page-footer a")
-    back_link = page.select_one(".back-link")
+    link = page.select_one(".notifications-page-footer a")
+    back_link = page.select_one(".notifications-back-link")
 
     assert back_link.text.strip() == "Back"
     assert back_link["href"] == url_for(
@@ -2227,11 +2195,11 @@ def test_confirm_delete_sms_sender(
         _test_page_title=False,
     )
 
-    assert normalize_spaces(page.select_one(".banner-dangerous").text) == (
+    assert normalize_spaces(page.select_one(".fr-alert--error").text) == (
         "Are you sure you want to delete this text message sender? " "Yes, delete"
     )
-    assert "action" not in page.select_one(".banner-dangerous form")
-    assert page.select_one(".banner-dangerous form")["method"] == "post"
+    assert "action" not in page.select_one(".fr-alert--error form")
+    assert page.select_one(".fr-alert--error form")["method"] == "post"
 
 
 @pytest.mark.parametrize(
@@ -2260,8 +2228,8 @@ def test_inbound_sms_sender_is_not_deleteable(
         sms_sender_id="1234",
     )
 
-    back_link = page.select_one(".back-link")
-    footer_link = page.select_one(".page-footer a")
+    back_link = page.select_one(".notifications-back-link")
+    footer_link = page.select_one(".notifications-page-footer a")
     assert normalize_spaces(back_link.text) == "Back"
 
     if expected_link_text:
@@ -2444,7 +2412,7 @@ def test_set_letter_contact_block_has_max_10_lines(
         _data={"letter_contact_block": "\n".join(map(str, range(0, 11)))},
         _expected_status=200,
     )
-    error_message = page.find("span", class_="error-message").text.strip()
+    error_message = page.find("span", class_="fr-error-text").text.strip()
     assert error_message == "Contains 11 lines, maximum is 10"
 
 
@@ -2807,7 +2775,7 @@ def test_should_preview_email_branding(
     client_request.login(platform_admin_user)
     page = client_request.get(endpoint, branding_type="custom_logo", branding_style="2", **extra_args)
 
-    iframe = page.find("iframe", attrs={"class": "branding-preview"})
+    iframe = page.find("iframe", attrs={"class": ".notifications-branding-preview"})
     iframeURLComponents = urlparse(iframe["src"])
     iframeQString = parse_qs(iframeURLComponents.query)
 
@@ -3363,7 +3331,7 @@ def test_archive_service_prompts_user(
     client_request.login(user)
 
     settings_page = client_request.get("main.archive_service", service_id=SERVICE_ONE_ID)
-    delete_link = settings_page.select(".page-footer-delete-link a")[0]
+    delete_link = settings_page.select(".notifications-page-footer-delete-link a")[0]
     assert normalize_spaces(delete_link.text) == "Delete this service"
     assert delete_link["href"] == url_for(
         "main.archive_service",
@@ -3374,7 +3342,7 @@ def test_archive_service_prompts_user(
         "main.archive_service",
         service_id=SERVICE_ONE_ID,
     )
-    assert normalize_spaces(delete_page.select_one(".banner-dangerous").text) == (
+    assert normalize_spaces(delete_page.select_one(".fr-alert--error").text) == (
         "Are you sure you want to delete ‘service one’? " "There’s no way to undo this. " "Yes, delete"
     )
     assert mocked_fn.called is False
@@ -3431,7 +3399,7 @@ def test_suspend_service_prompts_user(
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert (
         "This will suspend the service and revoke all API keys. Are you sure you want to suspend this service?"
-        in page.find("div", class_="banner-dangerous").text
+        in page.find("div", class_="fr-alert--error").text
     )
     assert mocked_fn.called is False
 
@@ -3492,7 +3460,7 @@ def test_resume_service_prompts_user(
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert (
         "This will resume the service. New API keys are required for this service to use the API"
-        in page.find("div", class_="banner-dangerous").text
+        in page.find("div", class_="fr-alert--error").text
     )
     assert mocked_fn.called is False
 
@@ -3615,7 +3583,7 @@ def test_service_set_contact_link_displays_error_message_when_no_radio_button_se
         },
         _follow_redirects=True,
     )
-    assert normalize_spaces(page.find("span", class_="error-message").text) == "You need to choose an option"
+    assert normalize_spaces(page.find("span", class_="fr-error-text").text) == "You need to choose an option"
     assert normalize_spaces(page.h1.text) == "Add contact details for ‘Download your document’ page"
 
 
@@ -3649,7 +3617,7 @@ def test_service_set_contact_link_does_not_update_invalid_contact_details(
         _follow_redirects=True,
     )
 
-    assert normalize_spaces(page.find("span", class_="error-message").text) == error
+    assert normalize_spaces(page.find("span", class_="fr-error-text").text) == error
     assert normalize_spaces(page.h1.text) == "Change contact details for ‘Download your document’ page"
 
 
@@ -3830,7 +3798,7 @@ def test_empty_letter_contact_block_returns_error(
         _data={"letter_contact_block": None},
         _expected_status=200,
     )
-    error_message = page.find("span", class_="error-message").text.strip()
+    error_message = page.find("span", class_="fr-error-text").text.strip()
     assert error_message == "This cannot be empty"
 
 
@@ -4141,7 +4109,7 @@ def test_update_service_data_retention_return_validation_error_for_negative_days
     )
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    error_message = page.find("span", class_="error-message").text.strip()
+    error_message = page.find("span", class_="fr-error-text").text.strip()
     assert error_message == "Must be between 3 and 90"
     assert mock_get_service_data_retention.called
     assert not mock_update_service_data_retention.called

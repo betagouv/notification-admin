@@ -1,9 +1,9 @@
-<h2 class="heading-medium">{{ _('Language attribute tags') }}</h2>
+<h2>{{ _('Language attribute tags') }}</h2>
 <p class="mb-12">
   {{ _('Language tags help make bilingual emails more accessible by indicating how content should be read by a screenreader. Use [[en]] on the line before English text and [[/en]] on the line following English text. Use [[fr]] on the line before French text and [[/fr]] after on the line following French text.') }}
 </p>
-<div class="panel-container">
-  <div class="panel-input break-words" aria-label="{{ _('An example of the input for an email containing content in English and French, including language attribute tags.') }}'">
+<div>
+  <div aria-label="{{ _('An example of the input for an email containing content in English and French, including language attribute tags.') }}'">
     <p>
       [[en]]<br/>
       # English title<br/><br/>
@@ -15,13 +15,13 @@
       [[/fr]]<br/>
     </p>
   </div>
-  <div class="panel-preview break-words" aria-label="{{ _('A preview shows English and French content, with the correct language attributes set.') }}">
+  <div aria-label="{{ _('A preview shows English and French content, with the correct language attributes set.') }}">
     <div lang="en-CA">
-      <h3 class="heading-medium">English title</h3>
+      <h3>English title</h3>
       <p>English text</p>
     </div>
     <div lang="fr-CA">
-      <h3 class="heading-medium">Titre français</h3>
+      <h3>Titre français</h3>
       <p>Texte en français</p>
     </div>
   </div>

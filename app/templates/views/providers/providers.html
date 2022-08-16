@@ -8,9 +8,9 @@ Providers
 
 {% block platform_admin_content %}
 
-  <h1 class="heading-large">Providers</h1>
+  <h1>Providers</h1>
 
-  <h2 class="heading-medium">SMS</h2>
+  <h2>SMS</h2>
 
   {% call(item, row_number) list_table(
       domestic_sms_providers,
@@ -30,7 +30,7 @@ Providers
       {{ text_field(item.active) }}
 
       {% if item.updated_at %}
-        <span class="local-datetime-short">{{ text_field(item.updated_at) }}</span>
+        <span>{{ text_field(item.updated_at) }}</span>
       {% else %}
           {{ text_field('None') }}
       {% endif %}
@@ -41,7 +41,7 @@ Providers
 
   {% endcall %}
 
-  <h2 class="heading-medium">Email</h2>
+  <h2>Email</h2>
 
   {% call(item, row_number) list_table(
       email_providers,
@@ -59,7 +59,7 @@ Providers
       {{ text_field(item.active) }}
 
       {% if item.updated_at %}
-        <span class="local-datetime-short">{{ text_field(item.updated_at) }}</span>
+        <span>{{ text_field(item.updated_at) }}</span>
       {% else %}
           {{ text_field('None') }}
       {% endif %}
@@ -70,7 +70,7 @@ Providers
 
   {% endcall %}
 
-  <h1 class="heading-large">International SMS Providers</h1>
+  <h1>International SMS Providers</h1>
 
   {% call(item, row_number) list_table(
       intl_sms_providers,
@@ -88,7 +88,7 @@ Providers
       {{ text_field(item.active) }}
 
       {% if item.updated_at %}
-        <span class="local-datetime-short">{{ text_field(item.updated_at) }}</span>
+        <span>{{ text_field(item.updated_at) }}</span>
       {% else %}
           {{ text_field('None') }}
       {% endif %}

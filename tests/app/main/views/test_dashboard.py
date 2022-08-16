@@ -210,7 +210,7 @@ def test_sending_link_has_query_param(
         service_id=SERVICE_ONE_ID,
     )
     sending_url = url_for("main.choose_template", service_id=SERVICE_ONE_ID, view="sending")
-    assert sending_url == page.select_one("a.button").attrs["href"]
+    assert sending_url == page.select_one("form.notifications-button-container").attrs["action"]
 
 
 def test_no_sending_link_if_no_templates(
@@ -314,7 +314,7 @@ def test_should_show_monthly_breakdown_of_template_usage(
     assert " ".join(table_rows[0].text.split()) == ("My first template " + template_label + "2")
 
     assert len(table_rows) == len(["April"])
-    assert len(page.select(".table-no-data")) == len(["May", "June", "July"])
+    assert len(page.select(".notifications-table-no-data")) == len(["May", "June", "July"])
 
 
 def test_anyone_can_see_monthly_breakdown(
@@ -343,7 +343,7 @@ def test_monthly_shows_letters_in_breakdown(
 ):
     page = client_request.get("main.monthly", service_id=service_one["id"])
 
-    columns = page.select(".table-field-left-aligned .big-number-label")
+    columns = page.select(".notifications-table-field-left-aligned .notifications-big-number-label")
 
     assert normalize_spaces(columns[0].text) == "emails"
     assert normalize_spaces(columns[1].text) == "text messages"
@@ -450,7 +450,7 @@ def test_correct_columns_display_on_dashboard(
                 "email": {"requested": 0, "delivered": 0, "failed": 0},
                 "sms": {"requested": 999999999, "delivered": 0, "failed": 0},
             },
-            ".big-number",
+            ".notifications-big-number",
             2,
         ),
         (
@@ -459,7 +459,7 @@ def test_correct_columns_display_on_dashboard(
                 "email": {"requested": 1000000000, "delivered": 0, "failed": 0},
                 "sms": {"requested": 1000000, "delivered": 0, "failed": 0},
             },
-            ".big-number-dark",
+            ".notifications-big-number-dark",
             2,
         ),
         (
@@ -469,7 +469,7 @@ def test_correct_columns_display_on_dashboard(
                 "sms": {"requested": 99999, "delivered": 0, "failed": 0},
                 "letter": {"requested": 99999, "delivered": 0, "failed": 0},
             },
-            ".big-number",
+            ".notifications-big-number",
             3,
         ),
         (
@@ -479,7 +479,7 @@ def test_correct_columns_display_on_dashboard(
                 "sms": {"requested": 0, "delivered": 0, "failed": 0},
                 "letter": {"requested": 100000, "delivered": 0, "failed": 0},
             },
-            ".big-number-dark",
+            ".notifications-big-number-dark",
             3,
         ),
     ],
@@ -507,7 +507,7 @@ def test_correct_font_size_for_big_numbers(
         service_id=service_one["id"],
     )
 
-    assert expected_column_count == len(page.select(".big-number-with-status {}".format(big_number_class)))
+    assert expected_column_count == len(page.select(".notifications-big-number-with-status {}".format(big_number_class)))
 
 
 @pytest.mark.parametrize(
@@ -590,8 +590,8 @@ def test_dashboard_single_and_plural(
     page = client_request.get("main.service_dashboard", service_id=service_one["id"], lang=lang)
 
     assert (
-        normalize_spaces(page.select(".big-number-with-status")[0].text),
-        normalize_spaces(page.select(".big-number-with-status")[1].text),
+        normalize_spaces(page.select(".notifications-big-number-with-status")[0].text),
+        normalize_spaces(page.select(".notifications-big-number-with-status")[1].text),
     ) == expected_big_numbers_single_plural
 
 
@@ -1081,7 +1081,7 @@ def test_service_dashboard_updates_gets_dashboard_totals(
         service_id=SERVICE_ONE_ID,
     )
 
-    numbers = [number.text.strip() for number in page.find_all("div", class_="big-number-number")]
+    numbers = [number.text.strip() for number in page.find_all("div", class_="notifications-big-number-number")]
     assert "123" in numbers
     assert "456" in numbers
 

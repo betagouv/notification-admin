@@ -15,15 +15,15 @@
   </div>
   {% endif %}
 
-  <h1 id="{{ id_text }}" class="heading-large">{{ h1 }}</h1>
+  <h1 id="{{ id_text }}">{{ h1 }}</h1>
 
 {% endmacro %}
 
 
 {% macro govuk_back_link(back_link, aria_label=None) %}
   {% if aria_label %}
-    <a class="back-link" href="{{ back_link }}" aria-label="{{ aria_label }}" >{{ _('Back') }}</a>
+    <a class="notifications-back-link" href="{{ back_link }}" aria-label="{{ aria_label }}" >{{ _('Back') }}</a>
   {% else %}
-    <a class="back-link" href="{{ back_link }}">{{ _('Back') }}</a>
+    <a class="notifications-back-link" href="{{ back_link }}">{{ _('Back') }}</a>
   {% endif %}
 {% endmacro %}

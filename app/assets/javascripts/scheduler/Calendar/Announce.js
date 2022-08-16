@@ -16,7 +16,7 @@ export const Announce = () => {
   return (
     <span
       id="Calendar-updates"
-      className="visually-hidden"
+      className="notifications-visually-hidden"
       aria-live="assertive"
     >
       {translate(message)}

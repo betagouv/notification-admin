@@ -6,19 +6,17 @@
 {% endblock %}
 
 {% set withnav = True %}
-{% set extra_title = ' - ' + current_service.name if current_service.name and current_user.has_permissions() else ''  %}
+{% set extra_title = ' - ' + current_service.name if current_service.name and current_user.has_permissions() else '' %}
 
 {% block page_title %}
-   {% block per_page_title %}{% endblock %} {% block service_page_title %}{% endblock %} {{ extra_title }} – {{ _('Notify') }}
+  {% block per_page_title %}{% endblock %} {% block service_page_title %}{% endblock %} {{ extra_title }} – {{ _('Notify')}}
 {% endblock %}
 
 {% block content %}
-  <div id="main_content" class="container px-gutterHalf contain-floats flex-grow">
-    <div class="grid-row contain-floats">
-      <main role="main" class="w-full float-left {% block main_content_class %}py-10{% endblock %} px-gutterHalf box-border column-main">
-        {% include 'partials/flash_messages.html' %}
-        {% block maincolumn_content %}{% endblock %}
-      </main>
-    </div>
+  <div id="main_content">
+    <main role="main" class="{% block main_content_class %}py-10{% endblock %}">
+      {% include 'partials/flash_messages.html' %}
+      {% block maincolumn_content %}{% endblock %}
+    </main>
   </div>
 {% endblock %}

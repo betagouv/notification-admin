@@ -10,9 +10,9 @@
 
 {% block platform_admin_content %}
 
-<div class="grid-row contain-floats">
+<div>
   <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
-    <h1 class="heading-large">Letter Validation Preview</h1>
+    <h1>Letter Validation Preview</h1>
 
     {{ file_upload(
         form.file,
@@ -28,7 +28,7 @@
     {% endif %}
 
     {% for page in pages %}
-    <div class="letter">
+    <div>
       <img src="data:image/png;base64,{{ page }}">
     </div>
     {% endfor %}

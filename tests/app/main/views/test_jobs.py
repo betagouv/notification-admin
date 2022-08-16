@@ -75,8 +75,8 @@ def test_get_jobs_shows_page_links(
     client_request.login(user(fake_uuid))
     page = client_request.get("main.view_jobs", service_id=SERVICE_ONE_ID)
 
-    assert "Next page" in page.find("div", {"class": "next-page"}).text
-    assert "Previous page" in page.find("div", {"class": "previous-page"}).text
+    assert "Next page" in page.find("div", {"class": "notifications-next-page"}).text
+    assert "Previous page" in page.find("div", {"class": "notifications-previous-page"}).text
 
 
 @pytest.mark.parametrize(
@@ -240,7 +240,7 @@ def test_get_jobs_should_tell_user_if_more_than_one_page(
         job_id=fake_uuid,
         status="",
     )
-    assert page.find("p", {"class": "table-show-more-link"}).text.strip() == "Only showing the first 50 rows"
+    assert page.find("p", {"class": "notifications-table-show-more-link"}).text.strip() == "Only showing the first 50 rows"
 
 
 def test_should_show_job_in_progress(
@@ -648,7 +648,7 @@ def test_dont_cancel_letter_job_when_to_early_to_cancel(
         _expected_status=200,
     )
     mock_cancel.assert_not_called()
-    flash_message = normalize_spaces(page.find("div", class_="banner-dangerous").text)
+    flash_message = normalize_spaces(page.find("div", class_="fr-alert--error").text)
 
     assert "We are still processing these letters, please try again in a minute." in flash_message
 

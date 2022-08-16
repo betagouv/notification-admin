@@ -5,12 +5,12 @@
   hint=False,
   width='w-full md:w-2/3'
 ) %}
-  <div class="multiple-choice">
+  <div>
     {{ checkbox_input(field.id, field.name, field.data) }}
     <label for="{{ field.id }}">
       {{ field.label.text }}
       {% if hint %}
-        <div class="hint">
+        <div>
           {{ hint }}
         </div>
       {% endif %}
@@ -39,10 +39,10 @@
 {% endmacro %}
 
 {% macro unlabelled_checkbox(id, name, data=None, value="y", label="") %}
-  <div class="multiple-choice">
+  <div>
     {{ checkbox_input(id, name, data, value) }}
     <label for="{{id}}">
-      <span class="sr-only">{{label}}</span>
+      <span class="notifications-sr-only">{{label}}</span>
     </label>
   </div>
 {% endmacro %}

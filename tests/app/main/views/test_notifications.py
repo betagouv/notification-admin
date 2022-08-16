@@ -103,7 +103,7 @@ def test_notification_status_page_shows_details(
 
     assert normalize_spaces(page.select(".sms-message-recipient")[0].text) == ("To: 6502532222")
     assert normalize_spaces(page.select(".sms-message-wrapper")[0].text) == ("service one: hello Jo")
-    assert normalize_spaces(page.select(".ajax-block-container p")[0].text) == (expected_status)
+    assert normalize_spaces(page.select(".notifications-ajax-block-container p")[0].text) == (expected_status)
 
     _mock_get_notification.assert_called_with(service_one["id"], fake_uuid)
 
@@ -286,7 +286,7 @@ def test_notification_status_shows_expected_back_link(
         notification_id=fake_uuid,
         **extra_args,
     )
-    back_link = page.select_one(".back-link")
+    back_link = page.select_one(".notifications-back-link")
 
     if expected_back_link:
         assert back_link["href"] == expected_back_link(service_id=SERVICE_ONE_ID)
@@ -695,7 +695,7 @@ def test_notifification_page_shows_error_message_if_precompiled_letter_cannot_be
         notification_id=fake_uuid,
     )
 
-    error_message = page.find("p", class_="notification-status-cancelled").text
+    error_message = page.find("p", class_="notifications-notification-status-cancelled").text
     assert normalize_spaces(error_message) == "Validation failed – this isn’t a PDF file that Notification can read"
 
 
@@ -856,7 +856,7 @@ def test_show_cancel_letter_confirmation(
         notification_id=fake_uuid,
     )
 
-    flash_message = normalize_spaces(page.find("div", class_="banner-dangerous").text)
+    flash_message = normalize_spaces(page.find("div", class_="fr-alert--error").text)
 
     assert "Are you sure you want to cancel sending this letter?" in flash_message
 

@@ -41,11 +41,9 @@ def test_non_logged_in_user_can_see_homepage(mocker, client, mock_calls_out_to_G
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
-    assert page.select_one("#gc-title").text.strip() == ("GC Notify")
+    assert page.select_one("#gc-title").text.strip() == "Notifications"
 
-    assert page.select_one("meta[name=description]")["content"].strip() == (
-        "GC Notify lets you send emails and text messages to your users"
-    )
+    assert page.select_one(".fr-header__service-tagline").text.strip() == ("L'e-mail transactionnel de l'État")
 
 
 def test_home_page_a11y(mocker, client, mock_calls_out_to_GCA):
@@ -181,11 +179,7 @@ def test_terms_page_has_correct_content(client_request):
 
 @pytest.mark.parametrize(
     "css_file_start",
-    [
-        "http://localhost:6012/static/stylesheets/index.css",
-        "https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap",
-        "https://fonts.googleapis.com/css?",
-    ],
+    ["http://localhost:6012/static/stylesheets/index.css"],
 )
 def test_css_is_served_from_correct_path(client_request, css_file_start):
     page = client_request.get("main.welcome")  # easy static page
@@ -260,11 +254,11 @@ def test_letter_template_preview_headers(
 @pytest.mark.parametrize(
     "query_key, query_value, heading",
     [
-        ("lang", "en", "GC Notify"),  # 'Notify' = english heading
-        ("lang", "fr", "GC Notification"),  # 'Notification' = french heading
-        ("lang", "sa?SDFa?DFa,/", "GC Notify"),
-        ("xyz", "xyz", "GC Notify"),
-        ("sa?SDFa?DFa,/", "sa?SDFa?DFa,/", "GC Notify"),
+        ("lang", "en", "Notifications"),  # 'Notify' = english heading
+        ("lang", "fr", "Notifications"),  # 'Notification' = french heading
+        ("lang", "sa?SDFa?DFa,/", "Notifications"),
+        ("xyz", "xyz", "Notifications"),
+        ("sa?SDFa?DFa,/", "sa?SDFa?DFa,/", "Notifications"),
     ],
 )
 def test_query_params(client, query_key, query_value, heading, mocker, mock_calls_out_to_GCA):

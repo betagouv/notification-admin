@@ -14,18 +14,16 @@
     'Set letter contact block',
     back_link=url_for('.view_template', service_id=current_service.id, template_id=template_id)
   ) }}
-  <div class="grid-row contain-floats">
-    <div class="md:w-3/4 float-left py-0 px-0 px-gutterHalf box-border">
-      {% call form_wrapper() %}
-        {{ radios(
-          form.sender,
-          option_hints=option_hints,
-          hide_legend=True
-        ) }}
-        {{ page_footer(_('Continue')) }}
-        <a href="{{ url_for('.service_add_letter_contact', service_id=current_service.id, from_template=template_id) }}">Add new sender</a>
-      {% endcall %}
-    </div>
+  <div>
+    {% call form_wrapper(class="notifications-form-set-letter-contact") %}
+      {{ radios(
+        form.sender,
+        option_hints=option_hints,
+        hide_legend=True
+      ) }}
+      {{ page_footer(_('Continue')) }}
+      <a href="{{ url_for('.service_add_letter_contact', service_id=current_service.id, from_template=template_id) }}">Add new sender</a>
+    {% endcall %}
   </div>
 
 {% endblock %}

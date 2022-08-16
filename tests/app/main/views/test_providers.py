@@ -304,7 +304,7 @@ def test_should_show_error_on_bad_provider_priority(
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert response.status_code == 200
-    assert "Not a valid integer value" in str(page.find_all("span", {"class": re.compile(r"error-message")})[0])
+    assert "Not a valid integer value" in str(page.find_all("span", {"class": re.compile(r"fr-error-text")})[0])
 
 
 def test_should_show_error_on_negative_provider_priority(
@@ -325,7 +325,7 @@ def test_should_show_error_on_negative_provider_priority(
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert response.status_code == 200
-    assert "Must be between 1 and 100" in str(page.find_all("span", {"class": re.compile(r"error-message")})[0])
+    assert "Must be between 1 and 100" in str(page.find_all("span", {"class": re.compile(r"fr-error-text")})[0])
 
 
 def test_should_show_error_on_too_big_provider_priority(
@@ -346,7 +346,7 @@ def test_should_show_error_on_too_big_provider_priority(
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert response.status_code == 200
-    assert "Must be between 1 and 100" in str(page.find_all("span", {"class": re.compile(r"error-message")})[0])
+    assert "Must be between 1 and 100" in str(page.find_all("span", {"class": re.compile(r"fr-error-text")})[0])
 
 
 def test_should_show_error_on_too_little_provider_priority(
@@ -367,7 +367,7 @@ def test_should_show_error_on_too_little_provider_priority(
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert response.status_code == 200
-    assert "Must be between 1 and 100" in str(page.find_all("span", {"class": re.compile(r"error-message")})[0])
+    assert "Must be between 1 and 100" in str(page.find_all("span", {"class": re.compile(r"fr-error-text")})[0])
 
 
 def test_should_update_provider_priority(

@@ -9,11 +9,11 @@
 
 {% block maincolumn_content %}
 
-<div class="grid-row contain-floats">
-  <div class="md:w-2/3 float-left py-0 px-0 px-gutterHalf box-border">
+<div>
+  <div>
 
     {% if again %}
-      <h1 class="heading-large">{{ _('You need to sign in again') }}</h1>
+      <h1>{{ _('You need to sign in again') }}</h1>
       {% if other_device %}
         <p>
           {{ _('We signed you out because you signed in to GC Notify on another device.') }}
@@ -24,7 +24,7 @@
         </p>
       {% endif %}
     {% else %}
-      <h1 class="heading-large">{{ _("Sign in") }}</h1>
+      <h1>{{ _("Sign in") }}</h1>
       <p>
         {{ _('If you do not have an account, you can') }}
         <a href="{{ url_for('.register') }}">{{ _('create one now') }}</a>.

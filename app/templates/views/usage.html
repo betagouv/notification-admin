@@ -61,7 +61,7 @@
       </div>
 
       {% if months %}
-        <div class="dashboard-table body-copy-table">
+        <div>
           {% call(month, row_index) list_table(
             months,
             caption="Total spend",
@@ -84,10 +84,10 @@
               ) }}
               <ul>
               {% if month.free %}
-                <li class="tabular-numbers">{{ "{:,}".format(month.free) }} free {{ message_count_label(month.free, 'sms', '') }}</li>
+                <li>{{ "{:,}".format(month.free) }} free {{ message_count_label(month.free, 'sms', '') }}</li>
               {% endif %}
               {% if month.paid %}
-                <li class="tabular-numbers">{{ "{:,}".format(month.paid) }} {{ message_count_label(month.free, 'sms', '') }}at
+                <li>{{ "{:,}".format(month.paid) }} {{ message_count_label(month.free, 'sms', '') }}at
                 {{- ' {:.2f}p'.format(sms_rate * 100) }}</li>
               {% endif %}
               {% if not (month.free or month.paid) %}
@@ -100,14 +100,14 @@
       {% endif %}
     </div>
 
-    <div class="grid-row contain-floats">
+    <div>
       <div class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border">
-        <p class="align-with-heading-copy">
+        <p>
           Financial year ends 31 March.
         </p>
       </div>
       <div class="w-1/2 float-left py-0 px-0 px-gutterHalf box-border">
-        <p class="align-with-heading-copy">
+        <p>
           What counts as 1 text message?<br />
           See <a href="{{ url_for('.pricing') }}">pricing</a>.
         </p>

@@ -5,15 +5,13 @@
 {% endblock %}
 
 {% block platform_admin_content %}
-  <div class="container contain-floats flex-grow">
-    <div class="navigation-service">
-      <div class="navigation-service-name">
-        {{ current_org.name }}
-      </div>
+  <div>
+    <div>
+      {{ current_org.name }}
     </div>
-    <div class="grid-row contain-floats">
-      <div class="w-1/4 float-left py-0 px-0 px-gutterHalf box-border">
-        <nav class="navigation">
+    <div>
+      <div>
+        <nav>
           <ul>
             <li><a
               href="{{ url_for('.organisation_dashboard', org_id=current_org.id) }}" {{ org_navigation.is_selected('dashboard') }}>Usage</a>
@@ -32,7 +30,7 @@
           </ul>
         </nav>
       </div>
-      <main role="main" class="w-3/4 float-left py-0 px-0 px-gutterHalf box-border column-main">
+      <main role="main">
         {% include 'partials/flash_messages.html' %}
         {% block org_content %}{% endblock %}
       </main>

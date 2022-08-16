@@ -6,16 +6,16 @@
 
 {% block platform_admin_content %}
 
-  <h1 class="heading-large">Preview letter branding</h1>
-  <div class="grid-row contain-floats">
+  <h1>Preview letter branding</h1>
+  <div>
     <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
-      <iframe src="{{ url_for('main.letter_template', branding_style=form.branding_style.data) }}" class="branding-preview"></iframe>
+      <iframe class=".notifications-branding-preview" src="{{ url_for('main.letter_template', branding_style=form.branding_style.data) }}"></iframe>
       {% call form_wrapper(action=action) %}
         <div class="form-group contain-floats box-border mb-gutterHalf md:mb-gutter">
           {{ form.hidden_tag() }}
-          <div class="page-footer">
-            <button type="submit" class="button">Save</button>
-            <a class="page-footer-back-link" href="{{ url_for('main.service_settings', service_id=service_id) }}">Back to service settings</a>
+          <div class="notifications-page-footer">
+            <button type="submit">Save</button>
+            <a href="{{ url_for('main.service_settings', service_id=service_id) }}">Back to service settings</a>
           </div>
         </div>
       {% endcall %}
