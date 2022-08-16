@@ -1,5 +1,5 @@
 {% macro task_list_item(status, label, link) %}
-  <li>
+  <li class="notifications-task-list-item">
     <span aria-describedby="{{ label|id_safe }}"><a href="{{ link }}">{{ label }}</a></span>
     {% if status == "in-progress" %}
       <strong id="{{ label|id_safe }}">
@@ -19,7 +19,7 @@
 {% endmacro %}
 
 {% macro task_list_wrapper() %}
-  <ul>
+  <ul class="notifications-task-list">
     {{ caller() }}
   </ul>
 {% endmacro %}

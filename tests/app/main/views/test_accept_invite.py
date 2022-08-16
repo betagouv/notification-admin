@@ -349,7 +349,7 @@ def test_new_user_accept_invite_with_malformed_token(
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
     assert (
-        normalize_spaces(page.select_one(".banner-dangerous").text)
+        normalize_spaces(page.select_one(".fr-alert--error").text)
         == "Something’s wrong with this link. Make sure you’ve copied the whole thing."
     )
 
@@ -432,7 +432,7 @@ def test_signed_in_existing_user_cannot_use_anothers_invite(
         _expected_status=403,
     )
     assert page.h1.string.strip() == "403"
-    flash_banners = page.find_all("div", class_="banner-dangerous")
+    flash_banners = page.find_all("div", class_="fr-alert--error")
     assert len(flash_banners) == 1
     banner_contents = flash_banners[0].text.strip()
     assert "You’re signed in as test@user.beta.gouv.fr." in banner_contents

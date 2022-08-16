@@ -1,7 +1,7 @@
 {% from "components/table.html" import list_table, field, row_heading %}
 {% from "components/show-more.html" import show_more %}
 
-<div>
+<div class="notifications-ajax-block-container">
   {% if scheduled_jobs %}
     <div class='dashboard-table'>
       {% call(item, row_number) list_table(

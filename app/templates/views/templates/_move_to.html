@@ -1,5 +1,6 @@
 {% from "components/radios.html" import radios, radios_nested %}
 {% from "components/page-footer.html" import page_footer %}
+{% from "components/buttons.html" import primary_button_blue_lighter %}
 
 <div id="sticky_template_forms">
   <button type="submit" name="operation" value="unknown" hidden></button>
@@ -30,9 +31,7 @@
   </div>
   <div id="add_new_template_form">
     <div>
-      <a href="{{ url_for('main.create_template', service_id=current_service.id, template_type=template_type, template_folder_id=current_template_folder_id) }}">
-        {{ _('Create template') }}
-      </a>
+      {{ primary_button_blue_lighter(label=_('Create template'), href=url_for('main.create_template', service_id=current_service.id, template_type=template_type, template_folder_id=current_template_folder_id)) }}
     </div>
   </div>
   <div role="status" aria-live="polite">

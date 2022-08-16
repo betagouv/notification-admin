@@ -13,7 +13,7 @@
 
   {{ template|string|translate_preview_template }}
 
-  <div>
+  <div class="notifications-page-footer">
     <a href="{{ url_for('.send_test', service_id=current_service.id, template_id=template.id, help=2) }}">{{ _("Continue") }} </a>
   </div>
 

@@ -17,14 +17,14 @@
     back_link=url_for('main.service_settings', service_id=current_service.id)
   ) }}
 
-  <div>
+  <div class="notifications-user-list">
     {% if not current_service.email_reply_to_addresses %}
-      <div>
+      <div class="notifications-user-list-item">
         <span>{{ _('You have not added any reply-to email addresses yet' ) }}</span>
       </div>
     {% endif %}
     {% for item in current_service.email_reply_to_addresses %}
-      <div>
+      <div class="notifications-user-list-item">
         <h3>
           <span>{{ item.email_address }}</span>&ensp;<span>
             {%- if item.is_default -%}

@@ -11,8 +11,8 @@
   </h1>
   <ul>
   {% for service in current_org.live_services %}
-    <li>
-      <a href="{{ url_for('main.usage', service_id=service.id) }}">{{ service['name'] }}</a>
+    <li class="notifications-browse-list-item">
+      <a class="notifications-browse-list-link" href="{{ url_for('main.usage', service_id=service.id) }}">{{ service['name'] }}</a>
     </li>
   {% endfor %}
   </ul>

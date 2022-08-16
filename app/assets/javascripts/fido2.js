@@ -131,7 +131,7 @@
         } else {
           var html = '<div class="mb-12 clear-both">';
           html +=
-            '<div class="banner banner-dangerous" role="group" tabindex="-1">Key(s) failed</div>';
+            '<div class="banner fr-alert--error" role="group" tabindex="-1">Key(s) failed</div>';
           html += "</div>";
 
           $(".test-key-message").html(html);

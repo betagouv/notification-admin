@@ -37,14 +37,14 @@
     <ul>
     {% for user in users_found %}
       <li>
-        <a href="{{url_for('.user_information', user_id=user.id)}}">{{ user.email_address }}</a>
-        <p>{{ user.name }}</p>
+        <a class="notifications-browse-list-link" href="{{url_for('.user_information', user_id=user.id)}}">{{ user.email_address }}</a>
+        <p class="notifications-browse-list-hint">{{ user.name }}</p>
       </li>
       <hr>
     {% endfor %}
     </ul>
   </nav>
   {% elif users_found == [] %}
-    <p>{{ _('No users found.') }}</p>
+    <p class="notifications-browse-list-hint">{{ _('No users found.') }}</p>
   {% endif %}
 {% endblock %}

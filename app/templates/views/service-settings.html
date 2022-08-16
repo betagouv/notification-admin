@@ -327,7 +327,7 @@
                 </a>
               {% else %}
                 {% set value = _('Not set') %}
-                <span>{{value}}</span>
+                <span class="notifications-table-field-status-default">{{value}}</span>
               {% endif %}
               {% if current_service.organisation_type %}
                 <div>
@@ -474,13 +474,13 @@
 
     {% if current_service.active and (current_service.trial_mode or current_user.platform_admin) %}
       <p>
-        <span>
+        <span class="notifications-page-footer-delete-link">
           <a href="{{ url_for('.archive_service', service_id=current_service.id) }}">
             {{ _('Delete this service') }}
           </a>
         </span>
         {% if current_user.platform_admin %}
-          <span>
+          <span class="notifications-page-footer-delete-link">
             <a href="{{ url_for('.suspend_service', service_id=current_service.id) }}">
                 {{ _('Suspend service') }}
               </a>
@@ -493,7 +493,7 @@
         <div class="hint mb-12 clear-both contain-floats">
           {{ _('Service suspended') }}
         </div>
-        <span>
+        <span class="notifications-page-footer-delete-link">
           <a href="{{ url_for('.resume_service', service_id=current_service.id) }}">
             {{ _('Resume service') }}
           </a>

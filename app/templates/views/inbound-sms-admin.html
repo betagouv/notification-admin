@@ -58,7 +58,7 @@ Inbound Numbers
               {% endif %}
               </th>
               <th style="font-weight:normal;">
-                  <a href="{{ url_for('main.service_dashboard', service_id=value.service.id) }}">{{ value.service.name }}</a>
+                  <a class="notifications-browse-list-link" href="{{ url_for('main.service_dashboard', service_id=value.service.id) }}">{{ value.service.name }}</a>
               </th>
           </tr>
           {% endfor %}

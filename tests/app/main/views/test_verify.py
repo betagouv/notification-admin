@@ -25,8 +25,8 @@ def test_should_return_verify_template(
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert page.h1.text == "Check your phone messages"
-    message = page.find_all("p")[1].text
-    assert message == "We’ve sent you a text message with a security code."
+    paragraphs = page.find_all("p")
+    assert any(paragraph.text == "We’ve sent you a text message with a security code." for paragraph in paragraphs)
 
 
 def test_should_redirect_to_welcome_screen_when_two_factor_code_is_correct(
@@ -96,8 +96,8 @@ def test_should_return_200_when_two_factor_code_is_wrong(
         _expected_status=200,
     )
 
-    assert len(page.select(".error-message")) == 1
-    assert normalize_spaces(page.select_one(".error-message").text) == ("Code not found")
+    assert len(page.select(".fr-error-text")) == 1
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == ("Code not found")
 
 
 def test_verify_email_redirects_to_verify_if_token_valid(
@@ -159,7 +159,7 @@ def test_verify_email_redirects_to_sign_in_if_user_active(
     response = client.get(url_for("main.verify_email", token="notreal"), follow_redirects=True)
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert page.h1.text == "Sign in"
-    flash_banner = page.find("div", class_="banner-dangerous").string.strip()
+    flash_banner = page.find("div", class_="fr-alert--error").string.strip()
     assert flash_banner == "That verification link has expired."
 
 

@@ -23,9 +23,11 @@ def test_view_team_members(
     )
 
     for i in range(0, 2):
-        assert normalize_spaces(page.select(".user-list-item .heading-small")[i].text) == "Test User {}".format(i + 1)
+        assert normalize_spaces(
+            page.select(".notifications-user-list-item .notifications-heading-small")[i].text
+        ) == "Test User {}".format(i + 1)
 
-    assert normalize_spaces(page.select(".tick-cross-list-edit-link")[0].text) == "Cancel invitation"
+    assert normalize_spaces(page.select(".notifications-cancel-invitation-button")[0].text) == "Cancel invitation"
 
 
 def test_view_edit_user_org_permissions(
@@ -92,7 +94,7 @@ def test_invite_org_user_errors_when_same_email_as_inviter(
     )
 
     assert mock_invite_org_user.called is False
-    assert normalize_spaces(page.select_one(".error-message").text) == "You cannot send an invitation to yourself"
+    assert normalize_spaces(page.select_one(".fr-error-text").text) == "You cannot send an invitation to yourself"
 
 
 def test_accepted_invite_when_other_user_already_logged_in(client_request, mock_check_org_invite_token):
@@ -102,7 +104,7 @@ def test_accepted_invite_when_other_user_already_logged_in(client_request, mock_
         follow_redirects=True,
         _expected_status=403,
     )
-    assert "This invite is for another email address." in normalize_spaces(page.select_one(".banner-dangerous").text)
+    assert "This invite is for another email address." in normalize_spaces(page.select_one(".fr-alert--error").text)
 
 
 def test_cancelled_invite_opened_by_user(

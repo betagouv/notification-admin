@@ -240,9 +240,9 @@ def test_should_show_total_on_live_trial_services_pages(
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert (
-        normalize_spaces(page.select(".big-number-with-status")[0].text),
-        normalize_spaces(page.select(".big-number-with-status")[1].text),
-        normalize_spaces(page.select(".big-number-with-status")[2].text),
+        normalize_spaces(page.select(".notifications-big-number-with-status")[0].text),
+        normalize_spaces(page.select(".notifications-big-number-with-status")[1].text),
+        normalize_spaces(page.select(".notifications-big-number-with-status")[2].text),
     ) == expected_big_numbers
 
 
@@ -317,8 +317,8 @@ def test_should_single_and_plural(
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
     assert (
-        normalize_spaces(page.select(".big-number-with-status")[0].text),
-        normalize_spaces(page.select(".big-number-with-status")[1].text),
+        normalize_spaces(page.select(".notifications-big-number-with-status")[0].text),
+        normalize_spaces(page.select(".notifications-big-number-with-status")[1].text),
     ) == expected_big_numbers_single_plural
 
 
@@ -442,8 +442,8 @@ def test_should_show_email_and_sms_stats_for_all_service_types(
 
     table_body = page.find_all("table")[0].find_all("tbody")[0]
     service_row_group = table_body.find_all("tbody")[0].find_all("tr")
-    email_stats = service_row_group[0].find_all("div", class_="big-number-number")
-    sms_stats = service_row_group[1].find_all("div", class_="big-number-number")
+    email_stats = service_row_group[0].find_all("div", class_="notifications-big-number-number")
+    sms_stats = service_row_group[1].find_all("div", class_="notifications-big-number-number")
     email_sending, email_delivered, email_failed = [int(x.text.strip()) for x in email_stats]
     sms_sending, sms_delivered, sms_failed = [int(x.text.strip()) for x in sms_stats]
 
@@ -830,20 +830,26 @@ def test_platform_admin_displays_stats_in_right_boxes_and_with_correct_styling(
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
     # Email permanent failure status box - number is correct
-    assert "3 permanent failures" in page.find_all("div", class_="md:w-1/3")[0].find(string=re.compile("permanent"))
+    assert "3 permanent failures" in page.find_all("div", class_="notifications-stats")[0].find(string=re.compile("permanent"))
     # Email complaints status box - link exists and number is correct
     assert page.find("a", string="15 complaints")
     # SMS total box - number is correct
-    assert page.find_all("div", class_="big-number-number")[1].text.strip() == "168"
+    assert page.find_all("div", class_="notifications-big-number-number")[1].text.strip() == "168"
     # Test SMS box - number is correct
-    assert "5" in page.find_all("div", class_="md:w-1/3")[4].text
+    assert "5" in page.find_all("div", class_="notifications-stats")[4].text
     # SMS technical failure status box - number is correct and failure class is used
     assert (
-        "1 technical failures" in page.find_all("div", class_="md:w-1/3")[1].find("div", class_="big-number-status bg-red").text
+        "1 technical failures"
+        in page.find_all("div", class_="notifications-stats")[1]
+        .find("div", class_="notifications-big-number-status notifications-bg-red")
+        .text
     )
     # Letter virus scan failure status box - number is correct and failure class is used
     assert (
-        "1 virus scan failures" in page.find_all("div", class_="md:w-1/3")[2].find("div", class_="big-number-status bg-red").text
+        "1 virus scan failures"
+        in page.find_all("div", class_="notifications-stats")[2]
+        .find("div", class_="notifications-big-number-status notifications-bg-red")
+        .text
     )
 
 
@@ -893,7 +899,7 @@ def test_service_letter_validation_preview_returns_400_if_file_is_too_big(client
 
     assert page.find("h1").text.strip() == "Letter validation preview"
     assert page.find_all("input", class_="file-upload-field")
-    page.find("span", class_="error-message").text.strip() == "File must be less than 2MB"
+    page.find("span", class_="fr-error-text").text.strip() == "File must be less than 2MB"
 
 
 def test_letter_validation_preview_renders_correctly(mocker, platform_admin_client):
@@ -905,7 +911,7 @@ def test_letter_validation_preview_renders_correctly(mocker, platform_admin_clie
     assert page.find_all("input", class_="file-upload-field")
 
 
-@pytest.mark.parametrize("result,expected_class", [(True, "banner-with-tick"), (False, "banner-dangerous")])
+@pytest.mark.parametrize("result,expected_class", [(True, "banner-with-tick"), (False, "fr-alert--error")])
 def test_letter_validation_preview_calls_template_preview_when_data_correct_and_displays_correct_message(
     mocker, platform_admin_client, result, expected_class
 ):
@@ -946,7 +952,7 @@ def test_letter_validation_preview_doesnt_call_template_preview_when_no_file(moc
     validate_letter.assert_not_called()
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    assert page.find("span", class_="error-message").text.strip() == "You need to upload a file to submit"
+    assert page.find("span", class_="fr-error-text").text.strip() == "You need to upload a file to submit"
 
 
 def test_letter_validation_preview_doesnt_call_template_preview_when_file_not_pdf(mocker, platform_admin_client):
@@ -962,7 +968,7 @@ def test_letter_validation_preview_doesnt_call_template_preview_when_file_not_pd
     antivirus_scan.assert_not_called()
     validate_letter.assert_not_called()
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    assert page.find("span", class_="error-message").text.strip() == "PDF documents only!"
+    assert page.find("span", class_="fr-error-text").text.strip() == "PDF documents only!"
 
 
 def test_letter_validation_preview_doesnt_call_template_preview_when_file_doesnt_pass_virus_scan(mocker, platform_admin_client):
@@ -980,7 +986,7 @@ def test_letter_validation_preview_doesnt_call_template_preview_when_file_doesnt
     validate_letter.assert_not_called()
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    assert page.find("div", class_="banner-dangerous").text.strip() == "Document didn't pass the virus scan"
+    assert page.find("div", class_="fr-alert--error").text.strip() == "Document didn't pass the virus scan"
 
 
 def test_clear_cache_shows_form(client_request, platform_admin_user, mocker):
@@ -1047,7 +1053,7 @@ def test_clear_cache_requires_option(client_request, platform_admin_user, mocker
 
     page = client_request.post("main.clear_cache", _data={}, _expected_status=200)
 
-    assert normalize_spaces(page.find("span", class_="error-message").text) == "You need to choose an option"
+    assert normalize_spaces(page.find("span", class_="fr-error-text").text) == "You need to choose an option"
     assert not redis.delete_cache_keys_by_pattern.called
 
 
@@ -1234,7 +1240,7 @@ def test_get_notifications_sent_by_service_validates_form(mocker, client_request
         _data={"start_date": "", "end_date": "20190101"},
     )
 
-    errors = page.select(".error-message")
+    errors = page.select(".fr-error-text")
     assert len(errors) == 2
 
     for error in errors:
@@ -1257,7 +1263,7 @@ def test_usage_for_all_services_when_no_results_for_date(client_request, platfor
         _data={"start_date": "2019-01-01", "end_date": "2019-03-31"},
     )
 
-    error = page.select_one(".banner-dangerous")
+    error = page.select_one(".fr-alert--error")
     assert normalize_spaces(error.text) == "No results for dates"
 
 

@@ -27,7 +27,7 @@ describe('FullscreenTable', () => {
       headings.forEach((heading, idx) => {
         if (idx === 0) {
           result += `<th scope="col" class="table-field-heading-first">
-                        <span class="visually-hidden">Row in file</span><span aria-hidden="true" class="table-field-invisible-error">${heading}</span>
+                        <span class="notifications-visually-hidden">Row in file</span><span aria-hidden="true" class="table-field-invisible-error">${heading}</span>
                       </th>`;
         } else {
           result += `<th scope="col" class="table-field-heading">
@@ -50,8 +50,8 @@ describe('FullscreenTable', () => {
                       </span>
                     </td>`;
         } else {
-          result += `<td class="table-field-left-aligned ">
-                      <div class="table-field-status-default">
+          result += `<td class="notifications-table-field-left-aligned ">
+                      <div class="notifications-table-field-status-default">
                         ${key}
                       </div>
                     </td>`;
@@ -172,30 +172,34 @@ describe('FullscreenTable', () => {
 
     test("when the page has loaded", () => {
       // add a delay to avoid flaky measurement -> jQuery vs window.getComputedStyle
-      setTimeout(function(){ 
+      setTimeout(function () {
         expect(window.getComputedStyle(tableFrame)['height']).toEqual('268px');
-      ; }, 200);
+        ;
+      }, 200);
 
       // add a delay to avoid flaky measurement -> jQuery vs window.getComputedStyle
-      setTimeout(function(){ 
+      setTimeout(function () {
         expect(window.getComputedStyle(numberColumnFrame)['height']).toEqual('268px');
-      ; }, 200);
+        ;
+      }, 200);
     });
 
     test("when the page has scrolled", () => {
 
       // scroll the window so the table fills the height of the window (768px)
       //windowMock.scrollBy(500);
-      
-      // add a delay to avoid flaky measurement -> jQuery vs window.getComputedStyle
-      setTimeout(function(){ 
-        expect(window.getComputedStyle(tableFrame)['height']).toEqual('768px');
-      ; }, 200);
 
       // add a delay to avoid flaky measurement -> jQuery vs window.getComputedStyle
-      setTimeout(function(){ 
+      setTimeout(function () {
+        expect(window.getComputedStyle(tableFrame)['height']).toEqual('768px');
+        ;
+      }, 200);
+
+      // add a delay to avoid flaky measurement -> jQuery vs window.getComputedStyle
+      setTimeout(function () {
         expect(window.getComputedStyle(numberColumnFrame)['height']).toEqual('768px');
-      ; }, 200);
+        ;
+      }, 200);
 
     });
 
@@ -205,14 +209,16 @@ describe('FullscreenTable', () => {
       windowMock.resizeTo({ height: 1000, width: 1024 });
 
       // add a delay to avoid flaky measurement -> jQuery vs window.getComputedStyle
-      setTimeout(function(){ 
+      setTimeout(function () {
         expect(window.getComputedStyle(tableFrame)['height']).toEqual('500px');
-        ; }, 200);
+        ;
+      }, 200);
 
       // add a delay to avoid flaky measurement -> jQuery vs window.getComputedStyle
-      setTimeout(function(){ 
+      setTimeout(function () {
         expect(window.getComputedStyle(tableFrame)['height']).toEqual('500px');
-        ; }, 200);
+        ;
+      }, 200);
 
     });
 

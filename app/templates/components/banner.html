@@ -2,7 +2,7 @@
 
 {% macro banner(body, type=None, with_tick=False, delete_button=None, subhead=None, context=None, action=None) %}
   <div
-    class="fr-alert{% if type=='dangerous' %} fr-alert--error {% endif %}"
+    class="fr-alert{% if type=='dangerous' %} fr-alert--error {% endif %} banner{% if type %}-{{ type }}{% endif %}{% if with_tick %}-with-tick{% else %} banner{% endif %}"
   >
     {% if subhead %}
       <h1>{{ subhead }}</h1>

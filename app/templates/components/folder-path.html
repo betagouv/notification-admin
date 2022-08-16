@@ -43,7 +43,7 @@
   current_user
 ) %}
   {% if folder_path %}
-    <nav aria-label="{{_('Current folder path')}}">
+    <nav class="fr-breadcrumb" aria-label="{{_('Current folder path')}}">
       {% if folder_path|length == 1 %}
         <a href="{{ url_for('.choose_template_to_copy', service_id=current_service_id) }}">{{ _('Services') }}</a>
         {{ folder_path_separator() }}

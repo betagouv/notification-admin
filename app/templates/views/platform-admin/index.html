@@ -27,7 +27,7 @@
 
   <div class="grid-row contain-floats mb-12 clear-both contain-floats">
     {% for noti_type in global_stats %}
-      <div>
+      <div class="notifications-stats">
         {{ big_number_simple(
             noti_type.black_box.number,
             message_count_label(noti_type.black_box.number, noti_type.black_box.notification_type)
@@ -48,9 +48,9 @@
 
   <div class="grid-row contain-floats mb-12 clear-both contain-floats">
     {% for noti_type in global_stats %}
-      <div>
+      <div class="notifications-stats">
         <div>
-          <span>{{ "{:,}".format(noti_type.test_data.number) }}</span>
+          <span class="notifications-big-number-number">{{ "{:,}".format(noti_type.test_data.number) }}</span>
           {{ noti_type.test_data.label }}
         </div>
       </div>

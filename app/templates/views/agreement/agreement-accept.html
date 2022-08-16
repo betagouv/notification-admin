@@ -27,7 +27,7 @@
           {{ radio(option, data_target='on-behalf-of' if option.data == 'someone-else' else None) }}
         {% endfor %}
       {% endcall %}
-      <div id="on-behalf-of">
+      <div id="on-behalf-of" class="notifications-conditional-radio-panel">
         {{ textbox(form.on_behalf_of_name, width='w-full') }}
         {{ textbox(form.on_behalf_of_email, width='w-full') }}
       </div>

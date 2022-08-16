@@ -11,7 +11,7 @@
     <a {% if id_key %}id="{{ id_key }}" {% endif %}
         href="{{ href }}" {% if lang %} lang="{{ lang }}" {% endif %}>
         {% if aria_label and aria_label != label %}
-            <span>{{ aria_label }}</span>
+            <span class="notifications-sr-only">{{ aria_label }}</span>
             <span role="presentation" aria-hidden="true">{{ label }}</span>
         {% else %}
             {{ label }}
@@ -31,7 +31,7 @@
   class=None,
   id_key=None
   ) %}
-<form {% if id_key %}id="{{ id_key }}" {% endif %} action="{{ href }}">
+<form {% if id_key %}id="{{ id_key }}" {% endif %} action="{{ href }}" class="notifications-button-container">
     <button class="fr-btn {% if class %} {{ class }} {% endif %}" aria-label="{{ label }}" type="submit">{{ label }}
     </button>
 </form>
@@ -43,7 +43,7 @@
     class=None,
     id_key=None
 ) %}
-    <form {%if id_key %}id="{{ id_key }}" {% endif %} action="{{href}}">
+    <form {%if id_key %}id="{{ id_key }}" {% endif %} action="{{href}}" class="notifications-button-container">
         <button class="fr-btn fr-btn--secondary {% if class %} {{ class }} {% endif %}" aria-label="{{ label }}"
             type="submit">{{ label }}</button>
     </form>

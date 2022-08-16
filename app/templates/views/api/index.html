@@ -21,7 +21,7 @@
   <nav>
     <div>
       <h2>
-        <a href="{{ url_for('.api_keys', service_id=current_service.id) }}">{{ _('API keys') }}</a>
+        <a class="notifications-api-header-links" href="{{ url_for('.api_keys', service_id=current_service.id) }}">{{ _('API keys') }}</a>
       </h2>
       <p>
         {{ _('An API key lets you connect your application or system with GC Notify.') }}
@@ -29,7 +29,7 @@
     </div>
     <div>
       <h2>
-        <a href="{{ url_for('.safelist', service_id=current_service.id) }}">{{ _('Safelist') }}</a>
+        <a class="notifications-api-header-links" href="{{ url_for('.safelist', service_id=current_service.id) }}">{{ _('Safelist') }}</a>
       </h2>
       <p>
         {{ _('A safelist lets you send test notifications to specific people.') }}
@@ -37,7 +37,7 @@
     </div>
     <div>
       <h2>
-        <a href="{{ url_for(callbacks_link, service_id=current_service.id) }}">{{ _('Callbacks') }}</a>
+        <a class="notifications-api-header-links" href="{{ url_for(callbacks_link, service_id=current_service.id) }}">{{ _('Callbacks') }}</a>
       </h2>
       <p>
         {{ _('Callbacks let you know whether GC Notify was able to deliver notifications.') }}

@@ -7,12 +7,12 @@
   <li>
     {% if yes %}
       <span>
-        <span>{{ truthy_hint }}</span>
+        <span class="notifications-visually-hidden">{{ truthy_hint }}</span>
         {{ label}}
       </span>
     {% else %}
       <span>
-        <span>{{ falsey_hint }}</span>
+        <span class="notifications-visually-hidden">{{ falsey_hint }}</span>
         {{ label}}
       </span>
     {% endif %}

@@ -24,7 +24,7 @@
     {% for month in months %}
       <h2>{{ _(month.name) }}</h2>
       {% if not month.templates_used %}
-        <p>
+        <p class="notifications-table-no-data">
           {{ _('No messages sent') }}
         </p>
       {% else %}

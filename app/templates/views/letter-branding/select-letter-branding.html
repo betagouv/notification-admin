@@ -13,7 +13,7 @@
   <nav>
     {% for brand in letter_brandings %}
       <div>
-        <div>
+        <div class="notifications-message-name">
           <a href="{{ url_for('.update_letter_branding', branding_id=brand.id) }}">
             {{ brand.name }}
           </a>

@@ -23,7 +23,7 @@
 
     {% if can_cancel_letter_job %}
       <div>
-        <div>
+        <div class="notifications-page-footer">
           <span>
               <a href="{{ url_for('main.cancel_letter_job', service_id=current_service.id, job_id=job_id) }}">Cancel sending these letters</a>
           </span>

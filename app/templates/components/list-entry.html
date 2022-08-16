@@ -20,7 +20,7 @@
             </span>
           {% endif %}
           {% if field.errors %}
-            <span data-module="track-error" data-error-type="{{ field.errors[0][0] }}" data-error-label="{{ field.name }}">
+            <span class="fr-error-text" data-module="track-error" data-error-type="{{ field.errors[0][0] }}" data-error-label="{{ field.name }}">
               {{ field.errors[0][0] }}
             </span>
           {% endif %}

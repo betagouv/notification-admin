@@ -30,12 +30,14 @@ def test_find_users_by_email_displays_users_found(client_request, platform_admin
 
     assert any(
         element.text.strip() == "test@beta.gouv.fr"
-        for element in document.find_all("a", {"class": "browse-list-link"}, href=True)
+        for element in document.find_all("a", {"class": "notifications-browse-list-link"}, href=True)
     )
-    assert any(element.text.strip() == "Test User" for element in document.find_all("p", {"class": "browse-list-hint"}))
+    assert any(
+        element.text.strip() == "Test User" for element in document.find_all("p", {"class": "notifications-browse-list-hint"})
+    )
 
-    assert document.find("a", {"class": "browse-list-link"}).text.strip() == "test@beta.gouv.fr"
-    assert document.find("p", {"class": "browse-list-hint"}).text.strip() == "Test User"
+    assert document.find("a", {"class": "notifications-browse-list-link"}).text.strip() == "test@beta.gouv.fr"
+    assert document.find("p", {"class": "notifications-browse-list-hint"}).text.strip() == "Test User"
 
 
 def test_find_users_by_email_displays_multiple_users(client_request, platform_admin_user, mocker):
@@ -47,8 +49,12 @@ def test_find_users_by_email_displays_multiple_users(client_request, platform_ad
     )
     document = client_request.post("main.find_users_by_email", _data={"search": "apple"}, _expected_status=200)
 
-    assert any(element.text.strip() == "Apple Jack" for element in document.find_all("p", {"class": "browse-list-hint"}))
-    assert any(element.text.strip() == "Apple Bloom" for element in document.find_all("p", {"class": "browse-list-hint"}))
+    assert any(
+        element.text.strip() == "Apple Jack" for element in document.find_all("p", {"class": "notifications-browse-list-hint"})
+    )
+    assert any(
+        element.text.strip() == "Apple Bloom" for element in document.find_all("p", {"class": "notifications-browse-list-hint"})
+    )
 
 
 def test_find_users_by_email_displays_message_if_no_users_found(client_request, platform_admin_user, mocker):
@@ -64,7 +70,7 @@ def test_find_users_by_email_displays_message_if_no_users_found(client_request, 
         _expected_status=200,
     )
 
-    assert document.find("p", {"class": "browse-list-hint"}).text.strip() == "No users found."
+    assert document.find("p", {"class": "notifications-browse-list-hint"}).text.strip() == "No users found."
 
 
 def test_find_users_by_email_validates_against_empty_search_submission(client_request, platform_admin_user, mocker):
@@ -72,7 +78,7 @@ def test_find_users_by_email_validates_against_empty_search_submission(client_re
     document = client_request.post("main.find_users_by_email", _data={"search": ""}, _expected_status=200)
 
     expected_message = "You need to enter full or partial email address to search by."
-    assert document.find("span", {"class": "error-message"}).text.strip() == expected_message
+    assert document.find("span", {"class": "fr-error-text"}).text.strip() == expected_message
 
 
 def test_user_information_page_shows_information_about_user(client, platform_admin_user, mocker):
@@ -219,7 +225,7 @@ def test_archive_user_prompts_for_confirmation(
 
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    assert "Are you sure you want to archive this user?" in page.find("div", class_="banner-dangerous").text
+    assert "Are you sure you want to archive this user?" in page.find("div", class_="fr-alert--error").text
 
 
 def test_reset_password_prompts_for_confirmation(
@@ -231,7 +237,7 @@ def test_reset_password_prompts_for_confirmation(
 
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    assert "Are you sure you want to request a password reset for this user?" in page.find("div", class_="banner-dangerous").text
+    assert "Are you sure you want to request a password reset for this user?" in page.find("div", class_="fr-alert--error").text
 
 
 def test_unblock_user_resets_failed_login_count(

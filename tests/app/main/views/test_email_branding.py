@@ -17,7 +17,7 @@ def test_email_branding_page_shows_full_branding_list(platform_admin_client, moc
 
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    links = page.select(".email-brand a")
+    links = page.select(".notifications-email-brand a")
     brand_names = [normalize_spaces(link.text) for link in links]
     hrefs = [link["href"] for link in links]
 
@@ -117,7 +117,7 @@ def test_create_email_branding_requires_a_name_when_submitting_logo_details(
         _expected_status=200,
     )
 
-    assert page.select_one(".error-message").text.strip() == "This field is required"
+    assert page.select_one(".fr-error-text").text.strip() == "This field is required"
     assert mock_create_email_branding.called is False
 
 
@@ -138,7 +138,7 @@ def test_create_email_branding_does_not_require_a_name_when_uploading_a_file(cli
         _follow_redirects=True,
     )
 
-    assert not page.find(".error-message")
+    assert not page.find(".fr-error-text")
 
 
 def test_create_new_email_branding_when_branding_saved(platform_admin_client, mocker, mock_create_email_branding, fake_uuid):

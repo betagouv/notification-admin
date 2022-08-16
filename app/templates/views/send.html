@@ -19,7 +19,7 @@
     )
   }}
 
-  <div class="page-footer mb-12 clear-both contain-floats">
+  <div class="notifications-page-footer mb-12 clear-both contain-floats">
     {{ file_upload( form.file, button_text=_('Choose a file')) }}
   </div>
 
@@ -28,9 +28,9 @@
     {% set csv_acronym = _('Comma Separated Values') %}
     {% set tsv_acr = _('Tab Separated Values') %} 
     {% set ods_acronym = _('Open Document Spreadsheet') %}
-    <span>{{ csv_acronym }}</span><span aria-hidden="true">{{ _('CSV') }}</span>, 
-    <span>{{ tsv_acr }}</span><span aria-hidden="true">{{ _('TSV') }}</span>, 
-    <span>{{ ods_acronym }}</span><span aria-hidden="true">{{ _('ODS') }}</span>
+    <span class="notifications-sr-only">{{ csv_acronym }}</span><span aria-hidden="true">{{ _('CSV') }}</span>, 
+    <span class="notifications-sr-only">{{ tsv_acr }}</span><span aria-hidden="true">{{ _('TSV') }}</span>, 
+    <span class="notifications-sr-only">{{ ods_acronym }}</span><span aria-hidden="true">{{ _('ODS') }}</span>
     {{ _('or Microsoft Excel spreadsheet') }}.
   </p>
 

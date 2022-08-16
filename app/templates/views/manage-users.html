@@ -11,10 +11,9 @@
 
 {% block maincolumn_content %}
 
-  <h1>
+  <h1 id="notifications-team-members">
     {{ _('Team members') }}
   </h1>
-
 {% if not has_team_members and current_user.has_permissions('manage_service') %}
   <p>
     {{ _("You should have at least two team members who can manage settings.") }}
@@ -23,7 +22,7 @@
 
 {% if show_search_box %}
   <div data-module="autofocus">
-    {{ live_search(target_selector='.user-list-item', show=True, form=form) }}
+    {{ live_search(target_selector='.notifications-user-list-item', show=True, form=form) }}
   </div>
 {% endif %}
 
@@ -33,11 +32,11 @@
     </div>
   {% endif %}
 
-  <div>
+  <div class="notifications-user-list">
 
 
     {% for user in users %}
-      <div>
+      <div class="notifications-user-list-item">
 
         <h2 title="{{ user.email_address }}">
           {%- if user.name -%}
@@ -67,7 +66,7 @@
             </ul>
             {# only show if the service has folders #}
             {% if current_service.all_template_folders %}
-              <div>
+              <div class="notifications-tick-cross-list-hint">
                 {% set folder_count = user.template_folders_for_service(current_service) | length %}
 
                 {% if folder_count == 0 %}
@@ -80,7 +79,7 @@
               </div>
             {% endif %}
             {% if current_service.has_permission('email_auth') %}
-              <div>
+              <div class="notifications-tick-cross-list-hint">
                 {% if user.security_keys|length > 0  %}
                 {{ _('Signs in with a Fido2 key') }}
                 {% elif user.auth_type == 'sms_auth'  %}

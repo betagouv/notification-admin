@@ -6,7 +6,7 @@
 {% set heading_1 = _('Recipient') %}
 {% set heading_2 = _('Status') %}
 
-<div aria-labelledby='pill-selected-item'>
+<div class="notifications-ajax-block-container" aria-labelledby='pill-selected-item'>
   {% if job.job_status == 'scheduled' %}
 
     <p>
@@ -15,7 +15,7 @@
       <span>{{ job.scheduled_for }}</span>
     </p>
     {% set btn_txt = _('Cancel scheduled send') %}
-    <div>
+    <div class="notifications-page-footer">
       {% call form_wrapper() %}
         {{ page_footer(
           button_text=btn_txt,
@@ -68,7 +68,7 @@
       {% endcall %}
 
       {% if more_than_one_page %}
-        <p>
+        <p class="notifications-table-show-more-link">
           {{ _('Only showing the first 50 rows') }}
         </p>
       {% endif %}

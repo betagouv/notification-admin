@@ -22,7 +22,7 @@ describe('API key', () => {
 
     // mock sticky JS
     window.GOVUK.stickAtBottomWhenScrolling = {
-      recalculate: jest.fn(() => {})
+      recalculate: jest.fn(() => { })
     }
 
   });
@@ -35,12 +35,12 @@ describe('API key', () => {
     require('../../app/assets/javascripts/apiKey.js');
 
     // set up DOM
-    document.body.innerHTML =`
+    document.body.innerHTML = `
       <h2 class="api-key-name">
         ${thing}
       </h2>
       <div data-module="api-key" data-key="${apiKey}" data-thing="${thing}" aria-live="assertive">
-        <span class="api-key-key">${apiKey}</span>
+        <span class="notifications-api-key-key">${apiKey}</span>
       </div>`;
 
     component = document.querySelector('[data-module=api-key]');
@@ -71,12 +71,12 @@ describe('API key', () => {
     beforeEach(() => {
 
       // set up DOM
-      document.body.innerHTML =`
+      document.body.innerHTML = `
         <h2 class="api-key-name">
           ${thing}
         </h2>
         <div data-module="api-key" data-key="${apiKey}" data-thing="${thing}" aria-live="assertive">
-          <span class="api-key-key">${apiKey}</span>
+          <span class="notifications-api-key-key">${apiKey}</span>
         </div>`;
 
       component = document.querySelector('[data-module=api-key]');
@@ -140,7 +140,7 @@ describe('API key', () => {
         document.createRange = jest.fn(() => rangeMock);
 
         // plug JSDOM not having execCommand
-        document.execCommand = jest.fn(() => {});
+        document.execCommand = jest.fn(() => { });
 
         helpers.triggerEvent(copyButton, 'click');
 

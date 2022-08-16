@@ -7,7 +7,7 @@
 
 {% set file_contents_header_id = 'file-preview' %}
 {% macro skip_to_file_contents() %}
-  <p>
+  <p class="notifications-visually-hidden">
     <a href="#{{ file_contents_header_id }}">{{ _('Skip to file contents') }}</a>
   </p>
 {% endmacro %}

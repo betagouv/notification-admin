@@ -83,7 +83,7 @@ def test_show_correct_title_and_description_for_sender_type(
     page = client_request.get(".set_sender", service_id=service_one["id"], template_id=fake_uuid)
 
     assert page.select_one("h1").text == expected_title
-    assert normalize_spaces(page.select_one("legend .visually-hidden").text) == expected_description
+    assert normalize_spaces(page.select_one("legend .notifications-visually-hidden").text) == expected_description
 
 
 @pytest.mark.parametrize(
@@ -106,7 +106,7 @@ def test_default_sender_is_checked_and_has_hint(client_request, service_one, fak
     page = client_request.get(".set_sender", service_id=service_one["id"], template_id=fake_uuid)
 
     assert page.select(".multiple-choice input")[0].has_attr("checked")
-    assert normalize_spaces(page.select_one(".multiple-choice label .block-label-hint").text) == "(Default)"
+    assert normalize_spaces(page.select_one(".multiple-choice label .notifications-block-label-hint").text) == "(Default)"
     assert not page.select(".multiple-choice input")[1].has_attr("checked")
 
 
@@ -120,7 +120,10 @@ def test_default_inbound_sender_is_checked_and_has_hint_with_default_and_receive
     page = client_request.get(".set_sender", service_id=service_one["id"], template_id=fake_uuid)
 
     assert page.select(".multiple-choice input")[0].has_attr("checked")
-    assert normalize_spaces(page.select_one(".multiple-choice label .block-label-hint").text) == "(Default and receives replies)"
+    assert (
+        normalize_spaces(page.select_one(".multiple-choice label .notifications-block-label-hint").text)
+        == "(Default and receives replies)"
+    )
     assert not page.select(".multiple-choice input")[1].has_attr("checked")
     assert not page.select(".multiple-choice input")[2].has_attr("checked")
 
@@ -135,7 +138,10 @@ def test_sms_sender_has_receives_replies_hint(
     page = client_request.get(".set_sender", service_id=service_one["id"], template_id=fake_uuid)
 
     assert page.select(".multiple-choice input")[0].has_attr("checked")
-    assert normalize_spaces(page.select_one(".multiple-choice label .block-label-hint").text) == "(Default and receives replies)"
+    assert (
+        normalize_spaces(page.select_one(".multiple-choice label .notifications-block-label-hint").text)
+        == "(Default and receives replies)"
+    )
     assert not page.select(".multiple-choice input")[1].has_attr("checked")
     assert not page.select(".multiple-choice input")[2].has_attr("checked")
 
@@ -225,8 +231,8 @@ def test_should_not_allow_files_to_be_uploaded_without_the_correct_permission(
     )
 
     assert page.select("main p")[0].text.strip() == "Sending text messages has been disabled for your service."
-    assert page.select(".back-link")[0].text == "Back"
-    assert page.select(".back-link")[0]["href"] == url_for(
+    assert page.select(".notifications-back-link")[0].text == "Back"
+    assert page.select(".notifications-back-link")[0]["href"] == url_for(
         ".view_template",
         service_id=service_one["id"],
         template_id=template_id,
@@ -279,7 +285,7 @@ def test_upload_files_in_different_formats(
         )
     else:
         assert not mock_s3_upload.called
-        assert normalize_spaces(page.select_one(".banner-dangerous").text) == (
+        assert normalize_spaces(page.select_one(".fr-alert--error").text) == (
             "Could not read {}. Try using a different file format.".format(filename)
         )
 
@@ -351,7 +357,7 @@ def test_shows_error_if_parsing_exception(
     )
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
-    assert normalize_spaces(page.select_one(".banner-dangerous").text) == (expected_error_message)
+    assert normalize_spaces(page.select_one(".fr-alert--error").text) == (expected_error_message)
 
 
 def test_upload_csv_file_with_errors_shows_check_page_with_errors(
@@ -492,7 +498,7 @@ def test_upload_csv_file_with_missing_columns_shows_error(
     with client_request.session_transaction() as session:
         assert "file_uploads" not in session
 
-    assert normalize_spaces(page.select(".banner-dangerous")[0].text) == expected_error
+    assert normalize_spaces(page.select(".fr-alert--error")[0].text) == expected_error
 
 
 def test_upload_csv_invalid_extension(
@@ -623,11 +629,11 @@ def test_upload_valid_csv_shows_preview_and_table(
     for row_index, row in enumerate(
         [
             (
-                '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="6502532223">6502532223</div> </div> </td>',  # noqa: E501
-                '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="A">A</div> </div> </td>',  # noqa: E501
+                '<td class="notifications-table-field-left-aligned"> <div class=""> <div title="6502532223">6502532223</div> </div> </td>',  # noqa: E501
+                '<td class="notifications-table-field-left-aligned"> <div class=""> <div title="A">A</div> </div> </td>',  # noqa: E501
                 (
-                    '<td class="table-field-left-aligned"> '
-                    '<div class="table-field-status-default"> '
+                    '<td class="notifications-table-field-left-aligned"> '
+                    '<div class="notifications-table-field-status-default"> '
                     "<ul> "
                     "<li>foo</li> <li>foo</li> <li>foo</li> "
                     "</ul> "
@@ -636,11 +642,11 @@ def test_upload_valid_csv_shows_preview_and_table(
                 ),
             ),
             (
-                '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="6502532224">6502532224</div> </div> </td>',  # noqa: E501
-                '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="B">B</div> </div> </td>',  # noqa: E501
+                '<td class="notifications-table-field-left-aligned"> <div class=""> <div title="6502532224">6502532224</div> </div> </td>',  # noqa: E501
+                '<td class="notifications-table-field-left-aligned"> <div class=""> <div title="B">B</div> </div> </td>',  # noqa: E501
                 (
-                    '<td class="table-field-left-aligned"> '
-                    '<div class="table-field-status-default"> '
+                    '<td class="notifications-table-field-left-aligned"> '
+                    '<div class="notifications-table-field-status-default"> '
                     "<ul> "
                     "<li>foo</li> <li>foo</li> <li>foo</li> "
                     "</ul> "
@@ -649,11 +655,11 @@ def test_upload_valid_csv_shows_preview_and_table(
                 ),
             ),
             (
-                '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="6502532225">6502532225</div> </div> </td>',  # noqa: E501
-                '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="C">C</div> </div> </td>',  # noqa: E501
+                '<td class="notifications-table-field-left-aligned"> <div class=""> <div title="6502532225">6502532225</div> </div> </td>',  # noqa: E501
+                '<td class="notifications-table-field-left-aligned"> <div class=""> <div title="C">C</div> </div> </td>',  # noqa: E501
                 (
-                    '<td class="table-field-left-aligned"> '
-                    '<div class="table-field-status-default"> '
+                    '<td class="notifications-table-field-left-aligned"> '
+                    '<div class="notifications-table-field-status-default"> '
                     "<ul> "
                     "<li>foo</li> <li>foo</li> "
                     "</ul> "
@@ -916,7 +922,7 @@ def test_send_test_doesnt_show_file_contents(
 
     assert page.select("h1")[0].text.strip() == "Review before sending"
     assert len(page.select("table")) == 0
-    assert len(page.select(".banner-dangerous")) == 0
+    assert len(page.select(".fr-alert--error")) == 0
     assert page.select_one("button[type=submit]").text.strip() == "Send 1 text message"
 
 
@@ -1018,8 +1024,8 @@ def test_send_one_off_does_not_send_without_the_correct_permissions(
     )
 
     assert page.select("main p")[0].text.strip() == "Sending text messages has been disabled for your service."
-    assert page.select(".back-link")[0].text == "Back"
-    assert page.select(".back-link")[0]["href"] == url_for(
+    assert page.select(".notifications-back-link")[0].text == "Back"
+    assert page.select(".notifications-back-link")[0]["href"] == url_for(
         ".view_template",
         service_id=service_one["id"],
         template_id=template_id,
@@ -1614,7 +1620,9 @@ def test_send_test_sms_message_with_placeholders_shows_first_field(
 
     assert page.select("label")[0].text.strip() == "Name"
     assert page.select("input")[0]["name"] == "placeholder_value"
-    assert page.select(".back-link")[0]["href"] == url_for(expected_back_link_endpoint, service_id=SERVICE_ONE_ID, **extra_args)
+    assert page.select(".notifications-back-link")[0]["href"] == url_for(
+        expected_back_link_endpoint, service_id=SERVICE_ONE_ID, **extra_args
+    )
     with client_request.session_transaction() as session:
         assert session["recipient"] == "6502532222"
 
@@ -1636,7 +1644,7 @@ def test_send_test_sms_message_back_link_with_multiple_placeholders(
         step_index=2,
     )
 
-    assert page.select_one(".back-link")["href"] == url_for(
+    assert page.select_one(".notifications-back-link")["href"] == url_for(
         "main.send_test_step",
         service_id=SERVICE_ONE_ID,
         template_id=unchanging_fake_uuid,
@@ -1694,7 +1702,7 @@ def test_send_test_sms_message_back_link_in_tour(
         help=2,
     )
 
-    assert page.select_one(".back-link")["href"] == expected_back_link(
+    assert page.select_one(".notifications-back-link")["href"] == expected_back_link(
         service_id=SERVICE_ONE_ID,
         template_id=unchanging_fake_uuid,
     )
@@ -1840,7 +1848,7 @@ def test_send_test_indicates_optional_address_columns(
 
     assert normalize_spaces(page.select("label")[0].text) == ("Address line 4")
     assert normalize_spaces(page.select("label + [id*='-hint']")[0].text) == ("Optional")
-    assert page.select(".back-link")[0]["href"] == url_for(
+    assert page.select(".notifications-back-link")[0]["href"] == url_for(
         "main.send_one_off_step",
         service_id=SERVICE_ONE_ID,
         template_id=fake_uuid,
@@ -2472,7 +2480,7 @@ def test_check_messages_back_link(
         **extra_args,
     )
 
-    assert (page.findAll("a", {"class": "back-link"})[0]["href"]) == expected_url(
+    assert (page.findAll("a", {"class": "notifications-back-link"})[0]["href"]) == expected_url(
         service_id=SERVICE_ONE_ID, template_id=fake_uuid
     )
 
@@ -2534,7 +2542,7 @@ def test_check_messages_shows_too_many_messages_errors(
     assert page.find("h1").text.strip() == "Too many recipients"
 
     # remove excess whitespace from element
-    details = page.find("div", class_="banner-dangerous").findAll("p")[1]
+    details = page.find("div", class_="fr-alert--error").findAll("p")[1]
     details = " ".join([line.strip() for line in details.text.split("\n") if line.strip() != ""])
     assert details == expected_msg
 
@@ -2570,7 +2578,7 @@ def test_check_messages_shows_trial_mode_error(
         _test_page_title=False,
     )
 
-    assert " ".join(page.find("div", class_="banner-dangerous").text.split()) == (
+    assert " ".join(page.find("div", class_="fr-alert--error").text.split()) == (
         "You cannot send to this phone number "
         "In trial mode, you can only send to yourself and team members. To send to more recipients, request to go live."
     )
@@ -2637,7 +2645,7 @@ def test_check_messages_shows_trial_mode_error_for_letters(
         _test_page_title=False,
     )
 
-    error = page.select(".banner-dangerous")
+    error = page.select(".fr-alert--error")
 
     if error_should_be_shown:
         assert normalize_spaces(error[0].text) == ("{} " "In trial mode, you can only preview how your letters will look").format(
@@ -2692,7 +2700,7 @@ def test_check_messages_shows_data_errors_before_trial_mode_errors_for_letters(
         original_file_name="example.xlsx",
     )
 
-    assert normalize_spaces(page.select_one(".banner-dangerous").text) == (
+    assert normalize_spaces(page.select_one(".fr-alert--error").text) == (
         "There is a problem with example.xlsx " "You need to enter missing data in 2 rows"
     )
     assert not page.select(".table-field-index a")
@@ -2731,7 +2739,7 @@ def test_warns_if_file_sent_already(
         _test_page_title=False,
     )
 
-    assert normalize_spaces(page.select_one(".banner-dangerous").text) == (
+    assert normalize_spaces(page.select_one(".fr-alert--error").text) == (
         "These messages have already been sent today " "If you need to re-send them, rename the file and upload it again."
     )
 
@@ -2776,7 +2784,7 @@ def test_check_messages_column_error_doesnt_show_optional_columns(
         _test_page_title=False,
     )
 
-    assert normalize_spaces(page.select_one(".banner-dangerous").text) == (
+    assert normalize_spaces(page.select_one(".fr-alert--error").text) == (
         "Your file needs a column called ‘postcode’ "
         "Right now it has columns called ‘address_line_1’, ‘address_line_2’ and ‘foo’."
     )
@@ -2872,7 +2880,7 @@ def test_letters_from_csv_files_dont_have_download_link(
         **extra_args,
     )
 
-    assert normalize_spaces(page.select_one(".banner-dangerous").text) == normalize_spaces(
+    assert normalize_spaces(page.select_one(".fr-alert--error").text) == normalize_spaces(
         "You cannot send this letter " "In trial mode, you can only preview how your letters will look"
     )
 
@@ -2961,14 +2969,14 @@ def test_send_one_off_letter_errors_in_trial_mode(
         _test_page_title=False,
     )
 
-    assert normalize_spaces(page.select(".banner-dangerous")) == normalize_spaces(
+    assert normalize_spaces(page.select(".fr-alert--error")) == normalize_spaces(
         "You cannot send this letter " "In trial mode, you can only preview how your letters will look"
     )
 
     assert len(page.select(".letter img")) == 5
 
     assert not page.select("[type=submit]")
-    assert page.select_one(".back-link").text == "Back"
+    assert page.select_one(".notifications-back-link").text == "Back"
     assert page.select_one("a[download]").text == "Download as a PDF"
 
 
@@ -3004,7 +3012,7 @@ def test_check_messages_shows_over_max_row_error(
         _test_page_title=False,
     )
 
-    assert " ".join(page.find("div", class_="banner-dangerous").text.split()) == (
+    assert " ".join(page.find("div", class_="fr-alert--error").text.split()) == (
         "Your file has too many rows " "GC Notify can process up to 11,111 rows at once. " "Your file has 99,999 rows."
     )
 
@@ -3072,7 +3080,7 @@ def test_check_notification_shows_preview(client_request, service_one, fake_uuid
     page = client_request.get("main.check_notification", service_id=service_one["id"], template_id=fake_uuid)
 
     assert page.h1.text.strip() == "Review before sending"
-    assert (page.findAll("a", {"class": "back-link"})[0]["href"]) == url_for(
+    assert (page.findAll("a", {"class": "notifications-back-link"})[0]["href"]) == url_for(
         ".add_recipients", service_id=service_one["id"], template_id=fake_uuid
     )
 
@@ -3258,8 +3266,8 @@ def test_send_notification_shows_error_if_400(
         _expected_status=200,
     )
 
-    assert normalize_spaces(page.select(".banner-dangerous h1")[0].text) == expected_h1
-    assert normalize_spaces(page.select(".banner-dangerous p")[0].text) == expected_err_details
+    assert normalize_spaces(page.select(".fr-alert--error h1")[0].text) == expected_h1
+    assert normalize_spaces(page.select(".fr-alert--error p")[0].text) == expected_err_details
     assert not page.find("input[type=submit]")
 
 
@@ -3288,8 +3296,8 @@ def test_send_notification_shows_email_error_in_trial_mode(
         _expected_status=200,
     )
 
-    assert normalize_spaces(page.select(".banner-dangerous h1")[0].text) == ("You cannot send to this email address")
-    assert normalize_spaces(page.select(".banner-dangerous p")[0].text) == (
+    assert normalize_spaces(page.select(".fr-alert--error h1")[0].text) == ("You cannot send to this email address")
+    assert normalize_spaces(page.select(".fr-alert--error p")[0].text) == (
         "In trial mode, you can only send to yourself and team members. To send to more recipients, request to go live."
     )
 

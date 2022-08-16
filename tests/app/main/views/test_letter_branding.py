@@ -20,7 +20,7 @@ def test_letter_branding_page_shows_full_branding_list(platform_admin_client, mo
 
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    links = page.select(".message-name a")
+    links = page.select(".notifications-message-name a")
     brand_names = [normalize_spaces(link.text) for link in links]
     hrefs = [link["href"] for link in links]
 
@@ -92,7 +92,7 @@ def test_update_letter_branding_when_uploading_invalid_file(platform_admin_clien
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
     assert page.find("h1").text == "Update letter branding"
-    assert page.select_one(".error-message").text.strip() == "SVG Images only!"
+    assert page.select_one(".fr-error-text").text.strip() == "SVG Images only!"
 
 
 def test_update_letter_branding_deletes_any_temp_files_when_uploading_a_file(
@@ -163,7 +163,7 @@ def test_update_letter_branding_shows_form_errors_on_name_fields(
     )
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    error_messages = page.find_all("span", class_="error-message")
+    error_messages = page.find_all("span", class_="fr-error-text")
 
     assert page.find("h1").text == "Update letter branding"
     assert len(error_messages) == 1
@@ -194,7 +194,7 @@ def test_update_letter_branding_shows_database_errors_on_name_field(
     )
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    error_message = page.find("span", class_="error-message").text.strip()
+    error_message = page.find("span", class_="fr-error-text").text.strip()
 
     assert page.find("h1").text == "Update letter branding"
     assert error_message == "name already in use"
@@ -263,7 +263,7 @@ def test_update_letter_branding_rolls_back_db_changes_and_shows_error_if_saving_
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert response.status_code == 200
     assert page.find("h1").text == "Update letter branding"
-    assert page.select_one(".error-message").text.strip() == "Error saving uploaded file - try uploading again"
+    assert page.select_one(".fr-error-text").text.strip() == "Error saving uploaded file - try uploading again"
 
     assert mock_client_update.call_count == 2
     assert mock_client_update.call_args_list == [
@@ -322,7 +322,7 @@ def test_create_letter_branding_when_uploading_invalid_file(platform_admin_clien
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
     assert page.find("h1").text == "Add letter branding"
-    assert page.select_one(".error-message").text.strip() == "SVG Images only!"
+    assert page.select_one(".fr-error-text").text.strip() == "SVG Images only!"
 
 
 def test_create_letter_branding_deletes_temp_files_when_uploading_a_new_file(
@@ -377,7 +377,7 @@ def test_create_letter_branding_shows_an_error_when_submitting_details_with_no_l
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
 
     assert page.find("h1").text == "Add letter branding"
-    assert page.select_one(".error-message").text.strip() == "You need to upload a file to submit"
+    assert page.select_one(".fr-error-text").text.strip() == "You need to upload a file to submit"
 
 
 def test_create_letter_branding_persists_logo_when_all_data_is_valid(
@@ -429,7 +429,7 @@ def test_create_letter_branding_shows_form_errors_on_name_field(platform_admin_c
     )
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    error_messages = page.find_all("span", class_="error-message")
+    error_messages = page.find_all("span", class_="fr-error-text")
 
     assert page.find("h1").text == "Add letter branding"
     assert len(error_messages) == 1
@@ -464,7 +464,7 @@ def test_create_letter_branding_shows_database_errors_on_name_fields(
     )
 
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
-    error_message = page.find("span", class_="error-message").text.strip()
+    error_message = page.find("span", class_="fr-error-text").text.strip()
 
     assert page.find("h1").text == "Add letter branding"
     assert error_message == "name already in use"

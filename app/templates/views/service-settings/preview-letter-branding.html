@@ -9,11 +9,11 @@
   <h1>Preview letter branding</h1>
   <div>
     <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
-      <iframe src="{{ url_for('main.letter_template', branding_style=form.branding_style.data) }}"></iframe>
+      <iframe class=".notifications-branding-preview" src="{{ url_for('main.letter_template', branding_style=form.branding_style.data) }}"></iframe>
       {% call form_wrapper(action=action) %}
         <div class="form-group contain-floats box-border mb-gutterHalf md:mb-gutter">
           {{ form.hidden_tag() }}
-          <div>
+          <div class="notifications-page-footer">
             <button type="submit">Save</button>
             <a href="{{ url_for('main.service_settings', service_id=service_id) }}">Back to service settings</a>
           </div>

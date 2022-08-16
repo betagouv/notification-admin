@@ -43,7 +43,7 @@
     <fieldset id="{{ field.id }}" role="{{ group }}" aria-labelledby="{{ field.id }}-label">
       <legend class="{{ 'form-label heading-small' }}{% if legend_style != 'text' %} {{ legend_style }}{% endif %}">
         {% if hide_legend %}
-          <span>
+          <span class="notifications-visually-hidden">
           {% endif %}
           {{ field.label.text|safe }}
           {% if hide_legend %}
@@ -55,7 +55,7 @@
           </span>
         {% endif %}
         {% if field.errors %}
-          <span data-module="track-error" data-error-type="{{ field.errors[0] }}" data-error-label="{{ field.name }}">
+          <span data-module="track-error" class="fr-error-text" data-error-type="{{ field.errors[0] }}" data-error-label="{{ field.name }}">
             {{ field.errors[0] }}
           </span>
         {% endif %}
@@ -75,14 +75,14 @@
       <div class="multiple-choice{{ ' has-conditional' if has_conditional}}" {% if data_target %} data-target="{{ data_target }}" {% endif %}>
       {% endif %}
       <input id="{{ option.id }}" name="{{ option.name }}" type="{{ input }}" value="{{ option.data }}" {% if option.data in disable %} disabled {% endif %} {% if option.checked %} checked {% endif %}>
-        <label for="{{ option.id }}">
+        <label class="notifications-block-label" for="{{ option.id }}">
           {{ option.label.text.split("||")[0] if '||' in option.label.text else option.label.text }}
           {% if '||' in option.label.text %}
             <div id="{{ option.id }}-img">
               <img src="{{ option.label.text.split('||')[1] }}" alt="{{ option.label.text.split('||')[2] }}" style="width: 400px;margin-top:16px"></div>
             {% endif %}
             {% if option_hints[option.data] %}
-              <div>
+              <div class="notifications-block-label-hint">
                 {{ option_hints[option.data] }}
               </div>
             {% endif %}

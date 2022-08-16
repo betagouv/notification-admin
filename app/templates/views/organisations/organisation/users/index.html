@@ -4,6 +4,7 @@
 {% from "components/tick-cross.html" import tick_cross %}
 {% from "components/textbox.html" import textbox %}
 {% from "components/live-search.html" import live_search %}
+{% from "components/buttons.html" import primary_button_blue_lighter, secondary_button_transparent_white %}
 
 {% block org_page_title %}
   Team members
@@ -17,16 +18,16 @@
 
   {% if show_search_box %}
     <div data-module="autofocus">
-      {{ live_search(target_selector='.user-list-item', show=True, form=form) }}
+      {{ live_search(target_selector='.notifications-user-list-item', show=True, form=form) }}
     </div>
   {% endif %}
 
-  <div>
+  <div class="notifications-user-list">
     {% for user in users %}
-      <div>
+      <div class="notifications-user-list-item">
         <h3>
           {%- if user.name -%}
-            <span>{{ user.name }}</span>&ensp;
+            <span class="notifications-heading-small">{{ user.name }}</span>&ensp;
           {%- endif -%}
           <span>
             {%- if user.status == 'pending' -%}
@@ -43,7 +44,7 @@
         <ul>
           <li>
             {% if user.status == 'pending' %}
-              <a href="{{ url_for('.cancel_invited_org_user', org_id=current_org.id, invited_user_id=user.id)}}">Cancel invitation</a>
+              {{ secondary_button_transparent_white(label="Cancel invitation", href=url_for('.cancel_invited_org_user', org_id=current_org.id, invited_user_id=user.id), class="notifications-cancel-invitation-button") }}
             {% endif %}
           </li>
         </ul>
@@ -52,7 +53,7 @@
   </div>
 
   <div>
-    <a href="{{ url_for('.invite_org_user', org_id=current_org.id) }}">Invite team member</a>
+    {{ primary_button_blue_lighter(label="Invite team member", href=url_for('.invite_org_user', org_id=current_org.id)) }}
   </div>
 
 {% endblock %}

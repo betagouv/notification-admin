@@ -86,10 +86,10 @@ showHideContent.init();
 $(() => GOVUK.modules.start());
 
 $(() =>
-  $(".error-message").eq(0).parent("label").next("input").trigger("focus")
+  $(".fr-error-text").eq(0).parent("label").next("input").trigger("focus")
 );
 
-$(() => $(".banner-dangerous").eq(0).trigger("focus"));
+$(() => $(".fr-alert--error").eq(0).trigger("focus"));
 
 //
 

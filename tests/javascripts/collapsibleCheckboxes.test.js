@@ -22,21 +22,21 @@ describe('Collapsible fieldset', () => {
     const _checkboxes = (start, end, descendents) => {
       result = '';
 
-        for (let num = start; num <= end; num++) {
-          let id = `folder-permissions-${num}`;
+      for (let num = start; num <= end; num++) {
+        let id = `folder-permissions-${num}`;
 
-          if (!descendents) { descendents = ''; }
+        if (!descendents) { descendents = ''; }
 
-          result += `<li class="multiple-choice">
+        result += `<li class="multiple-choice">
             <input id="${id}" name="folder_permissions" type="checkbox" value="${id}">
-            <label class="block-label" for="{id}">
+            <label class="notifications-block-label" for="{id}">
               Folder 18
             </label>
             ${descendents}
           </li>`;
-        }
+      }
 
-        return result;
+      return result;
     };
 
     // set up DOM
@@ -57,10 +57,10 @@ describe('Collapsible fieldset', () => {
         </div>
       </main>`;
 
-      formGroup = document.querySelector('.form-group');
-      fieldset = formGroup.querySelector('fieldset');
-      checkboxesContainer = fieldset.querySelector('#folder-permission-checkboxes');
-      checkboxes = checkboxesContainer.querySelectorAll('input[type=checkbox]');
+    formGroup = document.querySelector('.form-group');
+    fieldset = formGroup.querySelector('fieldset');
+    checkboxesContainer = fieldset.querySelector('#folder-permission-checkboxes');
+    checkboxes = checkboxesContainer.querySelectorAll('input[type=checkbox]');
 
   });
 
@@ -160,7 +160,7 @@ describe('Collapsible fieldset', () => {
 
     // select the first 3 checkboxes
     checkboxes.forEach((el, idx) => {
-      if ([0,1,2].includes(idx)) { el.setAttribute('checked', ''); }
+      if ([0, 1, 2].includes(idx)) { el.setAttribute('checked', ''); }
     });
 
     // start module
@@ -283,7 +283,7 @@ describe('Collapsible fieldset', () => {
     beforeEach(() => {
 
       // track calls to sticky JS
-      window.GOVUK.stickAtBottomWhenScrolling.recalculate = jest.fn(() => {});
+      window.GOVUK.stickAtBottomWhenScrolling.recalculate = jest.fn(() => { });
 
       // start module
       window.GOVUK.modules.start();

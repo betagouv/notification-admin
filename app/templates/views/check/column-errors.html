@@ -10,7 +10,7 @@
 
 {% set file_contents_header_id = 'file-preview' %}
 {% macro skip_to_file_contents() %}
-  <p>
+  <p class="notifications-visually-hidden">
     <a href="#{{ file_contents_header_id }}">{{ _('Skip to file contents') }}</a>
   </p>
 {% endmacro %}
@@ -203,7 +203,7 @@
     </div>
 
     {% if recipients.too_many_rows %}
-      <p>
+      <p class="notifications-table-show-more-link">
           {{ _('Only showing the first') }} {{ count_of_displayed_recipients }} {{ _('rows') }}.
       </p>
     {% elif count_of_displayed_recipients < count_of_recipients %}

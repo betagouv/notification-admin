@@ -33,7 +33,7 @@
 
         {% call row() %}
           {% call field(border=False) %}
-            <a href="{{ url_for('.api_keys', service_id=x['service_id']) }}">{{ x['api_key_name'] }}</a>
+            <a class="notifications-browse-list-link" href="{{ url_for('.api_keys', service_id=x['service_id']) }}">{{ x['api_key_name'] }}</a>
           {% endcall %}
           {% call field(border=False) %}
             <a href="{{ url_for('main.service_dashboard', service_id=x['service_id']) }}">{{ x['service_name'] }}</a>

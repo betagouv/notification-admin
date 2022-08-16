@@ -39,7 +39,7 @@ def test_malformed_token_returns_page_not_found(logged_in_client, url):
     assert response.status_code == 404
     page = BeautifulSoup(response.data.decode("utf-8"), "html.parser")
     assert page.h1.string.strip() == "Page could not be found"
-    flash_banner = page.find("div", class_="banner-dangerous").string.strip()
+    flash_banner = page.find("div", class_="fr-alert--error").string.strip()
     assert flash_banner == "There’s something wrong with the link you’ve used."
 
 
