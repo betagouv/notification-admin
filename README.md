@@ -50,11 +50,11 @@ version of Node.
 ```
 
 
-### Local installation instruction 
+### Local installation instruction
 
 On OS X:
 
-1. Install PyEnv with Homebrew. This will preserve your sanity. 
+1. Install PyEnv with Homebrew. This will preserve your sanity.
 
 `brew install pyenv`
 
@@ -68,7 +68,7 @@ On OS X:
 
 4. Ensure that version `3.9.1` is now the default by running
 
-`python --version` 
+`python --version`
 
 If it did not, add to your shell rc file. ex: `.bashrc` or `.zshrc`
 ```
@@ -111,7 +111,7 @@ source  ~/.pyenv/versions/3.9.1/bin/virtualenvwrapper.sh
 
 `make babel`
 
-13. Install npm and build the assets 
+13. Install npm and build the assets
 
 `npm install` followed by `npm run build`
 
@@ -167,7 +167,7 @@ When running on preview, staging and production there’s a bit more to it:
 <h1>{{ _('Hello') }}</h1>
 ```
 
-- For form hints 
+- For form hints
 
 Set a variable
 
@@ -208,7 +208,7 @@ let now_txt = window.polyglot.t("now");
 
 Currently this is a manual step. Add a row to `fr.csv` in `app/translations/csv/` for each new string you have wrapped. The format is: `"wrapped string","translation"`. Make sure the wrapped string you are adding is unique.
 
-- Compile 
+- Compile
 
 ```bash
 make babel
@@ -303,11 +303,11 @@ n lts
 npm rebuild node-sass
 ```
 
-### Instruction d'installation locale 
+### Instruction d'installation locale
 
 Sur macOS :
 
-1. Installer PyEnv avec Homebrew. Cela vous permettra de préserver votre santé mentale. 
+1. Installer PyEnv avec Homebrew. Cela vous permettra de préserver votre santé mentale.
 
 `brew install pyenv`
 
@@ -357,7 +357,7 @@ source ~/.pyenv/versions/3.9.1/bin/virtualenvwrapper.sh
 
 `pip3 install -r requirements.txt`
 
-11. Générer le fichier de version 
+11. Générer le fichier de version
 
 `make generate-version-file`
 
@@ -365,7 +365,7 @@ source ~/.pyenv/versions/3.9.1/bin/virtualenvwrapper.sh
 
 `make babel`
 
-13. Installer les dépendances npm et construire les actifs 
+13. Installer les dépendances npm et construire les actifs
 
 `npm install` suivi de `npm run build`.
 
@@ -416,7 +416,7 @@ Lorsque en production ou sur staging, c'est un peu plus compliqué:
 <h1>{{ _('Hello') }}</h1>
 ```
 
-- Pour des conseils sur les formulaires 
+- Pour des conseils sur les formulaires
 
 Crée une variable
 
@@ -456,7 +456,7 @@ let now_txt = window.polyglot.t("now") ;
 
 Actuellement, il s'agit d'une étape manuelle. Ajoutez une ligne à `fr.csv` dans `app/translations/csv/` pour chaque nouvelle  de charactère que vous avez enveloppée. Le format est le suivant : `"Texte Anglais", "traduction"`. Assurez-vous que la chaîne enveloppée que vous ajoutez est unique.
 
-- Compiler 
+- Compiler
 
 ```Bash
 make babel
