@@ -16,11 +16,6 @@ def show_status():
             current_app.logger.exception("API failed to respond")
             return jsonify(status="error", message=str(e.message)), 500
         return (
-            jsonify(
-                status="ok",
-                api=api_status,
-                commit_sha=version.__commit_sha__,
-                build_time=version.__time__,
-            ),
+            jsonify(status="ok", api=api_status, commit_sha=version.__commit_sha__),
             200,
         )

@@ -25,8 +25,6 @@ RUN make babel
 
 RUN npm run build
 
-RUN make generate-version-file
-
 ENV PORT=6012
 
 ARG GIT_SHA
