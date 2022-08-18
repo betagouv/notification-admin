@@ -27,8 +27,8 @@ RUN npm run build
 
 ENV PORT=6012
 
-ARG GIT_SHA
-ENV GIT_SHA ${GIT_SHA}
+ARG ADMIN_COMMIT
+ENV GIT_SHA=${GIT_SHA}
 
 ENTRYPOINT ["./entrypoint.sh"]
 
