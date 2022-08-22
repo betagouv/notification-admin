@@ -64,7 +64,7 @@ coverage: venv ## Create coverage report
 
 .PHONY: run-dev
 run-dev:
-	flask run -p 6012 --host=localhost
+	flask run -p 6012 --host=0.0.0.0
 
 .PHONY: lint-black
 lint-black:

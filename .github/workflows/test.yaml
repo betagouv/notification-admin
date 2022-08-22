@@ -12,7 +12,7 @@ jobs:
         with:
           context: .
           tags: notification-admin:latest
-          build-args: GIT_SHA=${{ github.sha }}
+          build-args: ADMIN_COMMIT=${{ github.sha }}
           outputs: type=docker,dest=/tmp/notification-admin.tar
           cache-from: type=gha
           cache-to: type=gha,mode=max
