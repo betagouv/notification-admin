@@ -11,10 +11,6 @@ GIT_COMMIT ?= $(shell git rev-parse HEAD 2> /dev/null || echo "")
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: generate-version-file
-generate-version-file: ## Generates the app version file
-	printf "__commit_sha__ = \"${GIT_COMMIT}\"\n__time__ = \"${DATE}\"\n" > ${APP_VERSION_FILE}
-
 .PHONY: test
 test: test-requirements
 	py.test --maxfail=1 -n4 --strict -p no:warnings $(TEST-FLAGS) tests/
