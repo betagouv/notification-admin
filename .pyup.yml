@@ -4,6 +4,3 @@ schedule: "every day"
 update: insecure
 search: False
 branch_prefix: pyup/
-requirements:
-  - requirements-app.txt
-  - requirements-dev.txt
