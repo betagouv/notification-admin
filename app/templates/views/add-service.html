@@ -1,34 +1,33 @@
 {% extends  "admin_template.html" %}
 {% from "components/radios.html" import radios %}
 {% from "components/textbox.html" import textbox %}
-{% from "components/page-header.html" import page_header %}
+{% from "components/page-header.html" import govuk_back_link %}
 {% from "components/page-footer.html" import page_footer %}
 {% from "components/form.html" import form_wrapper %}
+{% from "components/stepper.html" import stepper %}
 
 {% block per_page_title %}
   {{ heading }}
 {% endblock %}
 
 {% block maincolumn_content %}
-  {% set sub_text = _("Step {} of {}").format(step_num, step_max) %}
+  {% if back_link %}
+    {{ govuk_back_link(back_link) }}
+  {% endif %}
 
-  {{ page_header(
-    heading,
-    back_link=back_link,
-    sub_text=sub_text
-  ) }}
+  {{ stepper(step_num, step_max, heading, next_step_header) }}
 
-<style>
-    /* inline this as the */
-    .form-wrap .form-group .form-label{
-      font-weight:bold;
-    }
-</style>
+  <style>
+   /* inline this as the */
+   .form-wrap .form-group .form-label{
+       font-weight:bold;
+   }
+  </style>
 
-<div>
-  <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
-    {% include tmpl %}
+  <div>
+    <div class="w-full float-left py-0 px-0 px-gutterHalf box-border">
+      {% include tmpl %}
+    </div>
   </div>
-</div>
 
 {% endblock %}

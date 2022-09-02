@@ -27,7 +27,7 @@
     </label>
     {% if hint %}
       {% set describedby = describedby + field.name + '-hint ' %}
-      <span id="{{ field.name }}-hint">
+      <span class="fr-hint-text" id="{{ field.name }}-hint">
         {{ hint }}
       </span>
     {% endif %}

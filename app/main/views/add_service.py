@@ -112,15 +112,23 @@ def _create_service(
 
 def _renderTemplateStep(form, current_step) -> Text:
     back_link = None
+
+    step_max = len(WIZARD_ORDER)
     step_num = WIZARD_ORDER.index(current_step) + 1
+
+    next_step = WIZARD_ORDER[step_num] if step_num < step_max else None
+    next_step_header = next_step and WIZARD_DICT[next_step]["header"]
+
     if step_num > 1:
         back_link = url_for(".add_service", current_step=WIZARD_ORDER[step_num - 2])
+
     return render_template(
         "views/add-service.html",
         form=form,
         heading=_(WIZARD_DICT[current_step]["header"]),
         step_num=step_num,
-        step_max=len(WIZARD_ORDER),
+        step_max=step_max,
+        next_step_header=next_step_header,
         tmpl=WIZARD_DICT[current_step]["tmpl"],
         back_link=back_link,
     )

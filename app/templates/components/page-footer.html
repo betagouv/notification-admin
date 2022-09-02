@@ -9,7 +9,7 @@
   delete_link_text=_("Delete"),
   button_id="btn"
 ) %}
-  <div class="notifications-page-footer">
+  <div class="notifications-page-footer fr-mt-3w">
     {% if button_text %}
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <button data-button-id={{button_id}} type="submit" class="fr-btn {% if destructive %}button-red{% endif %}" {% if
@@ -23,7 +23,9 @@
       </span>
     {% endif %}
     {% if secondary_link and secondary_link_text %}
-      <a href="{{ secondary_link }}">{{ secondary_link_text }}</a>
+      <div class="fr-mt-1w">
+        <a href="{{ secondary_link }}">{{ secondary_link_text }}</a>
+      </div>
     {% endif %}
   </div>
 {% endmacro %}
