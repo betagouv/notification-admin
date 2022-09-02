@@ -87,7 +87,6 @@ xlrd = "==1.2.0"
 xlwt = "==1.3.0"
 
 [dev-packages]
-apig-wsgi = "==2.13.0"
 isort = "==5.10.1"
 pytest = "==7.1.2"
 pytest-env = "==0.6.2"
