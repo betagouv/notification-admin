@@ -20,7 +20,7 @@ from flask import (
     request,
     session,
 )
-from flask.globals import _lookup_req_object, _request_ctx_stack  # type: ignore
+from flask.globals import _request_ctx_stack  # type: ignore
 from flask_babel import Babel, _
 from flask_login import LoginManager, current_user
 from flask_wtf import CSRFProtect
@@ -88,15 +88,16 @@ login_manager = LoginManager()
 csrf = CSRFProtect()
 
 
-# The current service attached to the request stack.
-def _get_current_service():
-    return _lookup_req_object("service")
+def _get_service():
+    return g.service
 
 
-current_service = LocalProxy(_get_current_service)
+def _get_organisation():
+    return g.organisation
 
-# The current organisation attached to the request stack.
-current_organisation = LocalProxy(partial(_lookup_req_object, "organisation"))
+
+current_service = LocalProxy(_get_service)
+current_organisation = LocalProxy(_get_organisation)
 
 navigation = {
     "header_navigation": HeaderNavigation(),
@@ -551,12 +552,12 @@ def load_user(user_id):
 
 def load_service_before_request():
     if "/static/" in request.url:
-        _request_ctx_stack.top.service = None
-        _request_ctx_stack.top.organisation = None  # added to init None to ensure request context has None or something
+        g.service = None
+        g.organisation = None  # added to init None to ensure request context has None or something
         return
     if _request_ctx_stack.top is not None:
-        _request_ctx_stack.top.service = None
-        _request_ctx_stack.top.organisation = None  # added to init None to ensure request context has None or something
+        g.service = None
+        g.organisation = None  # added to init None to ensure request context has None or something
 
         if request.view_args:
             service_id = request.view_args.get("service_id", session.get("service_id"))
@@ -565,7 +566,7 @@ def load_service_before_request():
 
         if service_id:
             try:
-                _request_ctx_stack.top.service = Service(service_api_client.get_service(service_id)["data"])
+                g.service = Service(service_api_client.get_service(service_id)["data"])
             except HTTPError as exc:
                 # if service id isn't real, then 404 rather than 500ing later because we expect service to be set
                 if exc.status_code == 404:
@@ -586,7 +587,7 @@ def load_organisation_before_request():
 
             if org_id:
                 try:
-                    _request_ctx_stack.top.organisation = Organisation.from_id(org_id)
+                    g.organisation = Organisation.from_id(org_id)
                 except HTTPError as exc:
                     # if org id isn't real, then 404 rather than 500ing later because we expect org to be set
                     if exc.status_code == 404:
