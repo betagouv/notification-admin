@@ -24,6 +24,7 @@ const paths = {
   dist: "app/static/",
   templates: "app/templates/",
   npm: "node_modules/",
+  govuk_toolkit: "node_modules/govuk_frontend_toolkit/",
   toolkit: "node_modules/@gouvfr/dsfr/dist/",
 };
 
@@ -34,8 +35,10 @@ const paths = {
 
 const javascripts = () => {
   return src([
-    paths.toolkit + "dsfr.module.min.js",
-    paths.toolkit + "dsfr.nomodule.min.js",
+    paths.govuk_toolkit + "javascripts/govuk/modules.js",
+    paths.govuk_toolkit + "javascripts/govuk/show-hide-content.js",
+    // paths.toolkit + "dsfr.module.min.js",
+    // paths.toolkit + "dsfr.nomodule.min.js",
     paths.src + "javascripts/utils.js",
     paths.src + "javascripts/webpackLoader.js",
     paths.src + "javascripts/stick-to-window-when-scrolling.js",
