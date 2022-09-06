@@ -14,10 +14,10 @@
   {% set dashboard_url = url_for('main.service_dashboard', service_id=service_id) %}
   {% set back_url = dashboard_url if request.args.get('source') == 'dashboard' else choose_url %}
   {{ page_header(
-    header_txt,
-    back_link=back_url
+      header_txt,
+      back_link=back_url
   ) }}
-  
+
   <p>{{ _('Create a template to start writing a message.') }}</p>
   {% call form_wrapper() %}
     {{ radios(form.what_type, disable=disabled_options, option_hints=option_hints) }}

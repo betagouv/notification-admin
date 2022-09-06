@@ -11,96 +11,96 @@
 
 {% block maincolumn_content %}
   {{
-    page_header(
+  page_header(
       heading,
       back_link=url_for('main.view_template', service_id=current_service.id,
-      template_id=template.id) if template else url_for('main.create_template',
-      service_id=current_service.id, template_folder_id=template_folder_id),
+          template_id=template.id) if template else url_for('main.create_template',
+              service_id=current_service.id, template_folder_id=template_folder_id),
       back_link_aria_label=_('Back to template {}').format(template.name) if template else _('Back')
-    )
+  )
   }}
   {% call form_wrapper() %}
-  <div>
     <div>
-      <div class="form-group mb-gutterHalf md:mb-gutter">
-        {{ _("A template allows you to send the same message to many people. To tailor messages for each recipient, visit the <a href='{}' target='_blank'>Personalisation guide<span class='notifications-sr-only'> (Opens in a new tab)</span><img aria-hidden='true' role='presentation' class='inline w-6 h-6 ml-2 self-center' src='{}'/></a>.").format(gca_url_for('personalisation_guide'), asset_url('images/external.svg')) }}
+      <div>
+        <div class="form-group mb-gutterHalf md:mb-gutter">
+          {{ _("A template allows you to send the same message to many people. To tailor messages for each recipient, visit the <a href='{}' target='_blank'>Personalisation guide<span class='notifications-sr-only'> (Opens in a new tab)</span><img aria-hidden='true' role='presentation' class='inline w-6 h-6 ml-2 self-center' src='{}'/></a>.").format(gca_url_for('personalisation_guide'), asset_url('images/external.svg')) }}
+        </div>
+
+        {{ textbox(form.name, width='w-full', hint=_('Your recipients will not see this template name.'), rows=10) }}
+
+        {{ textbox(form.subject, width='w-full', highlight_tags=True, rows=2, hint=_("Tell recipients what the email is about. Try to keep it shorter than 10 words.")) }}
+
+        {{ textbox(form.template_content, highlight_tags=True, width='w-full', rows=8, hint=_("Use the <a href='{}' target='_blank'>email formatting guide <span class='notifications-sr-only'> (Opens in a new tab)</span><img aria-hidden='true' role='presentation' class='inline w-6 h-6 ml-2 self-center' src='{}'/></a> to craft your message.").format(gca_url_for('formatting_guide'), asset_url('images/external.svg'))) }}
+
+        {% if current_user.platform_admin %}
+          {{ radios(form.process_type, hint=_('This is only manageable by platform admins')) }}
+        {% endif %}
+        {{ sticky_page_footer_two_submit_buttons(_('Save'), "save", _("Preview"), "preview") }}
       </div>
-
-      {{ textbox(form.name, width='w-full', hint=_('Your recipients will not see this template name.'), rows=10) }}
-
-      {{ textbox(form.subject, width='w-full', highlight_tags=True, rows=2, hint=_("Tell recipients what the email is about. Try to keep it shorter than 10 words.")) }}
-
-      {{ textbox(form.template_content, highlight_tags=True, width='w-full', rows=8, hint=_("Use the <a href='{}' target='_blank'>email formatting guide <span class='notifications-sr-only'> (Opens in a new tab)</span><img aria-hidden='true' role='presentation' class='inline w-6 h-6 ml-2 self-center' src='{}'/></a> to craft your message.").format(gca_url_for('formatting_guide'), asset_url('images/external.svg'))) }}
-
-      {% if current_user.platform_admin %}
-        {{ radios(form.process_type, hint=_('This is only manageable by platform admins')) }}
-      {% endif %}
-      {{ sticky_page_footer_two_submit_buttons(_('Save'), "save", _("Preview"), "preview") }}
     </div>
-  </div>
   {% endcall %}
 {% endblock %}
 
 {% block page_script %}
-{{ super() }}
-<script nonce="{{ request_nonce }}">
-  const loadContent = templateId => {
-    const callback = `/services/templates/${templateId}/get-data`;
+  {{ super() }}
+  <script nonce="{{ request_nonce }}">
+   const loadContent = templateId => {
+       const callback = `/services/templates/${templateId}/get-data`;
 
-    // $("#template_content").val("{{ _('loading...')}}");
-    const loading_text = '{{ _("loading...") }}';
-    $("#template_content").val(loading_text);
+       // $("#template_content").val("{{ _('loading...')}}");
+       const loading_text = '{{ _("loading...") }}';
+       $("#template_content").val(loading_text);
 
-    $.ajax({
-      url: callback,
-      type: "post",
-      headers: {
-        "X-CSRFToken": "{{ csrf_token() }}"
-      },
-      dataType: "json",
-      success: function(data) {
-        $("#template_content").val(data.result.content);
-      }
-    });
-  };
-</script>
+       $.ajax({
+           url: callback,
+           type: "post",
+           headers: {
+               "X-CSRFToken": "{{ csrf_token() }}"
+           },
+           dataType: "json",
+           success: function(data) {
+               $("#template_content").val(data.result.content);
+           }
+       });
+   };
+  </script>
 
-<style>
-  select {
-    box-sizing: "border-box";
-    width: 50%;
-    height: 33px;
-    padding: 5px 4px 4px;
-    border: 2px solid #000;
-    font-size: 1.5rem;
-  }
+  <style>
+   select {
+       box-sizing: "border-box";
+       width: 50%;
+       height: 33px;
+       padding: 5px 4px 4px;
+       border: 2px solid #000;
+       font-size: 1.5rem;
+   }
 
-  .confirm-container-class {
-    font-size: 2rem;
-  }
+   .confirm-container-class {
+       font-size: 2rem;
+   }
 
-  .confirm-container-class .swal2-title {
-    color: #000;
-    font-size: 2.5rem;
-  }
+   .confirm-container-class .swal2-title {
+       color: #000;
+       font-size: 2.5rem;
+   }
 
-  .confirm-container-class .swal2-content {
-    color: #000;
-    font-size: 1.8rem;
-  }
+   .confirm-container-class .swal2-content {
+       color: #000;
+       font-size: 1.8rem;
+   }
 
-  .confirm-container-class .swal2-actions {
-    font-size: 1.8rem;
-  }
+   .confirm-container-class .swal2-actions {
+       font-size: 1.8rem;
+   }
 
-  .confirm-container-class button {
-    margin: 0 1.5rem 1rem;
-    line-height: 2rem;
-  }
+   .confirm-container-class button {
+       margin: 0 1.5rem 1rem;
+       line-height: 2rem;
+   }
 
-  .confirm-container-class .swal2-title strong {
-    font-weight: 900;
-  }
-</style>
+   .confirm-container-class .swal2-title strong {
+       font-weight: 900;
+   }
+  </style>
 
 {% endblock %}
