@@ -1,27 +1,29 @@
 {% from "components/big-number.html" import big_number %}
 
 {% macro mapping_table(caption='', field_headings=[], field_headings_visible=True, caption_visible=True, equal_length=False) -%}
-  <table>
-    <caption class="heading-medium table-heading{{ ' visuallyhidden' if not caption_visible}}">
-      {{ caption }}
-    </caption>
-    <thead class="table-field-headings{% if field_headings_visible %}-visible{% endif %}">
-      <tr>
-        {% for field_heading in field_headings %}
-          <th scope="col" class="table-field-heading{% if loop.first and not equal_length %}-first{% endif %}{% if not field_headings_visible %} border-0{% endif %}" width="{% if equal_length %}{{ (100 / field_headings|length)|int }}%{% endif %}">
-            {% if field_headings_visible %}
-              {{ field_heading }}
-            {% else %}
-              <span>{{ field_heading }}</span>
-            {% endif %}
-          </th>
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {{ caller() }}
-    </tbody>
-  </table>
+  <div class="fr-table">
+    <table>
+      <caption class="{{ 'visuallyhidden' if not caption_visible}}">
+        {{ caption }}
+      </caption>
+      <thead class="table-field-headings{% if field_headings_visible %}-visible{% endif %}">
+        <tr>
+          {% for field_heading in field_headings %}
+            <th scope="col" class="table-field-heading{% if loop.first and not equal_length %}-first{% endif %}{% if not field_headings_visible %} border-0{% endif %}" width="{% if equal_length %}{{ (100 / field_headings|length)|int }}%{% endif %}">
+              {% if field_headings_visible %}
+                {{ field_heading }}
+              {% else %}
+                <span>{{ field_heading }}</span>
+              {% endif %}
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {{ caller() }}
+      </tbody>
+    </table>
+  </div>
 {%- endmacro %}
 
 {% macro list_table(items, caption='', empty_message='', field_headings=[], field_headings_visible=True, caption_visible=True, equal_length=False) -%}
@@ -67,12 +69,12 @@
 
 {% macro field(align='left', status='', border=True) -%}
 
-    {% set field_alignment = 'table-field-right-aligned' if align == 'right' else 'notifications-table-field-left-aligned' %}
-    {% set border = '' if border else 'table-field-noborder' %}
+  {% set field_alignment = 'table-field-right-aligned' if align == 'right' else 'notifications-table-field-left-aligned' %}
+  {% set border = '' if border else 'table-field-noborder' %}
 
-    <td class="{{ [field_alignment, border]|join(' ') }}">
-      <div class="{{ 'notifications-table-field-status-' + status if status }}">{{ caller() }}</div>
-    </td>
+  <td class="{{ [field_alignment, border]|join(' ') }}">
+    <div class="{{ 'notifications-table-field-status-' + status if status }}">{{ caller() }}</div>
+  </td>
 {%- endmacro %}
 
 {% macro row_heading() -%}
@@ -109,9 +111,9 @@
 
 {% macro optional_text_field(text, default=_('Not set'), truncate=false) -%}
   {{ text_field(
-    text or default,
-    status='' if text else 'default',
-    truncate=truncate
+      text or default,
+      status='' if text else 'default',
+      truncate=truncate
   ) }}
 {%- endmacro %}
 
@@ -154,48 +156,48 @@
     {% call field(align='right') %}{% endcall %}
   {% else %}
     {% call field(
-      status=notification.status|format_notification_status_as_field_status(notification.notification_type),
-      align='right'
+        status=notification.status|format_notification_status_as_field_status(notification.notification_type),
+        align='right'
     ) %}
       {% if displayed_on_single_line %}<span class="notifications-displayed-on-single-line">{% endif %}
-      {% if notification.status|format_notification_status_as_url(notification.notification_type) %}
-        <a href="{{ notification.status|format_notification_status_as_url(notification.notification_type) }}">
-      {% endif %}
-      {{ notification.status|format_notification_status(notification.template.template_type, notification.provider_response) }}
-      {% if notification.status|format_notification_status_as_url(notification.notification_type) %}
-        </a>
-      {% endif %}
-      <span>
-        {% if notification['notification_type'] == "letter" %}
-          {% if notification.status == 'permanent-failure' %}
-            {{ (notification.updated_at) }}
-          {% else %}
-            {{ (notification.created_at) }}
-          {% endif %}
-        {% else %}
-          {{ notification.status|format_notification_status_as_time(
-            notification.created_at,
-            (notification.updated_at or notification.created_at)
-          )|safe }}
+        {% if notification.status|format_notification_status_as_url(notification.notification_type) %}
+          <a href="{{ notification.status|format_notification_status_as_url(notification.notification_type) }}">
         {% endif %}
-      </span>
-      {% if displayed_on_single_line %}</span>{% endif %}
+        {{ notification.status|format_notification_status(notification.template.template_type, notification.provider_response) }}
+        {% if notification.status|format_notification_status_as_url(notification.notification_type) %}
+          </a>
+        {% endif %}
+        <span>
+          {% if notification['notification_type'] == "letter" %}
+            {% if notification.status == 'permanent-failure' %}
+              {{ (notification.updated_at) }}
+            {% else %}
+              {{ (notification.created_at) }}
+            {% endif %}
+          {% else %}
+            {{ notification.status|format_notification_status_as_time(
+                notification.created_at,
+                (notification.updated_at or notification.created_at)
+            )|safe }}
+          {% endif %}
+        </span>
+        {% if displayed_on_single_line %}</span>{% endif %}
     {% endcall %}
   {% endif %}
 {% endmacro %}
 
 
 {% macro spark_bar_field(
-  count,
-  max_count,
-  id=None
+    count,
+    max_count,
+    id=None
 ) %}
   {% call field(align='right') %}
     <span {% if id %}id="{{ id }}"{% endif %}>
       <span style="width: {{ count / max_count * 100 }}%">
         {{ big_number(
-          count,
-          smallest=True
+            count,
+            smallest=True
         ) }}
       </span>
     </span>
