@@ -1,19 +1,19 @@
 {% macro page_footer(
-  button_text=None,
-  button_name=None,
-  button_value=None,
-  destructive=False,
-  secondary_link=False,
-  secondary_link_text=None,
-  delete_link=False,
-  delete_link_text=_("Delete"),
-  button_id="btn"
+    button_text=None,
+    button_name=None,
+    button_value=None,
+    destructive=False,
+    secondary_link=False,
+    secondary_link_text=None,
+    delete_link=False,
+    delete_link_text=_("Delete"),
+    button_id="btn"
 ) %}
   <div class="notifications-page-footer fr-mt-3w">
     {% if button_text %}
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <button data-button-id={{button_id}} type="submit" class="fr-btn {% if destructive %}button-red{% endif %}" {% if
-        button_name %}name="{{ button_name }}" {% endif %} {% if button_value %}value="{{ button_value }}" {% endif %}>
+                                                                                                                  button_name %}name="{{ button_name }}" {% endif %} {% if button_value %}value="{{ button_value }}" {% endif %}>
         {{- button_text -}}
       </button>
     {% endif %}
@@ -37,22 +37,20 @@
 {% endmacro %}
 
 {% macro sticky_page_footer_two_submit_buttons(button1_text="b1", button1_value="b1", button2_text="b2", button2_value="b2") %}
-  <div class="notifications-page-footer">
-    <div>
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      <button data-button-id="btn1" type="submit" class="button text-base outline-none focus:shadow-outline"
-        name="button_pressed" value="{{ button1_value }}">
-        {{- button1_text -}}
-      </button>
+  <div class="notifications-page-footer fr-form-group">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
-      <button
-        data-button-id="btn2"
-        type="submit"
-        class="button button-secondary text-base outline-none focus:shadow-outline"
-        name="button_pressed"
-        value="{{ button2_value }}">
-        {{- button2_text -}}
-      </button>
-    </div>
+    <ul class="fr-btns-group fr-btns-group--inline">
+      <li>
+        <button class="fr-btn submit" data-button-id="btn1" value="{{ button1_value }}">
+          {{- button1_text }}
+        </button>
+      </li>
+      <li>
+        <button class="fr-btn fr-btn--secondary" type="submit" data-button-id="btn2" value="{{ button2_value }}">
+          {{- button2_text }}
+        </button>
+      </li>
+    </ul>
   </div>
 {% endmacro %}
