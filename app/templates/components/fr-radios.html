@@ -1,0 +1,22 @@
+{% macro fr_radios(form, hint=None, option_hints={}, hide_legend=False) %}
+  <div class="fr-form-group">
+    <fieldset class="fr-fieldset">
+      <legend class="fr-fieldset__legend fr-text--regular" id='radio-hint-legend'>
+        {{ form.label }}
+        {% if hint %}
+          <span class="fr-hint-text">Texte de description additionnel</span>
+        {% endif %}
+      </legend>
+      <div class="fr-fieldset__content">
+        {% for option in form %}
+          <div class="fr-radio-group">
+            <input type="radio" id="{{ option.id }}" name="{{ option.name }}" value="{{ option.data }}">
+            <label class="fr-label" for="{{ option.id }}">
+              {{ option.label.text }}
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+    </fieldset>
+  </div>
+{% endmacro %}

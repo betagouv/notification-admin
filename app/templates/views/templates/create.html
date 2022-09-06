@@ -2,6 +2,7 @@
 {% from "components/page-header.html" import page_header %}
 {% from "components/page-footer.html" import page_footer %}
 {% from "components/radios.html" import radios %}
+{% from "components/fr-radios.html" import fr_radios %}
 {% from "components/form.html" import form_wrapper %}
 {% set header_txt = _('Create template') %}
 
@@ -20,7 +21,7 @@
 
   <p>{{ _('Create a template to start writing a message.') }}</p>
   {% call form_wrapper() %}
-    {{ radios(form.what_type, disable=disabled_options, option_hints=option_hints) }}
+    {{ fr_radios(form.what_type) }}
     {{ page_footer(_('Continue')) }}
   {% endcall %}
 
