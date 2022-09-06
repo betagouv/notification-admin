@@ -28,68 +28,72 @@
       </div>
 
       <div class="fr-header__tools">
-        {%if current_user.is_authenticated %}
-          {% if not current_user.platform_admin %}
-            {% if current_user.has_permissions() %}
-              {% if current_user.has_permissions('view_activity') %}
-                {{ nav_menu_item(url_for('main.service_dashboard', service_id=current_service.id),_('Dashboard'),'pl-0 header--'+header_navigation.is_selected('dashboard')) }}
-              {% endif %}
-              {{ nav_menu_item( url_for('main.choose_template', service_id=current_service.id),_('Templates'),'header--'+header_navigation.is_selected('templates')) }}
-              {% if not current_user.has_permissions('view_activity') %}
-                {{ nav_menu_item(url_for('main.view_notifications', service_id=current_service.id, status='sending,delivered,failed'),_('Sent messages'),'header--'+header_navigation.is_selected('sent-messages')) }}
-                {% if current_service.has_jobs %}
-                  {{ nav_menu_item(url_for('main.view_jobs', service_id=current_service.id),_('Bulk sends'),'header--'+header_navigation.is_selected('bulk-sends')) }}
+        <div class="fr-header__tools-links">
+          <ul class="fr-btns-group">
+            {%if current_user.is_authenticated %}
+              {% if not current_user.platform_admin %}
+                {% if current_user.has_permissions() %}
+                  {% if current_user.has_permissions('view_activity') %}
+                    {{ nav_menu_item(url_for('main.service_dashboard', service_id=current_service.id),_('Dashboard'),'pl-0 header--'+header_navigation.is_selected('dashboard')) }}
+                  {% endif %}
+                  {{ nav_menu_item( url_for('main.choose_template', service_id=current_service.id),_('Templates'),'header--'+header_navigation.is_selected('templates')) }}
+                  {% if not current_user.has_permissions('view_activity') %}
+                    {{ nav_menu_item(url_for('main.view_notifications', service_id=current_service.id, status='sending,delivered,failed'),_('Sent messages'),'header--'+header_navigation.is_selected('sent-messages')) }}
+                    {% if current_service.has_jobs %}
+                      {{ nav_menu_item(url_for('main.view_jobs', service_id=current_service.id),_('Bulk sends'),'header--'+header_navigation.is_selected('bulk-sends')) }}
+                    {% endif %}
+                  {% endif %}
+                  {% if current_user.has_permissions('manage_api_keys') %}
+                    {{ nav_menu_item(url_for('main.api_integration', service_id=current_service.id),_('API integration'),'header--'+header_navigation.is_selected('api-integration')) }}
+                  {% endif %}
+                  {{ nav_menu_item(url_for('main.manage_users', service_id=current_service.id),_('Team members'),'header--'+header_navigation.is_selected('team-members')) }}
+                  {% if current_user.has_permissions('manage_api_keys', 'manage_service') %}
+                    {{ nav_menu_item(url_for('main.service_settings', service_id=current_service.id),_('Settings'),'header--'+header_navigation.is_selected('settings')) }}
+                  {% endif %}
+                {% else %} {# not current_user.has_permissions, i.e. services not in context #}
+                  {{ nav_menu_item(url_for('main.choose_account'),_('Your services'),'header--'+header_navigation.is_selected('choose_account'),id_key='choose_account') }}
+                  {{ nav_menu_item(url_for('main.contact', service_id=current_service.id),_('Contact us'),'header--'+header_navigation.is_selected('contact')) }}
+                {% endif %}
+              {% else %} {# current_user.platform_admin #}
+                {% if not platform_admin_view_ind %}
+                  {% if current_user.has_permissions() %}
+                    {{ nav_menu_item(url_for('main.live_services', service_id=current_service.id), _('Admin panel'), 'pl-0') }}
+                    {{ nav_menu_item(url_for('main.service_dashboard', service_id=current_service.id),_('Dashboard'),'header--'+header_navigation.is_selected('dashboard')) }}
+                    {{ nav_menu_item( url_for('main.choose_template', service_id=current_service.id),_('Templates'),'header--'+header_navigation.is_selected('templates')) }}
+                    {{ nav_menu_item(url_for('main.api_integration', service_id=current_service.id),_('API integration'),'header--'+header_navigation.is_selected('api-integration')) }}
+                    {{ nav_menu_item(url_for('main.manage_users', service_id=current_service.id),_('Team members'),'header--'+header_navigation.is_selected('team-members')) }}
+                    {{ nav_menu_item(url_for('main.service_settings', service_id=current_service.id),_('Settings'),'header--'+header_navigation.is_selected('settings')) }}
+                  {% else %} {# not current_user.has_permissions, i.e. services not in context #}
+                    {{ nav_menu_item(url_for('main.choose_account'),_('Your services'),'pl-0 header--'+header_navigation.is_selected('choose_account'),id_key='choose_account') }}
+                    {{ nav_menu_item(url_for('main.live_services', service_id=current_service.id),_('Admin panel')) }}
+                  {% endif %}
                 {% endif %}
               {% endif %}
-              {% if current_user.has_permissions('manage_api_keys') %}
-                {{ nav_menu_item(url_for('main.api_integration', service_id=current_service.id),_('API integration'),'header--'+header_navigation.is_selected('api-integration')) }}
-              {% endif %}
-              {{ nav_menu_item(url_for('main.manage_users', service_id=current_service.id),_('Team members'),'header--'+header_navigation.is_selected('team-members')) }}
-              {% if current_user.has_permissions('manage_api_keys', 'manage_service') %}
-                {{ nav_menu_item(url_for('main.service_settings', service_id=current_service.id),_('Settings'),'header--'+header_navigation.is_selected('settings')) }}
-              {% endif %}
-            {% else %} {# not current_user.has_permissions, i.e. services not in context #}
-              {{ nav_menu_item(url_for('main.choose_account'),_('Your services'),'header--'+header_navigation.is_selected('choose_account'),id_key='choose_account') }}
-              {{ nav_menu_item(url_for('main.contact', service_id=current_service.id),_('Contact us'),'header--'+header_navigation.is_selected('contact')) }}
-            {% endif %}
-          {% else %} {# current_user.platform_admin #}
-            {% if not platform_admin_view_ind %}
-              {% if current_user.has_permissions() %}
-                {{ nav_menu_item(url_for('main.live_services', service_id=current_service.id), _('Admin panel'), 'pl-0') }}
-                {{ nav_menu_item(url_for('main.service_dashboard', service_id=current_service.id),_('Dashboard'),'header--'+header_navigation.is_selected('dashboard')) }}
-                {{ nav_menu_item( url_for('main.choose_template', service_id=current_service.id),_('Templates'),'header--'+header_navigation.is_selected('templates')) }}
-                {{ nav_menu_item(url_for('main.api_integration', service_id=current_service.id),_('API integration'),'header--'+header_navigation.is_selected('api-integration')) }}
-                {{ nav_menu_item(url_for('main.manage_users', service_id=current_service.id),_('Team members'),'header--'+header_navigation.is_selected('team-members')) }}
-                {{ nav_menu_item(url_for('main.service_settings', service_id=current_service.id),_('Settings'),'header--'+header_navigation.is_selected('settings')) }}
-              {% else %} {# not current_user.has_permissions, i.e. services not in context #}
-                {{ nav_menu_item(url_for('main.choose_account'),_('Your services'),'pl-0 header--'+header_navigation.is_selected('choose_account'),id_key='choose_account') }}
-                {{ nav_menu_item(url_for('main.live_services', service_id=current_service.id),_('Admin panel')) }}
-              {% endif %}
-            {% endif %}
-          {% endif %}
-        {% else %}
-          <div class="fr-header__tools-links">
-            <ul class="fr-btns-group">
-              <li>
-                <a class="fr-btn fr-icon-lock-line" href="{{url_for('main.sign_in' )}}">
-                  Se connecter
-                </a>
-              </li>
-              <li>
-                <a class="fr-btn fr-icon-account-line" href="{{url_for('main.register' )}}">
-                  S’enregistrer
-                </a>
-              </li>
-            </ul>
-          </div>
-        {% endif %}
-        <div class="fr-header__search fr-modal" id="modal-474">
-          <div class="fr-container fr-container-lg--fluid">
-            <button class="fr-btn--close fr-btn" aria-controls="modal-474" title="Fermer">
-              Fermer
-            </button>
-          </div>
+          </ul>
         </div>
+            {% else %}
+        <div class="fr-header__tools-links">
+          <ul class="fr-btns-group">
+            <li>
+              <a class="fr-btn fr-icon-lock-line" href="{{url_for('main.sign_in' )}}">
+                Se connecter
+              </a>
+            </li>
+            <li>
+              <a class="fr-btn fr-icon-account-line" href="{{url_for('main.register' )}}">
+                S’enregistrer
+              </a>
+            </li>
+          </ul>
+        </div>
+            {% endif %}
+            <div class="fr-header__search fr-modal" id="modal-474">
+              <div class="fr-container fr-container-lg--fluid">
+                <button class="fr-btn--close fr-btn" aria-controls="modal-474" title="Fermer">
+                  Fermer
+                </button>
+              </div>
+            </div>
       </div>
     </div>
   </div>
