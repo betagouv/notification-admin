@@ -1,29 +1,19 @@
-@import "./components/tailwind.css";
-
 @import "./toolkit/shims.css";
 
 /* elements */
 @import "./elements/details.css";
-@import "./elements/forms.css";
 @import "./elements/form-multiple-choice.css";
 @import "./elements/form-validation.css";
-@import "./elements/lists.css";
 @import "./elements/panels.css";
 
 /* components */
-@import "./components/grid.css";
-@import "./components/typography.css";
 @import "./components/placeholder.css";
-@import "./components/layout.css";
-@import "./components/page-footer.css";
-@import "./components/table.css";
-@import "./components/navigation.css";
 @import "./components/big-number.css";
 @import "./components/textbox.css";
 @import "./components/file-upload.css";
 @import "./components/browse-list.css";
-@import "./components/email_sms_message.css";
-@import "./components/buttons.css";
+/* @import "./components/email_sms_message.css"; */
+
 @import "./components/checkboxes-radios.css";
 @import "./components/pill.css";
 @import "./components/show-more.css";
@@ -44,8 +34,6 @@
 @import "./views/api.css";
 @import "./views/template.css";
 @import "./views/notification.css";
-
-@import "./toolkit/wp.css";
 
 /*! purgecss start ignore */
 @-ms-viewport {
@@ -109,10 +97,6 @@ section[id]:target {
   transform: rotate(-180deg);
   transition: all 0.5s ease;
   padding-top: 2px;
-}
-
-label {
-  @apply block text-smaller pb-2;
 }
 
 .group:before,
