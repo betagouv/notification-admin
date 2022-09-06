@@ -1,68 +1,67 @@
 {% macro textbox(
-  field,
-  label=None,
-  hint=False,
-  highlight_tags=False,
-  autofocus=False,
-  colour_preview=False,
-  help_link=None,
-  help_link_text=None,
-  width='w-full md:w-3/6',
-  suffix=None,
-  safe_error_message=False,
-  rows=8,
-  required=true
+    field,
+    label=None,
+    hint=False,
+    highlight_tags=False,
+    autofocus=False,
+    colour_preview=False,
+    help_link=None,
+    help_link_text=None,
+    width='w-full md:w-3/6',
+    suffix=None,
+    safe_error_message=False,
+    rows=8,
+    required=true
 ) %}
   <div
-    class="form-group contain-floats box-border mb-gutterHalf md:mb-gutter{% if field.errors %} form-group-error{% endif %}"
-    data-module="{% if autofocus %}autofocus{% elif colour_preview %}colour-preview{% endif %}">
+      class="fr-input-group{% if field.errors %} form-group-error{% endif %}"
+      data-module="{% if autofocus %}autofocus{% elif colour_preview %}colour-preview{% endif %}">
     {% set describedby = '' %}
 
     <label class="fr-label" for="{{ field.name }}">
       {% if label %}
-      {{ label }}
+        {{ label }}
       {% else %}
-      {{ field.label.text }}
+        {{ field.label.text }}
       {% endif %}
+      {% if hint %}
+        {% set describedby = describedby + field.name + '-hint ' %}
+        <span class="fr-hint-text" id="{{ field.name }}-hint">
+          {{ hint }}
+        </span>
+      {% endif %}
+
     </label>
-    {% if hint %}
-      {% set describedby = describedby + field.name + '-hint ' %}
-      <span class="fr-hint-text" id="{{ field.name }}-hint">
-        {{ hint }}
-      </span>
-    {% endif %}
     {% if field.errors %}
       {% set describedby = describedby + field.name + '-error-message ' %}
     {% endif %}
-    {%
-      if highlight_tags
-    %}
+    {% if highlight_tags %}
       {% set field_class = '{} textbox-highlight-textbox'.format(width) %}
     {% else %}
       {% set field_class = '{} {}'.format(width, 'text-right' if suffix else '') %}
     {% endif %}
     <span></span>
 
-    {% set field_class = 'form-control ' + field_class + (
-    ' fr-input--error' if field.errors else ''
+    {% set field_class = 'fr-form-control ' + field_class + (
+        ' fr-input--error' if field.errors else ''
     ) %}
 
     {% set field_class = field_class + " fr-input" %}
 
     {{ field(
-      class=field_class,
-      data_module='highlight-tags' if highlight_tags else '',
-      rows=rows|string if field.type == 'TextAreaField' else false,
-      invalid='' if field.errors else false,
-      required='' if required != false else false,
-      aria_required='true' if required != false else false,
-      aria_describedby=describedby|trim if describedby != '' else false,
-      **kwargs
+        class=field_class,
+        data_module='highlight-tags' if highlight_tags else '',
+        rows=rows|string if field.type == 'TextAreaField' else false,
+        invalid='' if field.errors else false,
+        required='' if required != false else false,
+        aria_required='true' if required != false else false,
+        aria_describedby=describedby|trim if describedby != '' else false,
+        **kwargs
     ) }}
 
     {% if field.errors %}
       <span id="{{ field.name }}-error-message" class="fr-error-text" data-module="track-error"
-        data-error-type="{{ field.errors[0] }}" data-error-label="{{ field.name }}">
+            data-error-type="{{ field.errors[0] }}" data-error-label="{{ field.name }}">
         {% if not safe_error_message %}{{ _(field.errors[0]) }}{% else %}{{ field.errors[0]|safe }}{% endif %}
       </span>
       <br />
@@ -72,7 +71,7 @@
       <span>{{ suffix }}</span>
     {% endif %}
     {% if help_link and help_link_text %}
-      <p class="textbox-help-link m-0 mt-4">
+      <p class="textbox-help-link">
         <a href='{{ help_link }}'>{{ help_link_text }}</a>
       </p>
     {% endif %}
@@ -80,21 +79,21 @@
 {% endmacro %}
 
 {% macro textbox_search(
-  field,
-  label=None,
-  hint=False,
-  highlight_tags=False,
-  autofocus=False,
-  colour_preview=False,
-  width='',
-  suffix=None,
-  safe_error_message=False,
-  rows=8,
-  required=true
+    field,
+    label=None,
+    hint=False,
+    highlight_tags=False,
+    autofocus=False,
+    colour_preview=False,
+    width='',
+    suffix=None,
+    safe_error_message=False,
+    rows=8,
+    required=true
 ) %}
   <div
-    class="form-group contain-floats box-border mb-gutterHalf md:mb-gutter{% if field.errors %} form-group-error{% endif %}"
-    data-module="{% if autofocus %}autofocus{% elif colour_preview %}colour-preview{% endif %}">
+      class="fr-form-group{% if field.errors %} form-group-error{% endif %}"
+      data-module="{% if autofocus %}autofocus{% elif colour_preview %}colour-preview{% endif %}">
     <div>
       {% set describedby = '' %}
       <label for="{{ field.name }}">
@@ -113,7 +112,7 @@
       {% if field.errors %}
         {% set describedby = describedby + field.name + '-error-message ' %}
         <span id="{{ field.name }}-error-message" class="fr-error-text" data-module="track-error"
-          data-error-type="{{ field.errors[0] }}" data-error-label="{{ field.name }}">
+              data-error-type="{{ field.errors[0] }}" data-error-label="{{ field.name }}">
           {% if not safe_error_message %}{{ _(field.errors[0]) }}{% else %}{{ field.errors[0]|safe }}{% endif %}
         </span>
       {% endif %}
@@ -121,19 +120,19 @@
 
     {% set field_class = '{}'.format(width) %}
 
-    {% set field_class = 'form-control input focus:shadow-outline min-h-target ' + field_class + (
-    ' form-control-error' if field.errors else ''
+    {% set field_class = 'fr-input ' + field_class + (
+        ' fr-form-control-error' if field.errors else ''
     ) %}
-    <div class="w-full flex gap-x-2">
+    <div>
       {{ field(
-        class=field_class,
-        data_module='highlight-tags' if highlight_tags else '',
-        rows=rows|string if field.type == 'TextAreaField' else false,
-        invalid='' if field.errors else false,
-        required='' if required != false else false,
-        aria_required='true' if required != false else false,
-        aria_describedby=describedby|trim if describedby != '' else false,
-        **kwargs
+          class=field_class,
+          data_module='highlight-tags' if highlight_tags else '',
+          rows=rows|string if field.type == 'TextAreaField' else false,
+          invalid='' if field.errors else false,
+          required='' if required != false else false,
+          aria_required='true' if required != false else false,
+          aria_describedby=describedby|trim if describedby != '' else false,
+          **kwargs
       ) }}
 
       <div>
