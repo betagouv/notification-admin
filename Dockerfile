@@ -18,7 +18,7 @@ COPY . /app
 
 RUN make babel
 
-RUN npm run build
+RUN npm run tailwind
 
 ENV PORT=6012
 

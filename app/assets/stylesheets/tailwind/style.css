@@ -3,7 +3,6 @@
 @import "./toolkit/shims.css";
 
 /* elements */
-@import "./elements/reset.css";
 @import "./elements/details.css";
 @import "./elements/forms.css";
 @import "./elements/form-multiple-choice.css";
@@ -51,56 +50,6 @@
 /*! purgecss start ignore */
 @-ms-viewport {
   width: device-width;
-}
-
-html {
-  font-size: 62.5%;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  background-color: #dee0e2;
-  -ms-overflow-style: scrollbar;
-}
-
-body {
-  @apply leading-normal font-normal;
-  font-size: 160%;
-  background: white;
-  color: #0b0c0c;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html,
-body,
-button,
-input,
-table,
-td,
-th {
-  @apply font-body;
-}
-
-html,
-body,
-div,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-article,
-aside,
-footer,
-header,
-hgroup,
-nav,
-section {
-  @apply m-0 p-0 align-baseline;
-}
-
-main {
-  @apply block;
 }
 
 input[type="search"]::-webkit-search-cancel-button {
