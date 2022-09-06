@@ -128,7 +128,7 @@ def _renderTemplateStep(form, current_step) -> Text:
         heading=_(WIZARD_DICT[current_step]["header"]),
         step_num=step_num,
         step_max=step_max,
-        next_step_header=next_step_header,
+        next_step_header=_(next_step_header),
         tmpl=WIZARD_DICT[current_step]["tmpl"],
         back_link=back_link,
     )

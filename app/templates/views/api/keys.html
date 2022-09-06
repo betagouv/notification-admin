@@ -11,20 +11,18 @@
 {% block maincolumn_content %}
   {% set heading_1 = _('API keys') %}
   {{ page_header(
-    heading_1,
-    back_link=url_for('main.api_integration', service_id=current_service.id)
+      heading_1,
+      back_link=url_for('main.api_integration', service_id=current_service.id)
   ) }}
 
   <p>
     {{ _("Create an API key to connect your web application or back-office system with GC Notify. Learn more in the <a href='{}'>API key documentation</a>.").format(documentation_url('keys')) }}
   </p>
 
-  <div>
-    <a href="{{ url_for('.create_api_key', service_id=current_service.id) }}">{{ _('Create an API key') }}</a>
-  </div>
+  <a class="fr-btn" href="{{ url_for('.create_api_key', service_id=current_service.id) }}">{{ _('Create an API key') }}</a>
 
   <h2>
-     {{ _('Existing API keys') }}
+    {{ _('Existing API keys') }}
   </h2>
   {% set empty_txt = _('You have not created any API keys yet') %}
   {% set keys_txt = _('API keys') %}
@@ -32,62 +30,62 @@
   {% set heading_2 = _('Action') %}
   <div>
     {% call(item, row_number) list_table(
-      current_service.api_keys,
-      empty_message=empty_txt,
-      caption=keys_txt,
-      caption_visible=false,
-      field_headings=[
-        heading_1,
-        heading_2
-      ],
-      field_headings_visible=False
+        current_service.api_keys,
+        empty_message=empty_txt,
+        caption=keys_txt,
+        caption_visible=false,
+        field_headings=[
+            heading_1,
+            heading_2
+        ],
+        field_headings_visible=False
     ) %}
-      {% call field() %}
-        <div>
-          {{ item.name }}
-          {% if (current_user.platform_admin and
-              'total_sends' in item and
-              'email_sends' in item and
-              'sms_sends' in item )  %}
-            <div>
-              {{ "{:,}".format(item.total_sends) }} {{ _('total sends') }} ({{ "{:,}".format(item.email_sends) }} {{ _('email') }}, {{ "{:,}".format(item.sms_sends) }} {{ _('sms') }})
-            </div>
-          {% endif %}
+    {% call field() %}
+      <div>
+        {{ item.name }}
+        {% if (current_user.platform_admin and
+            'total_sends' in item and
+            'email_sends' in item and
+            'sms_sends' in item )  %}
           <div>
-            {% if current_user.platform_admin %}
-              {{ _('Key type:') }}
-            {% endif %}
-            {% if item.key_type == 'normal' %}
-              {{ _('Live – sends to anyone') }}
-            {% elif item.key_type == 'team' %}
-              {{ _('Team and safelist – limits who you can send to') }}
-            {% elif item.key_type == 'test' %}
-              {{ _('Test – pretends to send messages') }}
-            {% endif %}
+            {{ "{:,}".format(item.total_sends) }} {{ _('total sends') }} ({{ "{:,}".format(item.email_sends) }} {{ _('email') }}, {{ "{:,}".format(item.sms_sends) }} {{ _('sms') }})
           </div>
+        {% endif %}
+        <div>
           {% if current_user.platform_admin %}
-            <div>
-              {{ _('Created:') }} <span>{{ item.created_at }}</span>
-            </div>
-            <div>
-              {{ _('Expires:') }} <span>{{ item.expiry_date }}</span>
-            </div>
-            <div>
-              {{ _('Last used:') }} <span>{{ item.last_send }}</span>
-            </div>
+            {{ _('Key type:') }}
+          {% endif %}
+          {% if item.key_type == 'normal' %}
+            {{ _('Live – sends to anyone') }}
+          {% elif item.key_type == 'team' %}
+            {{ _('Team and safelist – limits who you can send to') }}
+          {% elif item.key_type == 'test' %}
+            {{ _('Test – pretends to send messages') }}
           {% endif %}
         </div>
-      {% endcall %}
-      {% if item.expiry_date %}
-        {% call field(align='right') %}
-          <span class='hint'>{{ _('Revoked') }} <span>{{ item.expiry_date }}</span></span>
-        {% endcall %}
-      {% else %}
-        {% call field(align='right', status='error') %}
-          <a href='{{ url_for('.revoke_api_key', service_id=current_service.id, key_id=item.id) }}'>{{ _('Revoke') }}</a>
-        {% endcall %}
-      {% endif %}
+        {% if current_user.platform_admin %}
+          <div>
+            {{ _('Created:') }} <span>{{ item.created_at }}</span>
+          </div>
+          <div>
+            {{ _('Expires:') }} <span>{{ item.expiry_date }}</span>
+          </div>
+          <div>
+            {{ _('Last used:') }} <span>{{ item.last_send }}</span>
+          </div>
+        {% endif %}
+      </div>
     {% endcall %}
+    {% if item.expiry_date %}
+      {% call field(align='right') %}
+        <span class='hint'>{{ _('Revoked') }} <span>{{ item.expiry_date }}</span></span>
+      {% endcall %}
+    {% else %}
+      {% call field(align='right', status='error') %}
+        <a href='{{ url_for('.revoke_api_key', service_id=current_service.id, key_id=item.id) }}'>{{ _('Revoke') }}</a>
+      {% endcall %}
+    {% endif %}
+  {% endcall %}
   </div>
 
 {% endblock %}

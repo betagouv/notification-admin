@@ -14,12 +14,16 @@
     </p>
   {% else %}
     {% if current_user.has_permissions('send_messages', restrict_admin_usage=True) %}
-    <h2>{{ _('Ready to send?') }}</h2>
+      <h2>{{ _('Ready to send?') }}</h2>
 
-    <div class="mb-12">
-      {{ primary_button_blue_lighter(label=_('Yes, add recipients'), href=url_for('.add_recipients', service_id=current_service.id, template_id=template.id)) }}
-      {{ secondary_button_transparent_white(label=_('No, send yourself this message'), href=url_for('.send_test', service_id=current_service.id, template_id=template.id)) }}
-    </div>
+      <ul class="fr-btns-group fr-btns-group--inline">
+        <li>
+          {{ primary_button_blue_lighter(label=_('Yes, add recipients'), href=url_for('.add_recipients', service_id=current_service.id, template_id=template.id)) }}
+        </li>
+        <li>
+          {{ secondary_button_transparent_white(label=_('No, send yourself this message'), href=url_for('.send_test', service_id=current_service.id, template_id=template.id)) }}
+        </li>
+      </ul>
     {% endif %}
   {% endif %}
 </div>
@@ -27,5 +31,3 @@
 <div>
   {{ template|string|translate_preview_template }}
 </div>
-
-

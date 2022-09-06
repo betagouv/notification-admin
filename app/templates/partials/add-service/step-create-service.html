@@ -1,31 +1,28 @@
 <p>{{ _('GC Notify displays your service name:') }}</p>
 <p>
-<ul>
-  <li>{{ _('as the ‘from’ address on emails you send.') }}</li>
-  <li>{{ _('at the start of every text message.') }}</li>
-</ul>
+  <ul>
+    <li>{{ _('as the ‘from’ address on emails you send.') }}</li>
+    <li>{{ _('at the start of every text message.') }}</li>
+  </ul>
 </p>
 
 <p>{{ _('A good service name uses words service users recognize.') }}
-<br/><br/>
+  <br/><br/>
   {{ _('For example:') }} {{ _('Renew your passport | Renouveler votre passeport') }}
 </p>
 
 <h2>{{ _('What’s your service called?') }}</h2>
-<p>
-  {{ _('Make it something people would search for in their inbox.') }}
-</p>
 
-<div>
-  {% call form_wrapper() %}
+{% call form_wrapper() %}
+  <div class="fr-form-group">
     {% set hint_txt = _('Up to 255 characters') %}
 
     {{ textbox(form.name, hint=hint_txt, maxlength=255) }}
     {% set button_txt = _('Continue') %}
     {{ page_footer(button_txt) }}
 
-  {% endcall %}
-</div>
+  </div>
+{% endcall %}
 
 <p>
   {{ _('You can change your service name later in Settings.') }}

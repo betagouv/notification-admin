@@ -54,7 +54,7 @@
 
 {% block maincolumn_content %}
 
-  <h1 class="heading-large {% if current_user.has_access_to_live_and_trial_mode_services %}notifications-visually-hidden{% endif %}">
+  <h1 class="{% if current_user.has_access_to_live_and_trial_mode_services %}notifications-visually-hidden{% endif %}">
     {{ _('Your services') }}
   </h1>
 

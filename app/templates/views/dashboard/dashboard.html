@@ -12,46 +12,42 @@
 
 {% block maincolumn_content %}
 
-  <div>
+  <h1>{{ _('Dashboard') }}</h1>
+  {% if current_user.has_permissions('manage_templates') or current_user.has_permissions('send_messages') %}
+    {% include 'views/dashboard/task-shortcuts.html' %}
+  {% endif %}
 
-    <h1>{{ _('Dashboard') }}</h1>
-    {% if current_user.has_permissions('manage_templates') or current_user.has_permissions('send_messages') %}
-      {% include 'views/dashboard/task-shortcuts.html' %}
-    {% endif %}
+  {% if partials['has_scheduled_jobs'] %}
+    <h2 class="heading-medium mt-8">{{ _("Scheduled sends") }}</h2>
+    {{ ajax_block(partials, updates_url, 'upcoming', interval=5) }}
+  {% endif %}
 
-    {% if partials['has_scheduled_jobs'] %}
-      <h2 class="heading-medium mt-8">{{ _("Scheduled sends") }}</h2>
-      {{ ajax_block(partials, updates_url, 'upcoming', interval=5) }}
-    {% endif %}
+  <h2 class="heading-medium mt-8">
+    {{ _('Sent in the last week') }}
+  </h2>
 
-    <h2 class="heading-medium mt-8">
-      {{ _('Sent in the last week') }}
-    </h2>
-
-    {{ ajax_block(partials, updates_url, 'totals', interval=5) }}
-    {{ show_more(
+  {{ ajax_block(partials, updates_url, 'totals', interval=5) }}
+  {{ show_more(
       url_for('.monthly', service_id=current_service.id),
       _('See all messages sent')
-    ) }}
+  ) }}
 
-    {% if partials['has_template_statistics'] %}
-      <h2 class="heading-medium mt-8">{{ _("Templates used") }}</h2>
-      {{ ajax_block(partials, updates_url, 'template-statistics', interval=5) }}
-      {{ show_more(
+  {% if partials['has_template_statistics'] %}
+    <h2 class="heading-medium mt-8">{{ _("Templates used") }}</h2>
+    {{ ajax_block(partials, updates_url, 'template-statistics', interval=5) }}
+    {{ show_more(
         url_for('.template_usage', service_id=current_service.id),
         _('See all templates used')
-      ) }}
-    {% endif %}
+    ) }}
+  {% endif %}
 
-    {% if partials['has_jobs'] %}
-      <h2 class="heading-medium mt-8">{{ _("Bulk sends") }}</h2>
-      {{ ajax_block(partials, updates_url, 'jobs', interval=5) }}
-      {{ show_more(
+  {% if partials['has_jobs'] %}
+    <h2 class="heading-medium mt-8">{{ _("Bulk sends") }}</h2>
+    {{ ajax_block(partials, updates_url, 'jobs', interval=5) }}
+    {{ show_more(
         url_for('.view_jobs', service_id=current_service.id),
         _('See all bulk sends')
-      ) }}
-    {% endif %}
-
-  </div>
+    ) }}
+  {% endif %}
 
 {% endblock %}
