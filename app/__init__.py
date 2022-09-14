@@ -42,7 +42,6 @@ from werkzeug.local import LocalProxy
 from app import proxy_fix
 from app.articles.routing import gca_url_for
 from app.asset_fingerprinter import asset_fingerprinter
-from app.commands import setup_commands
 from app.config import configs
 from app.extensions import (
     antivirus_client,
@@ -121,8 +120,6 @@ def get_current_locale(application):
 
 
 def create_app(application):
-    setup_commands(application)
-
     notify_environment = os.environ["NOTIFY_ENVIRONMENT"]
     config = configs[notify_environment]
 
@@ -194,7 +191,7 @@ def create_app(application):
     redis_client.redis_store.decode_responses = True
 
     # Log the application configuration
-    application.logger.info(f"Notify config: {config.get_safe_config()}")
+    # application.logger.info(f"Notify config: {config.get_safe_config()}")
 
     from app.main import main as main_blueprint
 
