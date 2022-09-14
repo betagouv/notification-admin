@@ -9,14 +9,14 @@ WORKDIR /app
 RUN python -m pip install pipenv
 
 COPY Pipfile Pipfile.lock .
-RUN pipenv install --dev --system
+RUN pipenv install --dev
 
 COPY package.json package-lock.json .snyk .
 RUN npm ci
 
 COPY . /app
 
-RUN make babel
+RUN pipenv run make babel
 
 RUN npm run build
 
