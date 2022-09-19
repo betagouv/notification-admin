@@ -17,7 +17,7 @@ test:
 
 .PHONY: run-dev
 run-dev:
-	pipenv run flask run -p 6012 --host=0.0.0.0
+	pipenv run flask --debug run -p 6012 --host=0.0.0.0
 
 .PHONY: lint-flake
 lint-flake:
