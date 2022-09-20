@@ -80,10 +80,10 @@ from app.utils.user_permissions import (
     permission_options,
 )
 
-
 VALIDATOR_STRINGS = {
     "empty": "Ne peut pas être vide"
 }
+
 
 def get_time_value_and_label(future_time):
     return (
@@ -159,7 +159,6 @@ class RadioField(WTFormsRadioField):
 
 
 def email_address(label='Email address', gov_user=True, required=True):
-
     validators = [
         ValidEmail(),
     ]
@@ -273,6 +272,7 @@ def fr_text_input_field_widget(self, field, type=None, param_extensions=None, **
     return Markup(
         render_template('components/dsfr/input.njk', params=params))
 
+
 def govuk_text_input_field_widget(self, field, type=None, param_extensions=None, **kwargs):
     value = kwargs["value"] if "value" in kwargs else field.data
     value = str(value) if isinstance(value, Number) else value
@@ -369,7 +369,7 @@ class GovukSearchField(SearchField):
         params = {"classes": "govuk-!-width-full"}  # email addresses don't need to be spellchecked
         merge_jsonlike(params, param_extensions)
 
-        return govuk_text_input_field_widget(self, field, type="search", param_extensions=params, **kwargs)
+        return fr_text_input_field_widget(self, field, type="search", param_extensions=params, **kwargs)
 
 
 class GovukDateField(DateField):
@@ -695,7 +695,13 @@ class RegisterUserFromOrgInviteForm(StripWhitespaceForm):
         validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])]
     )
 
-    mobile_number = InternationalPhoneNumber('Mobile number', validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])])
+    mobile_number = InternationalPhoneNumber(
+        'Mobile number',
+        validators=[
+            DataRequired(message=VALIDATOR_STRINGS['empty'])
+        ]
+    )
+
     password = password()
     organisation = HiddenField('organisation')
     email_address = HiddenField('email_address')

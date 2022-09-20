@@ -59,19 +59,19 @@
         {% endif %}
       {% endcall %}
       {% if not current_user.is_gov_user %}
-        <p class="govuk-body">
+        <p>
           Only team members with a government email address can request to go live.
         </p>
       {% elif (not current_service.go_live_checklist_completed) or (current_service.able_to_accept_agreement and not current_service.organisation.agreement_signed) %}
-        <p class="govuk-body">
+        <p>
           You must complete these steps before you can request to go live.
         </p>
       {% else %}
-        <p class="govuk-body">
+        <p>
           When we receive your request we’ll get back to you within one working day.
         </p>
         <p class="bottom-gutter">
-          By requesting to go live you’re agreeing to our <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.terms') }}">terms of use</a>.
+          By requesting to go live you’re agreeing to our <a class="fr-link" href="{{ url_for('.terms') }}">terms of use</a>.
         </p>
         {% call form_wrapper() %}
           {{ page_footer('Request to go live') }}

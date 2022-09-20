@@ -20,18 +20,18 @@
     {% call banner_wrapper(type='dangerous') %}
       <h1 class="banner-title">{{ error.title }}</h1>
       {% if error.detail %}
-        <p class="govuk-body">{{ error.detail | safe }}</p>
+        <p>{{ error.detail | safe }}</p>
       {% endif %}
     {% endcall %}
   {% else %}
     {{ page_header('Upload an emergency contact list') }}
-    <p class="govuk-body">
+    <p>
       Save a list of staff email addresses or phone numbers in Notify.
     </p>
-    <p class="govuk-body">
+    <p>
       In an emergency, you can send a message to everyone on the list.
     </p>
-    <p class="govuk-body">
+    <p>
       Do not include contact details for members of the public.
     </p>
   {% endif %}
@@ -61,7 +61,7 @@
       {% call(item, row_number) list_table(
         [
           ['email address'],
-          ['test@example.gov.uk'],
+          ['test@beta.gouv.fr'],
         ],
         caption="Example",
         caption_visible=False,

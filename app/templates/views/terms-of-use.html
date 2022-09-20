@@ -13,36 +13,36 @@
 
   <h1 class="heading-large">Terms of use</h1>
 
-  <p class="govuk-body">
-    These terms apply to your service’s use of GOV.UK&nbsp;Notify. You must be the service manager to accept them.
+  <p>
+    These terms apply to your service’s use of Beta Notifications. You must be the service manager to accept them.
   </p>
 
   <h2 class="heading-medium" id="when-using-notify">When using Notify</h2>
-  <p class="govuk-body">You must:</p>
+  <p>You must:</p>
   <ul class="govuk-list govuk-list--bullet">
     <li>complete your organisation’s information assurance process (you do not need to include Notify or our delivery partners, we’ve already done that)</li>
     <li>tell us immediately if you have any security breaches</li>
     <li>keep your API keys secure</li>
     <li>get the right levels of consent (to send messages and to use data)</li>
-    <li>not send unsolicited messages, only ones related to a transaction or something the user has subscribed to be updated about (<a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/service-manual/design/sending-emails-and-text-messages">check the Service Manual</a> if you’re not sure)</li>
+    <li>not send unsolicited messages, only ones related to a transaction or something the user has subscribed to be updated about (<a class="fr-link" href="https://www.gov.uk/service-manual/design/sending-emails-and-text-messages">check the Service Manual</a> if you’re not sure)</li>
     <li>
-      send messages that meet the GOV.UK Service Manual standards for <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/service-manual/design/sending-emails-and-text-messages">writing text messages and emails</a></li>
+      send messages that meet the GOV.UK Service Manual standards for <a class="fr-link" href="https://www.gov.uk/service-manual/design/sending-emails-and-text-messages">writing text messages and emails</a></li>
     <li>check that the data you add to Notify is accurate and complies with data protection legislation</li>
   </ul>
-  <p class="govuk-body">If you do not keep to these terms, we might have to stop sending your messages.</p>
+  <p>If you do not keep to these terms, we might have to stop sending your messages.</p>
 
-  <p class="govuk-body">Notify will:</p>
+  <p>Notify will:</p>
   <ul class="govuk-list govuk-list--bullet">
     <li>send all the messages you pass to us, as long as they meet our guidelines</li>
     <li>
-      show how Notify is performing (through our <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('main.performance') }}">performance</a> and <a class="govuk-link govuk-link--no-visited-state" href="https://status.notifications.service.gov.uk/">status</a> pages)
+      show how Notify is performing (through our <a class="fr-link" href="{{ url_for('main.performance') }}">performance</a> and <a class="fr-link" href="https://status.notifications.service.gov.uk/">status</a> pages)
     </li>
-    <li>keep your data <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.security') }}">secure</a></li>
+    <li>keep your data <a class="fr-link" href="{{ url_for('.security') }}">secure</a></li>
     <li>give you one month’s notice by email if we change our terms of use or delivery providers</li>
   </ul>
 
   <h2 class="heading-medium" id="leaving-notify">Leaving Notify</h2>
-  <p class="govuk-body">You can leave Notify at any time. Just <a class="govuk-link govuk-link--no-visited-state" href="{{url_for('.support')}}">contact us</a> and we’ll close your account.</p>
-  <p class="govuk-body">When you leave Notify, all your data will be deleted.</p>
+  <p>You can leave Notify at any time. Just <a class="fr-link" href="{{url_for('.support')}}">contact us</a> and we’ll close your account.</p>
+  <p>When you leave Notify, all your data will be deleted.</p>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends "withnav_template.html" %}
 {% from "components/page-header.html" import page_header %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 {% from "components/back-link/macro.njk" import govukBackLink %}
 
 {% block service_page_title %}
@@ -18,22 +18,22 @@
 
     {{ page_header('Accept our data sharing and financial agreement')}}
 
-    <p class="govuk-body">
-      Before you can use GOV.UK Notify, you need to accept our data sharing and financial agreement.
+    <p>
+      Before you can use Beta Notifications, you need to accept our data sharing and financial agreement.
     </p>
-    <p class="govuk-body">
+    <p>
       This must be done by, or on behalf of, someone with the authority to sign contracts for {{ current_service.organisation.name }}.
     </p>
-    <p class="govuk-body">
+    <p>
       Once accepted, the agreement covers all Notify services from {{ current_service.organisation.name }}.
     </p>
-    <p class="govuk-body">
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('main.service_download_agreement', service_id=current_service.id) }}">Download a copy of the data sharing and financial agreement (PDF)</a>.
+    <p>
+      <a class="fr-link" href="{{ url_for('main.service_download_agreement', service_id=current_service.id) }}">Download a copy of the data sharing and financial agreement (PDF)</a>.
     </p>
-    <p class="govuk-body">
+    <p>
       The agreement is confidential and should not be shared outside your organisation.
     </p>
-    {{ govukButton({
+    {{ frButton({
       "element": "a",
       "text": "Continue",
       "href": url_for('main.service_accept_agreement', service_id=current_service.id),

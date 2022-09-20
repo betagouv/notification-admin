@@ -4,7 +4,7 @@
 {% from "components/radios.html" import radio_select %}
 {% from "components/table.html" import list_table, field, text_field, index_field, hidden_field_heading, row, row_heading %}
 {% from "components/page-header.html" import page_header %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 {% from "components/back-link/macro.njk" import govukBackLink %}
 
 {% block service_page_title %}
@@ -19,12 +19,12 @@
 
   {{ page_header(contact_list.original_file_name) }}
 
-  <p class="govuk-body">
+  <p>
     Uploaded by {{ contact_list.created_by }} {{ contact_list.created_at|format_datetime_human }}.
   </p>
 
   {% if jobs %}
-    <p class="govuk-body">
+    <p>
       Used {{ jobs|length|iteration_count }}
       in the last {{ current_service.get_days_of_retention(contact_list.template_type) }}
       days.
@@ -91,7 +91,7 @@
       {% endcall %}
     </div>
   {% else %}
-    <p class="govuk-body">
+    <p>
       {% if contact_list.has_jobs %}
         Not used in the last {{ current_service.get_days_of_retention(contact_list.template_type) }} days.
       {% else %}
@@ -134,7 +134,7 @@
           <a class="govuk-link govuk-link--destructive" href="{{ url_for('main.delete_contact_list', service_id=current_service.id, contact_list_id=contact_list.id) }}">Delete this contact list</a>
         </span>
       {% endif %}
-      <a class="govuk-link govuk-link--no-visited-state page-footer-right-aligned-link-without-button" download href="{{ url_for('main.download_contact_list', service_id=current_service.id, contact_list_id=contact_list.id) }}">Download this contact list (<abbr title="Comma separated values">CSV</abbr>)</a>
+      <a class="fr-link page-footer-right-aligned-link-without-button" download href="{{ url_for('main.download_contact_list', service_id=current_service.id, contact_list_id=contact_list.id) }}">Download this contact list (<abbr title="Comma separated values">CSV</abbr>)</a>
     </div>
   </div>
 

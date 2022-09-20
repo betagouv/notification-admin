@@ -37,7 +37,7 @@ def test_form_is_valid_returns_no_errors(
     ),
     (
         {},
-        'Cannot be empty',
+        'Ne peut pas être vide',
     ),
     (
         {'sms_code': '12E45'},

@@ -563,7 +563,7 @@ def test_platform_admin_splash_doesnt_talk_to_api(
 
     page = client_request.get('main.platform_admin_splash_page')
 
-    assert page.select_one('main .govuk-body a')['href'] == url_for(
+    assert page.select_one('main a.fr-link')['href'] == url_for(
         'main.platform_admin',
     )
 
@@ -720,7 +720,7 @@ def test_platform_admin_submit_empty_returned_letters(
 
     assert not mock_client.called
 
-    assert "Cannot be empty" in page.text
+    assert "Ne peut pas être vide" in page.text
 
 
 def test_clear_cache_shows_form(

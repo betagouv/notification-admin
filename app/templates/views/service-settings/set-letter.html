@@ -17,11 +17,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-five-sixths">
       {{ page_header('Send letters') }}
-      <p class="govuk-body">
+      <p>
         It costs between 41 pence and £1.28 to send a letter using Notify.
       </p>
-      <p class="govuk-body">
-        See <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for(".pricing", _anchor="letters") }}">pricing</a> for the list
+      <p>
+        See <a class="fr-link" href="{{ url_for(".pricing", _anchor="letters") }}">pricing</a> for the list
         of rates.
       </p>
       {% call form_wrapper() %}

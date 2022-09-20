@@ -327,7 +327,7 @@ def test_should_show_confirm_revoke_api_key(
     )
     assert normalize_spaces(page.select('.banner-dangerous')[0].text) == (
         'Are you sure you want to revoke ‘some key name’? '
-        'You will not be able to use this API key to connect to GOV.UK Notify. '
+        'You will not be able to use this API key to connect to Beta Notifications. '
         'Yes, revoke this API key'
     )
     assert mock_get_api_keys.call_args_list == [
@@ -435,7 +435,7 @@ def test_should_show_guestlist_page(
         'main.guest_list',
         service_id=SERVICE_ONE_ID,
     )
-    textboxes = page.find_all('input', {'class': 'govuk-input'})
+    textboxes = page.find_all('input', {'class': 'fr-input'})
     for index, value in enumerate(
         ['test@example.com'] + [None] * 4 + ['07900900000'] + [None] * 4
     ):
@@ -496,7 +496,7 @@ def test_should_validate_guestlist_items(
     ('main.received_text_messages_callback'),
 ])
 @pytest.mark.parametrize('url, bearer_token, expected_errors', [
-    ("https://example.com", "", "Cannot be empty"),
+    ("https://example.com", "", "Ne peut pas être vide"),
     ("http://not_https.com", "1234567890", "Must be a valid https URL"),
     ("https://test.com", "123456789", "Must be at least 10 characters"),
 ])
@@ -523,7 +523,7 @@ def test_callback_forms_validation(
         _data=data,
         _expected_status=200
     )
-    error_msgs = ' '.join(msg.text.strip() for msg in response.select(".govuk-error-message"))
+    error_msgs = ' '.join(msg.text.strip() for msg in response.select(".fr-error-text"))
 
     assert expected_errors in error_msgs
 

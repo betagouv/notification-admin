@@ -93,7 +93,7 @@ def create_api_key(service_id):
             'hint': {
                 'html': Markup(
                     'Not available because your service is in '
-                    '<a class="govuk-link govuk-link--no-visited-state" href="/features/trial-mode">trial mode</a>')
+                    '<a class="fr-link" href="/features/trial-mode">trial mode</a>')
             }
         }
     if current_service.has_permission('letter'):
@@ -125,7 +125,7 @@ def revoke_api_key(service_id, key_id):
     if request.method == 'GET':
         flash([
             "Are you sure you want to revoke ‘{}’?".format(key_name),
-            "You will not be able to use this API key to connect to GOV.UK Notify."
+            "You will not be able to use this API key to connect to Beta Notifications."
         ], 'revoke this API key')
         return render_template(
             'views/api/keys.html',

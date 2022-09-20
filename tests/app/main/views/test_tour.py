@@ -24,7 +24,7 @@ def test_should_200_for_tour_start(
         'Try sending yourself this example'
     )
     selected_hint = page.select('.banner-tour .govuk-grid-row')[0]
-    selected_hint_text = normalize_spaces(selected_hint.select(".govuk-body")[0].text)
+    selected_hint_text = normalize_spaces(selected_hint.select(".fr-body")[0].text)
     assert "greyed-out-step" not in selected_hint["class"]
     assert selected_hint_text == 'Every message is sent from a template'
 
@@ -39,7 +39,7 @@ def test_should_200_for_tour_start(
         'service one: ((one)) ((two)) ((three))'
     )
 
-    assert page.select('a.govuk-button')[0]['href'] == url_for(
+    assert page.select('.page-footer a')[0]['href'] == url_for(
         '.tour_step', service_id=SERVICE_ONE_ID, template_id=fake_uuid, step_index=1
     )
 
@@ -147,7 +147,7 @@ def test_should_200_for_get_tour_step(
         'Try sending yourself this example'
     )
     selected_hint = page.select('.banner-tour .govuk-grid-row')[1]
-    selected_hint_text = normalize_spaces(selected_hint.select(".govuk-body")[0].text)
+    selected_hint_text = normalize_spaces(selected_hint.select(".fr-body")[0].text)
     assert "greyed-out-step" not in selected_hint["class"]
     assert selected_hint_text == 'The template pulls in the data you provide'
 
@@ -180,11 +180,11 @@ def test_should_show_empty_text_box(
         step_index=1
     )
 
-    textbox = page.select_one('[data-module=autofocus][data-force-focus=True] .govuk-input')
+    textbox = page.select_one('[data-module=autofocus][data-force-focus=True] .fr-input')
     assert 'value' not in textbox
     assert textbox['name'] == 'placeholder_value'
     assert textbox['class'] == [
-        'govuk-input', 'govuk-!-width-full',
+        'fr-input', 'govuk-!-width-full',
     ]
     # data-module=autofocus is set on a containing element so it
     # shouldn’t also be set on the textbox itself
@@ -210,7 +210,7 @@ def test_should_prefill_answers_for_get_tour_step(
         step_index=1
     )
 
-    assert page.select('.govuk-input')[0]['value'] == 'hello'
+    assert page.select('.fr-input')[0]['value'] == 'hello'
 
 
 @pytest.mark.parametrize('template_type', ['email', 'letter', 'broadcast'])
@@ -429,9 +429,9 @@ def test_post_tour_step_raises_validation_error_for_form_error(
     )
 
     assert normalize_spaces(
-        page.select('.govuk-error-message')[0].text
+        page.select('.fr-error-text')[0].text
     ) == (
-        'Error: Cannot be empty'
+        'Erreur : Ne peut pas être vide'
     )
 
     assert normalize_spaces(
@@ -547,7 +547,7 @@ def test_should_200_for_check_tour_notification(
         'Try sending yourself this example'
     )
     selected_hint = page.select('.banner-tour .govuk-grid-row')[1]
-    selected_hint_text = normalize_spaces(selected_hint.select(".govuk-body")[0].text)
+    selected_hint_text = normalize_spaces(selected_hint.select(".fr-body")[0].text)
     assert "greyed-out-step" not in selected_hint["class"]
     assert selected_hint_text == 'The template pulls in the data you provide'
 

@@ -20,11 +20,11 @@
   {% if template.placeholders %}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-five-sixths">
-        <p class="govuk-body">
+        <p>
           You cannot use an emergency contact list with this template because it
           is personalised with {{ list_of_placeholders(template.placeholders) }}.
         </p>
-        <p class="govuk-body">
+        <p>
           Emergency contact lists can only include email addresses or phone
           numbers.
         </p>
@@ -65,11 +65,11 @@
   {% else %}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-five-sixths">
-        <p class="govuk-body">
+        <p>
           You have not saved any lists of {{ 99|recipient_count_label(template.template_type) }} yet.
         </p>
-        <p class="govuk-body">
-          To upload and save an emergency contact list, go to the <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('main.uploads', service_id=current_service.id) }}">uploads</a> page.
+        <p>
+          To upload and save an emergency contact list, go to the <a class="fr-link" href="{{ url_for('main.uploads', service_id=current_service.id) }}">uploads</a> page.
         </p>
       </div>
     </div>

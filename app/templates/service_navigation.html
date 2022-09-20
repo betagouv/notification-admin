@@ -34,9 +34,9 @@
   {% if current_service.organisation_id %}
     {% if current_user.platform_admin or
       (current_user.belongs_to_organisation(current_service.organisation_id) and current_service.live) %}
-      <a href="{{ url_for('.organisation_dashboard', org_id=current_service.organisation_id) }}" class="govuk-link govuk-link--no-visited-state navigation-organisation-link">{{ current_service.organisation_name }}</a>
+      <a href="{{ url_for('.organisation_dashboard', org_id=current_service.organisation_id) }}" class="fr-link navigation-organisation-link">{{ current_service.organisation_name }}</a>
     {% endif %}
   {% endif %}
   {{ navigation_service_name(current_service) }}
-  <a href="{{ url_for('main.choose_account') }}" class="govuk-link govuk-link--no-visited-state navigation-service-switch">Switch service</a>
+  <a href="{{ url_for('main.choose_account') }}" class="fr-link navigation-service-switch">Changer de service</a>
 </div>

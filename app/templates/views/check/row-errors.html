@@ -21,14 +21,14 @@
         <h1 class='banner-title' data-module="track-error" data-error-type="Bad rows" data-error-label="{{ upload_id }}">
           There’s a problem with {{ original_file_name }}
         </h1>
-        <p class="govuk-body">
+        <p>
           You need to {{ row_errors[0] }}.
         </p>
       {% else %}
         <h1 class='banner-title' data-module="track-error" data-error-type="Bad rows" data-error-label="{{ upload_id }}">
           There are some problems with {{ original_file_name }}
         </h1>
-        <p class="govuk-body">
+        <p>
           You need to:
         </p>
         <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0">
@@ -49,7 +49,7 @@
         button_text='Upload your file again'
       ) }}
     </div>
-    <a href="#content" class="govuk-link govuk-link--no-visited-state back-to-top-link">Back to top</a>
+    <a href="#content" class="fr-link back-to-top-link">Back to top</a>
   </div>
 
   <div class="fullscreen-content" data-module="fullscreen-table">

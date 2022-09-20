@@ -127,6 +127,7 @@ def user_profile_email_confirm(token):
 def user_profile_mobile_number():
 
     user = User.from_id(current_user.id)
+
     form = ChangeMobileNumberForm(mobile_number=current_user.mobile_number)
 
     if form.validate_on_submit():

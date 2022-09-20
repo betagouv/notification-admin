@@ -85,7 +85,7 @@ def test_choose_support_type(
     assert not page.select_one('input[name=name]')
     assert not page.select_one('input[name=email_address]')
     assert page.find('form').find('p').text.strip() == (
-        'We’ll reply to test@user.gov.uk'
+        'We’ll reply to test@beta.gouv.fr'
     )
 
 
@@ -100,7 +100,7 @@ def test_get_support_as_someone_in_the_public_sector(
         _follow_redirects=True,
     )
     assert normalize_spaces(page.select('h1')) == (
-        'Contact GOV.UK Notify support'
+        'Contact Beta Notifications support'
     )
     assert page.select_one('form textarea[name=feedback]')
     assert page.select_one('form input[name=name]')
@@ -118,7 +118,7 @@ def test_get_support_as_member_of_public(
         _follow_redirects=True,
     )
     assert normalize_spaces(page.select('h1')) == (
-        'The GOV.UK Notify service is for people who work in the government'
+        'The Beta Notifications service is for people who work in the government'
     )
     assert len(page.select('h2 a')) == 3
     assert not page.select('form')
@@ -225,7 +225,7 @@ def test_passes_user_details_through_flow(
         ticket_type=zendesk_ticket_type,
         p1=False,
         user_name='Test User',
-        user_email='test@user.gov.uk',
+        user_email='test@beta.gouv.fr',
         org_id=None,
         org_type='central',
         service_id=SERVICE_ONE_ID
@@ -267,8 +267,8 @@ def test_email_address_required_for_problems_and_questions(
         _data=data,
         _expected_status=200
     )
-    assert normalize_spaces(page.select_one('.govuk-error-message').text) == (
-        'Error: Cannot be empty'
+    assert normalize_spaces(page.select_one('.fr-error-text').text) == (
+        'Erreur : Ne peut pas être vide'
     )
 
 
@@ -292,8 +292,8 @@ def test_email_address_must_be_valid_if_provided_to_support_form(
         _expected_status=200,
     )
 
-    assert normalize_spaces(page.select_one('span.govuk-error-message').text) == (
-        'Error: Enter a valid email address'
+    assert normalize_spaces(page.select_one('p.fr-error-text').text) == (
+        'Erreur : Enter a valid email address'
     )
 
 
@@ -413,7 +413,7 @@ def test_redirects_to_triage(
 
 @pytest.mark.parametrize('ticket_type, expected_h1', (
     (PROBLEM_TICKET_TYPE, 'Report a problem'),
-    (GENERAL_TICKET_TYPE, 'Contact GOV.UK Notify support'),
+    (GENERAL_TICKET_TYPE, 'Contact Beta Notifications support'),
 ))
 def test_options_on_triage_page(
     client_request,

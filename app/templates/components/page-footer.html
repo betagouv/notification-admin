@@ -1,4 +1,3 @@
-{% from "components/button.html" import fr_button, fr_button_secondary %}
 {% from "components/dsfr/button.njk" import frButton %}
 
 {% macro page_footer(
@@ -45,8 +44,14 @@
       </span>
     {% endif %}
     {% if secondary_link and secondary_link_text %}
-      <a class="fr-link" href="{{ secondary_link }}">{{ secondary_link_text }}</a>
+      <a class="fr-link secondary-link" href="{{ secondary_link }}">{{ secondary_link_text }}</a>
     {% endif %}
 
+  </div>
+{% endmacro %}
+
+{% macro sticky_page_footer(button_text=None) %}
+  <div class="js-stick-at-bottom-when-scrolling">
+    {{ page_footer(button_text) }}
   </div>
 {% endmacro %}

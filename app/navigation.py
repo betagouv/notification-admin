@@ -6,7 +6,7 @@ from flask import request
 class Navigation:
 
     mapping = {}
-    selected_class = "selected"
+    selected_class = "fr-sidemenu__item--active"
 
     def __init__(self):
         self.mapping = {

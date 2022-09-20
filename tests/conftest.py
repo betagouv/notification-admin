@@ -2123,7 +2123,7 @@ def mock_get_users_by_service(mocker):
             id=sample_uuid(),
             logged_in_at=None,
             mobile_number='+447700900986',
-            email_address='notify@digital.cabinet-office.gov.uk',
+            email_address='notify@beta.gouv.fr',
         )]
 
     # You shouldn’t be calling the user API client directly, so it’s the
@@ -2168,7 +2168,7 @@ def mock_s3_set_metadata(mocker):
 def sample_invite(mocker, service_one):
     id_ = USER_ONE_ID
     from_user = service_one['users'][0]
-    email_address = 'invited_user@test.gov.uk'
+    email_address = 'invited-user@beta.gouv.fr'
     service_id = service_one['id']
     permissions = 'view_activity,send_emails,send_letters,send_texts,manage_settings,manage_users,manage_api_keys'
     created_at = str(datetime.utcnow())
@@ -2213,7 +2213,7 @@ def mock_get_invites_without_manage_permission(mocker, service_one, sample_invit
         return [invite_json(
             id_=str(sample_uuid()),
             from_user=service_one['users'][0],
-            email_address='invited_user@test.gov.uk',
+            email_address='invited-user@beta.gouv.fr',
             service_id=service_one['id'],
             permissions='view_activity,send_messages,manage_api_keys',
             created_at=str(datetime.utcnow()),
@@ -2762,7 +2762,7 @@ def mock_get_notification(mocker):
         noti['created_by'] = {
             'id': fake_uuid,
             'name': 'Test User',
-            'email_address': 'test@user.gov.uk'
+            'email_address': 'test@beta.gouv.fr'
         }
         noti['template'] = template_json(
             service_id,
@@ -2903,8 +2903,7 @@ def client_request(_logged_in_client, mocker, service_one):  # noqa (C901 too co
                     raise AssertionError('Page title ‘{}’ does not start with H1 ‘{}’'.format(page_title, h1))
             if _test_for_elements_without_class and _expected_status not in (301, 302):
                 for tag, hint in (
-                    ('p', 'govuk-body'),
-                    ('a', 'govuk-link govuk-link--no-visited-state'),
+                    ('a', 'fr-link'),
                 ):
                     element = page.select_one(f'{tag}:not([class])')
                     if (
@@ -3320,7 +3319,7 @@ def mock_get_users_for_organisation(mocker):
     def _get_users_for_organisation(org_id):
         return [
             user_json(id_='1234', name='Test User 1'),
-            user_json(id_='5678', name='Test User 2', email_address='testt@gov.uk'),
+            user_json(id_='5678', name='Test User 2', email_address='testt@beta.gouv.fr'),
         ]
 
     return mocker.patch(
@@ -3346,7 +3345,7 @@ def mock_get_invited_users_for_organisation(mocker, sample_org_invite):
 def sample_org_invite(mocker, organisation_one):
     id_ = str(UUID(bytes=b'sample_org_invit', version=4))
     invited_by = organisation_one['users'][0]
-    email_address = 'invited_user@test.gov.uk'
+    email_address = 'invited-user@beta.gouv.fr'
     organisation = organisation_one['id']
     created_at = str(datetime.utcnow())
     status = 'pending'
@@ -3699,7 +3698,7 @@ def create_active_user_approve_broadcasts_permissions(with_unique_id=False):
 def create_active_caseworking_user(with_unique_id=False):
     return create_user(
         id=str(uuid4()) if with_unique_id else sample_uuid(),
-        email_address='caseworker@example.gov.uk',
+        email_address='caseworker@example.beta.gouv.fr',
         permissions={SERVICE_ONE_ID: [
             'send_texts',
             'send_emails',
@@ -3749,7 +3748,7 @@ def create_platform_admin_user(with_unique_id=False, auth_type='webauthn_auth', 
     return create_user(
         id=str(uuid4()) if with_unique_id else sample_uuid(),
         name='Platform admin user',
-        email_address='platform@admin.gov.uk',
+        email_address='platform@admin.beta.gouv.fr',
         permissions=permissions or {},
         platform_admin=True,
         auth_type=auth_type,
@@ -3787,7 +3786,7 @@ def create_user(**overrides):
     user_data = {
         'name': 'Test User',
         'password': 'somepassword',
-        'email_address': 'test@user.gov.uk',
+        'email_address': 'test@beta.gouv.fr',
         'mobile_number': '07700 900762',
         'state': 'active',
         'failed_login_count': 0,
@@ -3803,6 +3802,7 @@ def create_user(**overrides):
         'can_use_webauthn': False,
     }
     user_data.update(overrides)
+
     return user_data
 
 
@@ -3973,7 +3973,7 @@ def create_notification(
         noti['created_by'] = {
             'id': sample_uuid(),
             'name': 'Test User',
-            'email_address': 'test@user.gov.uk'
+            'email_address': 'test@beta.gouv.fr'
         }
     noti['personalisation'] = {'name': 'Jo'}
     noti['template'] = template_json(

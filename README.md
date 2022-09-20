@@ -1,6 +1,6 @@
 # notifications-admin
 
-GOV.UK Notify admin application - https://www.notifications.service.gov.uk/
+Beta Notifications admin application - https://www.notifications.service.gov.uk/
 
  - Register and manage users
  - Create and manage services

@@ -1,7 +1,7 @@
 {% extends "withnav_template.html" %}
 {% from "components/tick-cross.html" import tick_cross %}
 {% from "components/live-search.html" import live_search %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 
 {% block service_page_title %}
   Team members
@@ -22,11 +22,11 @@
   <div class="user-list">
     {% for user in users %}
       <div class="user-list-item">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <h2 class="user-list-item-heading" title="{{ user.email_address }}">
+        <div class="fr-grid-row">
+          <div class="fr-col-8">
+            <h2 title="{{ user.email_address }}">
               {%- if user.name -%}
-              <span class="heading-small live-search-relevant">{{ user.name }}</span>&ensp;
+              <span class="live-search-relevant">{{ user.name }}</span>&ensp;
               {%- endif -%}
               <span class="hint">
               {%- if user.status == 'pending' -%}
@@ -85,11 +85,11 @@
 
   {% if current_user.has_permissions('manage_service') %}
     <div class="js-stick-at-bottom-when-scrolling">
-      {{ govukButton({
+      {{ frButton({
         "element": "a",
         "text": "Invite a team member",
         "href": url_for('.invite_user', service_id=current_service.id),
-        "classes": "govuk-button--secondary"
+        "classes": "fr-btn--secondary"
       }) }}
     </div>
   {% endif %}

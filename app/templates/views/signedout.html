@@ -1,7 +1,7 @@
 {% extends "fullwidth_template.html" %}
 
 {% block meta %}
-  <meta name="description" content="GOV.UK Notify lets you send emails, text messages and letters to your users. Try it now if you work in central government, a local authority, or the NHS.">
+  <meta name="description" content="Beta Notifications lets you send emails, text messages and letters to your users. Try it now if you work in central government, a local authority, or the NHS.">
 {% endblock %}
 
 {% block pageTitle %}
@@ -14,10 +14,10 @@
       <nav class="breadcrumbs breadcrumbs--inverse" aria-label="Breadcrumbs">
        <ol itemscope itemtype="http://schema.org/BreadcrumbList">
          <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-           <a class="govuk-link govuk-link--no-visited-state" href="https://www.gov.uk/service-toolkit#gov-uk-services" itemprop="item"><span itemprop="name">GOV.UK services</span></a>
+           <a class="fr-link" href="https://www.gov.uk/service-toolkit#gov-uk-services" itemprop="item"><span itemprop="name">GOV.UK services</span></a>
          </li>
          <li class="breadcrumbs__item breadcrumbs__item--active" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-           <a class="govuk-link govuk-link--no-visited-state" href="#main" itemprop="item"><span itemprop="name">GOV.UK Notify</span></a>
+           <a class="fr-link" href="#main" itemprop="item"><span itemprop="name">Beta Notifications</span></a>
          </li>
        </ol>
       </nav>
@@ -26,11 +26,11 @@
           <h1>
             Send emails, text messages and letters to your users
           </h1>
-          <p class="govuk-body">
-            Try GOV.UK Notify now if you work in central government, a&nbsp;local authority, or the NHS.
+          <p>
+            Try Beta Notifications now if you work in central government, a&nbsp;local authority, or the NHS.
           </p>
           <div class="button-container">
-            or <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.sign_in' )}}">sign in</a> if you’ve used
+            or <a class="fr-link" href="{{ url_for('.sign_in' )}}">sign in</a> if you’ve used
             it before
           </div>
         </div>
@@ -44,7 +44,7 @@
         <h2>
           Control your content
         </h2>
-        <p class="govuk-body">
+        <p>
           You do not need any technical knowledge to create email,
           text&nbsp;message or letter templates.
         </p>
@@ -60,7 +60,7 @@
         <h2>
           See how your messages perform
         </h2>
-        <p class="govuk-body">
+        <p>
           Track how many messages you’ve sent and
           find out which ones are not being delivered.
         </p>
@@ -68,7 +68,7 @@
       <div class="govuk-grid-column-one-half">
         <img
           src="{{ asset_url('images/product/02-reporting.svg') }}"
-          alt="A screenshot of GOV.UK Notify showing counts of emails and text messages sent"
+          alt="A screenshot of Beta Notifications showing counts of emails and text messages sent"
         >
       </div>
     </div>
@@ -79,7 +79,7 @@
     </h2>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half">
-        <p class="govuk-body">
+        <p>
           Upload a spreadsheet of email&nbsp;addresses or
           phone&nbsp;numbers and Notify sends the messages.
         </p>
@@ -89,8 +89,8 @@
         >
       </div>
       <div class="govuk-grid-column-one-half">
-        <p class="govuk-body">
-          Integrate the GOV.UK Notify API with your web&nbsp;application or
+        <p>
+          Integrate the Beta Notifications API with your web&nbsp;application or
           back office system.
         </p>
         <img
@@ -102,7 +102,7 @@
   </div>
   <div class="product-page-section">
     <h2 class="with-keyline">
-      Introducing GOV.UK Notify
+      Introducing Beta Notifications
     </h2>
     <div class="responsive-embed responsive-embed--16by9 responsive-embed--bordered bottom-gutter-2">
       <div class="responsive-embed__wrapper">
@@ -112,7 +112,7 @@
   </div>
   <div class="product-page-section">
     <div class="with-keyline bottom-gutter-2" id="whos-using-notify">
-      <h2>Who’s using GOV.UK Notify</h2>
+      <h2>Who’s using Beta Notifications</h2>
       <div class="govuk-grid-row bottom-gutter">
         <div class="govuk-grid-column-one-half">
           <span class="govuk-visually-hidden">There are</span>
@@ -126,9 +126,9 @@
           <span class="govuk-visually-hidden">using Notify.</span>
         </div>
       </div>
-      <p class="govuk-body">
+      <p>
         See the
-        <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('main.performance') }}">list of services and organisations</a>.
+        <a class="fr-link" href="{{ url_for('main.performance') }}">list of services and organisations</a>.
       </p>
     </div>
   </div>
@@ -156,7 +156,7 @@
           <p class="align-with-big-number-hint">
             There’s no monthly charge, no setup fee and no&nbsp;procurement process.
           </p>
-          <p class="govuk-body">Find out more about <a class="govuk-link govuk-link--no-visited-state" href="https://www.notifications.service.gov.uk/pricing">pricing</a>.
+          <p>Find out more about <a class="fr-link" href="https://www.notifications.service.gov.uk/pricing">pricing</a>.
           </p>
         </div>
       </div>
@@ -168,19 +168,19 @@
         <h2 class="with-keyline">
           The team
         </h2>
-        <p class="govuk-body">
-          GOV.UK Notify is built by the Government Digital Service
+        <p>
+          Beta Notifications is built by the Government Digital Service
           and is supported 24 hours a day, 7 days a week.
         </p>
-        <p class="govuk-body">
-          <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('main.support') }}">Contact us</a> if you have a question or want
+        <p>
+          <a class="fr-link" href="{{ url_for('main.support') }}">Contact us</a> if you have a question or want
           to give feedback.
         </p>
       </div>
       <div class="govuk-grid-column-one-half">
         <img
           src="{{ asset_url('images/product/team.jpg') }}"
-          alt="A photo of the GOV.UK Notify team gathered around a big screen. One team member is pointing at a graph on the screen."
+          alt="A photo of the Beta Notifications team gathered around a big screen. One team member is pointing at a graph on the screen."
         >
       </div>
     </div>

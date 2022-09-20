@@ -2352,7 +2352,7 @@ def test_send_one_off_letter_address_populates_address_fields_in_session(
     (
         '',
         [],
-        'Cannot be empty'
+        'Ne peut pas être vide'
     ),
     (
         'a\n\n\n\nb',
@@ -4137,11 +4137,11 @@ def test_reply_to_is_previewed_if_chosen(
 ):
     mocker.patch('app.main.views.send.s3download', return_value="""
         email_address,date,thing
-        notify@digital.cabinet-office.gov.uk,foo,bar
+        notify@beta.gouv.fr,foo,bar
     """)
 
     with client_request.session_transaction() as session:
-        session['recipient'] = 'notify@digital.cabinet-office.gov.uk'
+        session['recipient'] = 'notify@beta.gouv.fr'
         session['placeholders'] = {}
         session['file_uploads'] = {
             fake_uuid: {'template_id': fake_uuid}
@@ -4423,8 +4423,8 @@ def test_send_to_myself_sets_placeholder_and_redirects_for_email(
     )
 
     with client_request.session_transaction() as session:
-        assert session['recipient'] == 'test@user.gov.uk'
-        assert session['placeholders'] == {'email address': 'test@user.gov.uk'}
+        assert session['recipient'] == 'test@beta.gouv.fr'
+        assert session['placeholders'] == {'email address': 'test@beta.gouv.fr'}
 
 
 def test_send_to_myself_sets_placeholder_and_redirects_for_sms(

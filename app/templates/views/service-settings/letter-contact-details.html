@@ -2,7 +2,7 @@
 {% from "components/copy-to-clipboard.html" import copy_to_clipboard %}
 {% from "components/page-header.html" import page_header %}
 {% from "components/table.html" import row_group, row, text_field, edit_field, field, boolean_field, list_table with context %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 {% from "components/back-link/macro.njk" import govukBackLink %}
 
 {% block service_page_title %}
@@ -31,7 +31,7 @@
         </div>
         <div class="govuk-grid-column-one-quarter">
           {% if current_service.default_letter_contact_block and current_user.has_permissions('manage_service') %}
-              <a class="govuk-link govuk-link--no-visited-state user-list-edit-link" href="{{ url_for('.service_make_blank_default_letter_contact', service_id =current_service.id) }}">Make default</a>
+              <a class="fr-link user-list-edit-link" href="{{ url_for('.service_make_blank_default_letter_contact', service_id =current_service.id) }}">Make default</a>
           {% endif %}
         </div>
       </div>
@@ -40,7 +40,7 @@
       <div class="user-list-item">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-three-quarters">
-            <p class="govuk-body">
+            <p>
               {{ item.contact_block | nl2br }}
             </p>
             <p class="govuk-body hint">
@@ -51,7 +51,7 @@
           </div>
           <div class="govuk-grid-column-one-quarter">
             {% if current_user.has_permissions('manage_service') %}
-            <a class="govuk-link govuk-link--no-visited-state user-list-edit-link" href="{{ url_for('.service_edit_letter_contact', service_id =current_service.id, letter_contact_id = item.id) }}">
+            <a class="fr-link user-list-edit-link" href="{{ url_for('.service_edit_letter_contact', service_id =current_service.id, letter_contact_id = item.id) }}">
               Change<span class="govuk-visually-hidden"> {{ item.contact_block }}</span>
             </a>
             {% endif %}
@@ -68,7 +68,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <div class="js-stick-at-bottom-when-scrolling">
-          {{ govukButton({
+          {{ frButton({
             "element": "a",
             "text": "Add a new address",
             "href": url_for('.service_add_letter_contact', service_id=current_service.id)

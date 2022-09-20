@@ -1,6 +1,6 @@
 {% extends "withnav_template.html" %}
 {% from "components/form.html" import form_wrapper %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 {% from "components/branding-preview.html" import email_branding_preview %}
 
 {% block service_page_title %}
@@ -17,7 +17,7 @@
         <div class="form-group">
           {{ form.hidden_tag() }}
           <div class="page-footer">
-            {{ govukButton({ "text": "Save" }) }}
+            {{ frButton({ "text": "Save" }) }}
           </div>
         </div>
       {% endcall %}

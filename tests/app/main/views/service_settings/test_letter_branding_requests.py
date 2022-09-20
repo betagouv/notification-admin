@@ -15,6 +15,7 @@ from tests.conftest import (
 )
 
 
+@pytest.skip(allow_module_level=True, reason="We don't do letters")
 @pytest.mark.parametrize('organisation_type, expected_options', (
     ('nhs_central', [
         ('nhs', 'NHS'),
@@ -144,7 +145,7 @@ def test_letter_branding_request_submit(
         subject='Letter branding request - service one',
         ticket_type='question',
         user_name='Test User',
-        user_email='test@user.gov.uk',
+        user_email='test@beta.gouv.fr',
         org_id=organisation_id,
         org_type='central',
         service_id=SERVICE_ONE_ID
@@ -157,7 +158,7 @@ def test_letter_branding_request_submit(
 
 
 @pytest.mark.parametrize('data, error_message', (
-    ({'options': 'something_else'}, 'Cannot be empty'),  # no data in 'something_else' textbox
+    ({'options': 'something_else'}, 'Ne peut pas être vide'),  # no data in 'something_else' textbox
     ({'options': ''}, 'Select an option'),  # no radio button selected
 ))
 def test_letter_branding_request_submit_when_form_has_missing_data(

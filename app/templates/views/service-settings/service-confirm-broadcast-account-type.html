@@ -18,7 +18,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-five-sixths">
       {{ page_header('Confirm emergency alert settings') }}
-      <p class="govuk-body">
+      <p>
         {{ broadcast_service_name_tag(
           form.account_type.service_mode == 'training',
           form.account_type.broadcast_channel,
@@ -27,11 +27,11 @@
         ) }}
       </p>
       {% if form.account_type.service_mode == 'training' %}
-        <p class="govuk-body">
+        <p>
           No phones will receive alerts sent from this service.
         </p>
       {% else %}
-        <p class="govuk-body">
+        <p>
           Members of the public
           {% if form.account_type.broadcast_channel in ['test', 'operator'] %}
             who have switched on the {{ form.account_type.broadcast_channel }} channel on their phones
@@ -43,7 +43,7 @@
         </p>
       {% endif %}
 
-      <p class="govuk-body">
+      <p>
         All team member permissions will be removed.
       </p>
 

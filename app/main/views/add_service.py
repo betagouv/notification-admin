@@ -91,7 +91,7 @@ def add_service():
 
 
 def _render_add_service_page(form, default_organisation_type):
-    heading = 'About your service'
+    heading = 'Votre service'
 
     if default_organisation_type == 'local':
         return render_template(

@@ -2,7 +2,7 @@
 {% from "components/copy-to-clipboard.html" import copy_to_clipboard %}
 {% from "components/page-header.html" import page_header %}
 {% from "components/table.html" import row_group, row, text_field, edit_field, field, boolean_field, list_table with context %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 {% from "components/back-link/macro.njk" import govukBackLink %}
 
 {% block service_page_title %}
@@ -37,7 +37,7 @@
           </div>
           <div class="govuk-grid-column-one-quarter">
             {% if current_user.has_permissions('manage_service') %}
-              <a class="govuk-link govuk-link--no-visited-state user-list-edit-link"href="{{ url_for('.service_edit_email_reply_to', service_id =current_service.id, reply_to_email_id = item.id) }}">
+              <a class="fr-link user-list-edit-link"href="{{ url_for('.service_edit_email_reply_to', service_id =current_service.id, reply_to_email_id = item.id) }}">
                 Change<span class="govuk-visually-hidden"> {{ item.email_address }}</span>
               </a>
             {% endif %}
@@ -57,7 +57,7 @@
     <div class="govuk-grid-column-full">
       {% if current_user.has_permissions('manage_service') %}
         <div class="js-stick-at-bottom-when-scrolling">
-          {{ govukButton({
+          {{ frButton({
             "element": "a",
             "text": "Add reply-to email address",
             "href": url_for('.service_add_email_reply_to', service_id=current_service.id),
@@ -66,10 +66,10 @@
       {% endif %}
     </div>
     <div class="govuk-grid-column-five-sixths">
-      <p class="govuk-body">
+      <p>
         You need to add at least one reply-to address so recipients can reply to your messages.
       </p>
-      <p class="govuk-body">
+      <p>
         Emails with a reply-to address:
       </p>
       <ul class="govuk-list govuk-list--bullet">

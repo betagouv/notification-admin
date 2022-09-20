@@ -95,8 +95,8 @@ def test_should_return_200_when_sms_code_is_wrong(
         _expected_status=200,
     )
 
-    assert len(page.select('.govuk-error-message')) == 1
-    assert 'Code not found' in page.select_one('.govuk-error-message').text
+    assert len(page.select('.fr-error-text')) == 1
+    assert 'Code not found' in page.select_one('.fr-error-text').text
 
 
 def test_verify_email_redirects_to_verify_if_token_valid(

@@ -121,7 +121,8 @@ def test_redirect_caseworkers_to_templates(
     mocker,
     active_caseworking_user,
 ):
-    mocker.patch('app.user_api_client.get_user', return_value=active_caseworking_user)
+    client_request.login(active_caseworking_user)
+
     client_request.get(
         'main.service_dashboard',
         service_id=SERVICE_ONE_ID,
@@ -630,7 +631,7 @@ def test_should_show_recent_templates_on_dashboard(
     mock_template_stats.assert_called_once_with(SERVICE_ONE_ID, limit_days=7)
 
     headers = [header.text.strip() for header in page.find_all('h2') + page.find_all('h1')]
-    assert 'In the last 7 days' in headers
+    assert 'Les 7 derniers jours' in headers
 
     table_rows = page.find_all('tbody')[0].find_all('tr')
 

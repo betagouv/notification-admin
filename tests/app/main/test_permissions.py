@@ -116,7 +116,7 @@ def test_service_navigation_for_org_user(
         item.text.strip() for item in page.select('nav.navigation a')
     ] == [
         'Usage',
-        'Team members',
+        'Votre équipe',
     ]
 
 
@@ -125,9 +125,9 @@ def test_service_navigation_for_org_user(
         [],
         (
             'Templates',
-            'Sent messages',
+            'Messages envoyés',
             'Uploads',
-            'Team members',
+            'Votre équipe',
         ),
         403,
     ),
@@ -135,9 +135,9 @@ def test_service_navigation_for_org_user(
         [ORGANISATION_ID],
         (
             'Templates',
-            'Sent messages',
+            'Messages envoyés',
             'Uploads',
-            'Team members',
+            'Votre équipe',
             'Usage',
         ),
         200,

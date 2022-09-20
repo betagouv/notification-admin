@@ -2,7 +2,7 @@
 {% from "components/table.html" import list_table, row, field, hidden_field_heading %}
 {% from "components/page-footer.html" import page_footer %}
 {% from "components/live-search.html" import live_search %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 
 {% block org_page_title %}
   Team members
@@ -53,7 +53,7 @@
           </div>
           <div class="govuk-grid-column-one-quarter">
             {% if user.status == 'pending' %}
-              <a class="govuk-link govuk-link--no-visited-state user-list-edit-link" href="{{ url_for('.cancel_invited_org_user', org_id=current_org.id, invited_user_id=user.id)}}">Cancel invitation<span class="govuk-visually-hidden"> for {{ user.email_address }}</span></a>
+              <a class="fr-link user-list-edit-link" href="{{ url_for('.cancel_invited_org_user', org_id=current_org.id, invited_user_id=user.id)}}">Cancel invitation<span class="govuk-visually-hidden"> for {{ user.email_address }}</span></a>
             {% elif user.status != 'cancelled' %}
               <a class="govuk-link govuk-link--destructive user-list-edit-link" href="{{ url_for('.edit_organisation_user', org_id=current_org.id, user_id=user.id)}}">Remove<span class="govuk-visually-hidden"> {{ user.name }} {{ user.email_address }}</span></a>
             {% endif %}
@@ -64,11 +64,11 @@
   </div>
 
   <div class="js-stick-at-bottom-when-scrolling">
-    {{ govukButton({
+    {{ frButton({
       "element": "a",
       "text": "Invite team member",
       "href": url_for('.invite_org_user', org_id=current_org.id),
-      "classes": "govuk-button--secondary"
+      "classes": "fr-btn--secondary"
     }) }}
   </div>
 

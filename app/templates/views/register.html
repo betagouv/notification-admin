@@ -3,14 +3,14 @@
 {% from "components/form.html" import form_wrapper %}
 
 {% block per_page_title %}
-  S'enregistrer
+  Créer un compte
 {% endblock %}
 
 {% block maincolumn_content %}
 
   <div class="fr-grid-row">
     <div class="fr-col-lg-6">
-      <h1>Créer un compte</h1>
+      <h1 class="heading-large">Créer un compte</h1>
       {% call form_wrapper(autocomplete=True) %}
         {{ form.name(param_extensions={"classes": "govuk-!-width-three-quarters"}) }}
         {{ form.email_address(

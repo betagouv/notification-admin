@@ -11,7 +11,7 @@
       <h1 class="heading-large">
         {{ user.name }}
       </h1>
-      <p class="govuk-body">{{ user.email_address }}</p>
+      <p>{{ user.email_address }}</p>
       <p class="{{ '' if user.mobile_number else 'hint' }}">{{ user.mobile_number or 'No mobile number'}}</p>
 
       <h2 class="heading-medium">Live services</h2>
@@ -20,7 +20,7 @@
           <ul>
           {% for service in user.live_services|sort %}
             <li class="browse-list-item">
-              <a class="govuk-link govuk-link--no-visited-state browse-list-hint" href={{url_for('.service_dashboard', service_id=service.id)}}>{{ service.name }}</a>
+              <a class="fr-link browse-list-hint" href={{url_for('.service_dashboard', service_id=service.id)}}>{{ service.name }}</a>
             </li>
           {% endfor %}
           </ul>
@@ -36,7 +36,7 @@
           <ul>
           {% for service in user.trial_mode_services|sort %}
             <li class="browse-list-item">
-              <a class="govuk-link govuk-link--no-visited-state browse-list-hint" href={{url_for('.service_dashboard', service_id=service.id)}}>{{ service.name }}</a>
+              <a class="fr-link browse-list-hint" href={{url_for('.service_dashboard', service_id=service.id)}}>{{ service.name }}</a>
             </li>
           {% endfor %}
           </ul>
@@ -48,7 +48,7 @@
       </nav>
 
       <h2 class="heading-medium">Authentication</h2>
-      <p class="govuk-body">{{ user.auth_type | format_auth_type }}</p>
+      <p>{{ user.auth_type | format_auth_type }}</p>
       {% if user.auth_type != 'webauthn_auth' %}
         <a class="govuk-link govuk-link" href="{{ url_for('main.change_user_auth', user_id=user.id) }}">
           Change authentication for this user
@@ -59,7 +59,7 @@
       {% if not user.logged_in_at %}
       <p class="hint">This person has never logged in</p>
       {% else %}
-      <p class="govuk-body">Last logged in
+      <p>Last logged in
         <time class="timeago" datetime="{{ user.logged_in_at }}">
           {{ user.logged_in_at|format_delta }}
         </time>

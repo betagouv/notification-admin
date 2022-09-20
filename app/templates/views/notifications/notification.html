@@ -20,7 +20,7 @@
     {{ page_header(
       1|message_count_label(template.template_type, suffix='') | capitalize
     ) }}
-    <p class="govuk-body">
+    <p>
       {% if is_precompiled_letter %}
         {% if created_by %}
           Uploaded
@@ -31,7 +31,7 @@
         {% if help %}
           ‘{{ template.name }}’
         {% else %}
-          <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.view_template', service_id=current_service.id, template_id=template.id) }}">‘{{ template.name }}’</a>
+          <a class="fr-link" href="{{ url_for('.view_template', service_id=current_service.id, template_id=template.id) }}">‘{{ template.name }}’</a>
         {% endif %}
         was sent
       {% endif %}
@@ -39,7 +39,7 @@
         {% set destination =
           {'letter': 'an address', 'email': 'an email address', 'sms': 'a phone number'} %}
         to {{ destination[template.template_type] }} from
-        <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.view_job', service_id=current_service.id, job_id=job.id) }}">{{ job.original_file_name }}</a>
+        <a class="fr-link" href="{{ url_for('.view_job', service_id=current_service.id, job_id=job.id) }}">{{ job.original_file_name }}</a>
       {% elif created_by %}
         by {{ created_by.name }}
       {% endif %}
@@ -67,19 +67,19 @@
       {% else %}
         {% if sent_with_test_key %}
           {% if is_precompiled_letter %}
-            <p class="govuk-body">
+            <p>
               This letter passed our checks, but we will not print it because you used a test key.
             </p>
           {% else %}
-            <p class="govuk-body">
+            <p>
               We will not print this letter because you used a test key.
             </p>
           {% endif %}
         {% else %}
-          <p class="govuk-body">
+          <p>
             {{ letter_print_day }}
           </p>
-          <p class="govuk-body">
+          <p>
             Estimated delivery date: {{ estimated_letter_delivery_date|format_day_of_week }} {{ estimated_letter_delivery_date|format_date_short }}
           </p>
         {% endif %}
@@ -100,7 +100,7 @@
           {% else %}
             <div>&nbsp;</div>
           {% endif %}
-          <a class="govuk-link govuk-link--no-visited-state page-footer-right-aligned-link-without-button" href="{{ url_for('main.view_letter_notification_as_preview', service_id=current_service.id, notification_id=notification_id, filetype='pdf') }}" download>Download as a PDF</a>
+          <a class="fr-link page-footer-right-aligned-link-without-button" href="{{ url_for('main.view_letter_notification_as_preview', service_id=current_service.id, notification_id=notification_id, filetype='pdf') }}" download>Download as a PDF</a>
         </div>
       </div>
     {% elif template.template_type == 'email' %}
@@ -112,8 +112,8 @@
     {% endif %}
 
     {% if current_user.has_permissions('send_messages') and current_user.has_permissions('view_activity') and template.template_type == 'sms' and can_receive_inbound %}
-      <p class="govuk-body">
-        <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.conversation', service_id=current_service.id, notification_id=notification_id, _anchor='n{}'.format(notification_id)) }}">See all text messages sent to this phone number</a>
+      <p>
+        <a class="fr-link" href="{{ url_for('.conversation', service_id=current_service.id, notification_id=notification_id, _anchor='n{}'.format(notification_id)) }}">See all text messages sent to this phone number</a>
       </p>
     {% endif %}
 

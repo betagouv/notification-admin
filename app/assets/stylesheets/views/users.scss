@@ -1,8 +1,6 @@
 $item-top-padding: govuk-spacing(3);
 
 .user-list {
-
-  @include core-19;
   margin-bottom: govuk-spacing(6);
 
   &-item {

@@ -35,7 +35,7 @@ def test_render_sign_in_template_with_next_link_for_password_reset(
         _optional_args=f"?next=/services/{SERVICE_ONE_ID}/templates",
         _test_page_title=False
     )
-    forgot_password_link = page.find('a', class_="govuk-link govuk-link--no-visited-state page-footer-secondary-link")
+    forgot_password_link = page.find('a', class_="fr-link secondary-link")
     assert forgot_password_link.text == 'Forgotten your password?'
     assert forgot_password_link['href'] == url_for('main.forgot_password', next=f'/services/{SERVICE_ONE_ID}/templates')
 
@@ -133,8 +133,8 @@ def test_logged_in_user_doesnt_do_evil_redirect(
     f'/services/{SERVICE_ONE_ID}/templates',
 ])
 @pytest.mark.parametrize('email_address, password', [
-    ('valid@example.gov.uk', 'val1dPassw0rd!'),
-    (' valid@example.gov.uk  ', '  val1dPassw0rd!  '),
+    ('valid@beta.gouv.fr', 'val1dPassw0rd!'),
+    (' valid@beta.gouv.fr  ', '  val1dPassw0rd!  '),
 ])
 def test_process_sms_auth_sign_in_return_2fa_template(
     client_request,
@@ -158,7 +158,7 @@ def test_process_sms_auth_sign_in_return_2fa_template(
         _expected_redirect=url_for('.two_factor_sms', next=redirect_url),
     )
     mock_verify_password.assert_called_with(api_user_active['id'], password)
-    mock_get_user_by_email.assert_called_with('valid@example.gov.uk')
+    mock_get_user_by_email.assert_called_with('valid@beta.gouv.fr')
 
 
 @pytest.mark.parametrize('redirect_url', [
@@ -181,7 +181,7 @@ def test_process_email_auth_sign_in_return_2fa_template(
         'main.sign_in',
         next=redirect_url,
         _data={
-            'email_address': 'valid@example.gov.uk',
+            'email_address': 'valid@beta.gouv.fr',
             'password': 'val1dPassw0rd!',
         },
         _expected_redirect=url_for('.two_factor_email_sent', next=redirect_url),
@@ -210,13 +210,13 @@ def test_process_webauthn_auth_sign_in_redirects_to_webauthn_with_next_redirect(
         'main.sign_in',
         next=redirect_url,
         _data={
-            'email_address': 'valid@example.gov.uk',
+            'email_address': 'valid@beta.gouv.fr',
             'password': 'val1dPassw0rd!',
         },
         _expected_redirect=url_for('.two_factor_webauthn', next=redirect_url)
     )
 
-    mock_get_user_by_email.assert_called_once_with('valid@example.gov.uk')
+    mock_get_user_by_email.assert_called_once_with('valid@beta.gouv.fr')
 
 
 def test_should_return_locked_out_true_when_user_is_locked(
@@ -227,7 +227,7 @@ def test_should_return_locked_out_true_when_user_is_locked(
     page = client_request.post(
         'main.sign_in',
         _data={
-            'email_address': 'valid@example.gov.uk',
+            'email_address': 'valid@beta.gouv.fr',
             'password': 'whatIsMyPassword!',
         },
         _expected_status=200,
@@ -243,7 +243,7 @@ def test_should_return_200_when_user_does_not_exist(
     page = client_request.post(
         'main.sign_in',
         _data={
-            'email_address': 'notfound@gov.uk',
+            'email_address': 'notfound@beta.gouv.fr',
             'password': 'doesNotExist!'
         },
         _expected_status=200,
@@ -262,7 +262,7 @@ def test_should_return_redirect_when_user_is_pending(
     client_request.post(
         'main.sign_in',
         _data={
-            'email_address': 'pending_user@example.gov.uk',
+            'email_address': 'pending_user@beta.gouv.fr',
             'password': 'val1dPassw0rd!'
         },
         _expected_redirect=url_for('main.resend_email_verification'),
@@ -289,7 +289,7 @@ def test_should_attempt_redirect_when_user_is_pending(
         'main.sign_in',
         next=redirect_url,
         _data={
-            'email_address': 'pending_user@example.gov.uk',
+            'email_address': 'pending_user@beta.gouv.fr',
             'password': 'val1dPassw0rd!'
         },
         _expected_redirect=url_for('main.resend_email_verification', next=redirect_url)
@@ -307,7 +307,7 @@ def test_email_address_is_treated_case_insensitively_when_signing_in_as_invited_
     mock_get_invited_user_by_id,
 ):
     client_request.logout()
-    sample_invite['email_address'] = 'TEST@user.gov.uk'
+    sample_invite['email_address'] = 'TEST@beta.gouv.fr'
 
     mocker.patch(
         'app.models.user.User.from_email_address_and_password_or_none',
@@ -320,7 +320,7 @@ def test_email_address_is_treated_case_insensitively_when_signing_in_as_invited_
     client_request.post(
         'main.sign_in',
         _data={
-            'email_address': 'test@user.gov.uk',
+            'email_address': 'test@beta.gouv.fr',
             'password': 'val1dPassw0rd!'
         },
     )
@@ -355,7 +355,7 @@ def test_when_signing_in_as_invited_user_you_cannot_accept_an_invite_for_another
     page = client_request.post(
         'main.sign_in',
         _data={
-            'email_address': 'test@user.gov.uk',
+            'email_address': 'test@beta.gouv.fr',
             'password': 'val1dPassw0rd!'
         },
         _expected_status=403

@@ -3,7 +3,7 @@
 {% from "components/folder-path.html" import folder_path, page_title_folder_path %}
 {% from "components/page-footer.html" import page_footer %}
 {% from "components/copy-to-clipboard.html" import copy_to_clipboard %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 
 {% block service_page_title %}
   {{ page_title_folder_path(current_service.get_template_path(template._template)) }}
@@ -24,7 +24,7 @@
         </ul>
         <form method='post'>
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-          {{ govukButton({ "text": "Confirm", "classes": "govuk-button--warning govuk-!-margin-top-2" }) }}
+          {{ frButton({ "text": "Confirm", "classes": "govuk-button--warning govuk-!-margin-top-2" }) }}
         </form>
       {% endcall %}
     </div>
@@ -61,7 +61,7 @@
       </h2>
 
       &emsp;
-      <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.view_template_versions', service_id=current_service.id, template_id=template.id) }}">See previous versions</a>
+      <a class="fr-link" href="{{ url_for('.view_template_versions', service_id=current_service.id, template_id=template.id) }}">See previous versions</a>
       &emsp;
       <br/>
     {% endif %}

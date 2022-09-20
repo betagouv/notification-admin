@@ -13,7 +13,6 @@ from app.models.webauthn_credential import (
 from tests.conftest import (
     create_api_user_active,
     create_user,
-    fake_uuid,
     normalize_spaces,
     url_for_endpoint_with_token,
 )
@@ -104,7 +103,7 @@ def test_should_redirect_after_email_change(
 ):
     client_request.post(
         'main.user_profile_email',
-        _data={'email_address': 'new_notify@notify.gov.uk'},
+        _data={'email_address': 'new_notify@beta.gouv.fr'},
         _expected_status=302,
         _expected_redirect=url_for(
             'main.user_profile_email_authenticate',
@@ -115,7 +114,11 @@ def test_should_redirect_after_email_change(
 
 
 @pytest.mark.parametrize('email_address,error_message', [
-    ('me@example.com', 'Enter a public sector email address or find out who can use Notify'),
+    (
+        'me@example.com',
+        'Votre adresse n\'est pas encore éligible à Beta Notifications. '
+        'Consultez les conditions d\'éligibilité de Beta Notifications.'
+    ),
     ('not_valid', 'Enter a valid email address')  # 2 errors with email address, only first error shown
 ])
 def test_should_show_errors_if_new_email_address_does_not_validate(
@@ -131,7 +134,7 @@ def test_should_show_errors_if_new_email_address_does_not_validate(
         _expected_status=200,
     )
 
-    assert normalize_spaces(page.find('span', class_='govuk-error-message').text) == f'Error: {error_message}'
+    assert normalize_spaces(page.find('p', class_='fr-error-text').text) == f'Erreur : {error_message}'
     # We only call API to check if the email address is already in use if there are no other errors
     assert not mock_email_is_not_already_in_use.called
 
@@ -140,7 +143,7 @@ def test_should_show_authenticate_after_email_change(
     client_request,
 ):
     with client_request.session_transaction() as session:
-        session['new-email'] = 'new_notify@notify.gov.uk'
+        session['new-email'] = 'new_notify@beta.gouv.fr'
 
     page = client_request.get('main.user_profile_email_authenticate')
 
@@ -154,7 +157,7 @@ def test_should_render_change_email_continue_after_authenticate_email(
     mock_send_change_email_verification,
 ):
     with client_request.session_transaction() as session:
-        session['new-email'] = 'new_notify@notify.gov.uk'
+        session['new-email'] = 'new_notify@beta.gouv.fr'
     page = client_request.post(
         'main.user_profile_email_authenticate',
         _data={'password': '12345'},
@@ -170,7 +173,7 @@ def test_should_redirect_to_user_profile_when_user_confirms_email_link(
     mock_update_user_attribute,
 ):
 
-    token = generate_token(payload=json.dumps({'user_id': api_user_active['id'], 'email': 'new_email@gov.uk'}),
+    token = generate_token(payload=json.dumps({'user_id': api_user_active['id'], 'email': 'new_email@beta.gouv.fr'}),
                            secret=notify_admin.config['SECRET_KEY'], salt=notify_admin.config['DANGEROUS_SALT'])
     client_request.get_url(
         url_for_endpoint_with_token(
@@ -194,7 +197,7 @@ def test_change_your_mobile_number_page_shows_delete_link_if_user_on_email_auth(
     api_user_active_email_auth,
     mocker
 ):
-    mocker.patch('app.user_api_client.get_user', return_value=api_user_active_email_auth)
+    client_request.login(api_user_active_email_auth)
     page = client_request.get(('main.user_profile_mobile_number'))
     assert 'Change your mobile number' in page.text
     assert 'Delete your number' in page.text
@@ -203,7 +206,8 @@ def test_change_your_mobile_number_page_shows_delete_link_if_user_on_email_auth(
 def test_change_your_mobile_number_page_doesnt_show_delete_link_if_user_has_no_mobile_number(
     client_request,
     api_user_active_email_auth,
-    mocker
+    mocker,
+    fake_uuid
 ):
     user = create_user(
         id=fake_uuid,
@@ -211,7 +215,10 @@ def test_change_your_mobile_number_page_doesnt_show_delete_link_if_user_has_no_m
         mobile_number=None
     )
     mocker.patch('app.user_api_client.get_user', return_value=user)
+
+    client_request.login(user)
     page = client_request.get(('main.user_profile_mobile_number'))
+
     assert 'Change your mobile number' in page.text
     assert 'Delete your number' not in page.text
 
@@ -241,7 +248,7 @@ def test_delete_mobile_number(
     api_user_active_email_auth,
     mocker
 ):
-    mocker.patch('app.user_api_client.get_user', return_value=api_user_active_email_auth)
+    client_request.login(api_user_active_email_auth)
     mock_delete = mocker.patch('app.user_api_client.update_user_attribute')
 
     client_request.post(

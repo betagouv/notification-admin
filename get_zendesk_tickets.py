@@ -17,7 +17,7 @@ NOTIFY_GROUP_ID = 360000036529
 NOTIFY_ORG_ID = 21891972
 
 # the account used to authenticate with. If no requester is provided, the ticket will come from this account.
-NOTIFY_ZENDESK_EMAIL = 'zd-api-notify@digital.cabinet-office.gov.uk'
+NOTIFY_ZENDESK_EMAIL = 'zd-api-notify@beta.gouv.fr'
 ZENDESK_API_KEY = os.environ.get('ZENDESK_API_KEY')
 
 

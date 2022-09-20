@@ -14,12 +14,10 @@
 {% endblock %}
 
 {% block maincolumn_content %}
-
   {% if (not current_service.all_templates) and (not current_service.all_template_folders) %}
-
      {{ page_header(page_title, size='medium') }}
 
-     <p class="govuk-body">
+     <p>
        {% if current_service.has_permission('broadcast') %}
           You haven’t added any templates yet.
        {% else %}
@@ -45,7 +43,7 @@
       </div>
       {% if current_user.has_permissions('manage_templates') and current_template_folder_id and user_has_template_folder_permission %}
         <div class="govuk-grid-column-one-sixth">
-          <a href="{{ url_for('.manage_template_folder', service_id=current_service.id, template_folder_id=current_template_folder_id) }}" class="govuk-link govuk-link--no-visited-state folder-heading-manage-link">Manage<span class="govuk-visually-hidden"> this folder</span></a>
+          <a href="{{ url_for('.manage_template_folder', service_id=current_service.id, template_folder_id=current_template_folder_id) }}" class="fr-link folder-heading-manage-link">Manage<span class="govuk-visually-hidden"> this folder</span></a>
         </div>
       {% endif %}
     </div>

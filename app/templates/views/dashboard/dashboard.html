@@ -1,6 +1,5 @@
 {% extends "withnav_template.html" %}
 
-{% from "components/show-more.html" import show_more %}
 {% from "components/table.html" import list_table, field, right_aligned_field_heading, hidden_field_heading %}
 {% from "components/ajax-block.html" import ajax_block %}
 
@@ -11,7 +10,6 @@
 {% block maincolumn_content %}
 
   <div class="dashboard">
-
     <h1 class="govuk-visually-hidden">Dashboard</h1>
     {% if current_user.has_permissions('manage_templates') and not current_service.all_templates %}
       {% include 'views/dashboard/write-first-messages.html' %}
@@ -19,27 +17,24 @@
 
     {{ ajax_block(partials, updates_url, 'upcoming') }}
 
-    <h2 class="heading-medium">
-      In the last 7 days
+    <h2>
+      Les 7 derniers jours
     </h2>
 
     {{ ajax_block(partials, updates_url, 'inbox') }}
-
     {{ ajax_block(partials, updates_url, 'totals') }}
-    {{ show_more(
-      url_for('.monthly', service_id=current_service.id),
-      'See messages sent per month'
-    ) }}
+    <a class="fr-link" href="{{ url_for('.monthly', service_id=current_service.id) }}">
+      See messages sent per month
+    </a>
 
     {{ ajax_block(partials, updates_url, 'template-statistics') }}
 
     {% if current_user.has_permissions('manage_service') %}
       <h2 class='heading-medium'>This year</h2>
       {{ ajax_block(partials, updates_url, 'usage') }}
-      {{ show_more(
-        url_for(".usage", service_id=current_service['id']),
-        'See usage'
-      ) }}
+      <a class="fr-link" href="{{ url_for(".usage", service_id=current_service['id']) }}">
+        See usage
+      </a>
     {% endif %}
 
   </div>

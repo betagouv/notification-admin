@@ -8,7 +8,7 @@
     this.addCancelButton = () => {
 
       var $cancelButton = $(`
-        <a href="" role="button" class="file-upload-button govuk-button govuk-button--warning">
+        <a href="" role="button" class="file-upload-button fr-btn govuk-button--warning">
           Cancel upload
         </a>
       `);
@@ -28,7 +28,7 @@
 
       var buttonText = this.$field.data('buttonText');
       var buttonHTMLStr = `
-        <button type="button" class="file-upload-button govuk-button govuk-!-margin-right-1" id="file-upload-button">
+        <button type="button" class="file-upload-button fr-btn govuk-!-margin-right-1" id="file-upload-button">
           ${buttonText}
         </button>`;
 

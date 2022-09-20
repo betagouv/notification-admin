@@ -25,7 +25,7 @@ class MockS3Object():
         partial(url_for, 'main.request_to_go_live', service_id=SERVICE_ONE_ID),
         [
             (
-                ['govuk-link', 'govuk-link--no-visited-state'],
+                ['fr-link'],
                 partial(url_for, 'main.service_download_agreement', service_id=SERVICE_ONE_ID),
             ),
         ]
@@ -35,11 +35,11 @@ class MockS3Object():
         partial(url_for, 'main.request_to_go_live', service_id=SERVICE_ONE_ID),
         [
             (
-                ['govuk-link', 'govuk-link--no-visited-state'],
+                ['fr-link'],
                 partial(url_for, 'main.service_download_agreement', service_id=SERVICE_ONE_ID),
             ),
             (
-                ['govuk-button'],
+                ['fr-btn'],
                 partial(url_for, 'main.service_accept_agreement', service_id=SERVICE_ONE_ID),
             ),
         ]
@@ -49,11 +49,11 @@ class MockS3Object():
         partial(url_for, 'main.request_to_go_live', service_id=SERVICE_ONE_ID),
         [
             (
-                ['govuk-link', 'govuk-link--no-visited-state'],
+                ['fr-link'],
                 partial(url_for, 'main.service_download_agreement', service_id=SERVICE_ONE_ID),
             ),
             (
-                ['govuk-button'],
+                ['fr-btn'],
                 partial(url_for, 'main.service_accept_agreement', service_id=SERVICE_ONE_ID),
             ),
         ]
@@ -63,7 +63,7 @@ class MockS3Object():
         partial(url_for, 'main.request_to_go_live', service_id=SERVICE_ONE_ID),
         [
             (
-                ['govuk-link', 'govuk-link--no-visited-state'],
+                ['fr-link'],
                 partial(url_for, 'main.support'),
             ),
         ]
@@ -128,11 +128,11 @@ def test_unknown_gps_and_trusts_are_redirected(
 @pytest.mark.parametrize('crown, expected_status, expected_file_fetched, expected_file_served', (
     (
         True, 200, 'crown.pdf',
-        'GOV.UK Notify data sharing and financial agreement.pdf',
+        'Beta Notifications data sharing and financial agreement.pdf',
     ),
     (
         False, 200, 'non-crown.pdf',
-        'GOV.UK Notify data sharing and financial agreement (non-crown).pdf',
+        'Beta Notifications data sharing and financial agreement (non-crown).pdf',
     ),
     (
         None, 404, None,
@@ -274,7 +274,7 @@ def test_accept_agreement_page_populates(
         },
         [
             'Select an option',
-            'Error: Must be a number',
+            'Erreur : Must be a number',
         ],
     ),
     (
@@ -285,7 +285,7 @@ def test_accept_agreement_page_populates(
             'on_behalf_of_email': '',
         },
         [
-            'Error: Must be a number',
+            'Erreur : Must be a number',
         ],
     ),
     (
@@ -296,8 +296,8 @@ def test_accept_agreement_page_populates(
             'on_behalf_of_email': '',
         },
         [
-            'Error: Cannot be empty',
-            'Error: Cannot be empty',
+            'Erreur : Ne peut pas être vide',
+            'Erreur : Ne peut pas être vide',
         ],
     ),
     (
@@ -308,7 +308,7 @@ def test_accept_agreement_page_populates(
             'on_behalf_of_email': '',
         },
         [
-            'Error: Cannot be empty',
+            'Erreur : Ne peut pas être vide',
         ],
     ),
     (
@@ -319,7 +319,7 @@ def test_accept_agreement_page_populates(
             'on_behalf_of_email': 'test@example.com',
         },
         [
-            'Error: Cannot be empty',
+            'Erreur : Ne peut pas être vide',
         ],
     ),
 
@@ -338,7 +338,7 @@ def test_accept_agreement_page_validates(
         _expected_status=200,
     )
     assert [
-        error.text.strip() for error in page.select('.govuk-error-message, .error-message')
+        error.text.strip() for error in page.select('.fr-error-text, .error-message')
     ] == expected_errors
 
 
@@ -413,12 +413,12 @@ def test_accept_agreement_page_persists(
 @pytest.mark.parametrize('name, email, expected_paragraph', (
     (None, None, (
         'I confirm that I have the legal authority to accept the '
-        'GOV.UK Notify data sharing and financial agreement (version '
+        'Beta Notifications data sharing and financial agreement (version '
         '1.2) and that Test Organisation will be bound by it.'
     )),
     ('Firstname Lastname', 'test@example.com', (
         'I confirm that I have the legal authority to accept the '
-        'GOV.UK Notify data sharing and financial agreement (version '
+        'Beta Notifications data sharing and financial agreement (version '
         '1.2) on behalf of Firstname Lastname (test@example.com) and '
         'that Test Organisation will be bound by it.'
     )),

@@ -52,7 +52,7 @@
           {{ broadcast_message.template.name }} is waiting for approval
         </h1>
         {% if current_service.live %}
-          <p class="govuk-body">
+          <p>
             You need another member of your team to approve your alert.
           </p>
           {{ page_footer(
@@ -87,10 +87,10 @@
             "html": approve_details
           }) }}
         {% elif current_user.has_permissions('create_broadcasts', restrict_admin_usage=True) %}
-          <p class="govuk-body">
+          <p>
             You need another member of your team to approve this alert.
           </p>
-          <p class="govuk-body">
+          <p>
             This service is in training mode. No real alerts will be sent.
           </p>
           {{ page_footer(
@@ -130,11 +130,11 @@
     {% elif current_user.has_permissions('create_broadcasts', restrict_admin_usage=True) %}
       <div class="banner govuk-!-margin-bottom-6">
         <h1 class="govuk-heading-m govuk-!-margin-bottom-3">This alert is waiting for approval</h1>
-        <p class="govuk-body">
+        <p>
           Another member of your team needs to approve this alert.
         </p>
         {% if not current_service.live %}
-          <p class="govuk-body">
+          <p>
             This service is in training mode. No real alerts will be sent.
           </p>
         {% endif %}
@@ -146,7 +146,7 @@
     {% else %}
       <div class="banner govuk-!-margin-bottom-6">
         <h1 class="govuk-heading-m govuk-!-margin-bottom-3">This alert is waiting for approval</h1>
-        <p class="govuk-body">
+        <p>
           You don’t have permission to approve alerts.
         </p>
       </div>
@@ -211,16 +211,16 @@
   {% endif %}
 
   {% if broadcast_message.status == 'broadcasting' %}
-    <p class="govuk-body">
+    <p>
       Broadcasting stops {{ broadcast_message.finishes_at|format_datetime_human }}.
     </p>
   {% elif broadcast_message.status == 'cancelled' %}
-    <p class="govuk-body">
+    <p>
       Stopped by {{ broadcast_message.cancelled_by }}
       {{ broadcast_message.cancelled_at|format_datetime_human }}.
     </p>
   {% elif broadcast_message.status == 'completed' %}
-    <p class="govuk-body">
+    <p>
       Finished broadcasting {{ broadcast_message.finishes_at|format_datetime_human }}.
     </p>
   {% endif %}

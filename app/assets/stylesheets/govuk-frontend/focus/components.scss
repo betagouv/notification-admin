@@ -61,7 +61,7 @@
 }
 
 // Updates to buttons
-.govuk-button {
+.fr-btn {
   &:focus {
     border-color: $govuk-focus-colour;
     // When colours are overridden, for example when users have a dark mode,

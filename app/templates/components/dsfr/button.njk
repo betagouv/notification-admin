@@ -11,7 +11,7 @@
 
   {#- Define common attributes that we can use across all element types #}
 
-  {%- set commonAttributes %} class="fr-btn{% if params.classes %} {{ params.classes }}{% endif %}{% if params.disabled %} govuk-button--disabled{% endif %}"{% for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}{% endset %}
+  {%- set commonAttributes %} class="fr-btn{% if params.classes %} {{ params.classes }}{% endif %}" {% if params.disabled %}disabled {% endif %}{% for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}{% endset %}
 
   {#- Define common attributes we can use for both button and input types #}
 
@@ -20,12 +20,12 @@
   {#- Actually create a button... or a link! #}
 
   {%- if element == 'a' %}
-    <a href="{{ params.href if params.href else '#' }}" role="button" draggable="false" {{- commonAttributes | safe }}>
+    <a class="fr-link" href="{{ params.href if params.href else '#' }}" role="button" draggable="false" {{- commonAttributes | safe }}>
       {{ params.html | safe if params.html else params.text }}
     </a>
 
   {%- elseif element == 'button' %}
-    <button {%- if params.value %} value="{{ params.value }}"{% endif %} {{- buttonAttributes | safe }} {{- commonAttributes | safe }}>
+    <button class="fr-btn" {%- if params.value %} value="{{ params.value }}"{% endif %} {{- buttonAttributes | safe }} {{- commonAttributes | safe }}>
       {{ params.html | safe if params.html else params.text }}
     </button>
 

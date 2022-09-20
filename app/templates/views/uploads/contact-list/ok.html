@@ -3,7 +3,7 @@
 {% from "components/radios.html" import radio_select %}
 {% from "components/table.html" import list_table, field, text_field, index_field, hidden_field_heading %}
 {% from "components/page-header.html" import page_header %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 {% from "components/back-link/macro.njk" import govukBackLink %}
 
 {% block service_page_title %}
@@ -18,14 +18,14 @@
 
   {{ page_header(original_file_name) }}
 
-  <p class="govuk-body">
+  <p>
     {{ recipients|length|recipient_count(recipients.template_type) }} found
   </p>
 
   <div class="bottom-gutter-3-2">
     <form method="post" enctype="multipart/form-data" action="{{ url_for('main.save_contact_list', service_id=current_service.id, upload_id=upload_id) }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      {{ govukButton({ "text": "Save contact list" }) }}
+      {{ frButton({ "text": "Save contact list" }) }}
     </form>
   </div>
 

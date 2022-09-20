@@ -1,7 +1,7 @@
 {% extends "withnav_template.html" %}
 {% from "components/table.html" import list_table, field, hidden_field_heading %}
 {% from "components/page-header.html" import page_header %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 {% from "components/back-link/macro.njk" import govukBackLink %}
 
 {% block service_page_title %}
@@ -57,11 +57,11 @@
   </div>
 
   <div class="js-stick-at-bottom-when-scrolling">
-    {{ govukButton({
+    {{ frButton({
       "element": "a",
       "text": "Create an API key",
       "href": url_for('.create_api_key', service_id=current_service.id),
-      "classes": "govuk-button--secondary"
+      "classes": "fr-btn--secondary"
     }) }}
   </div>
 

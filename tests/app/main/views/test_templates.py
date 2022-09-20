@@ -254,7 +254,7 @@ def test_should_show_page_of_broadcast_templates(
     )
     assert [
         (
-            normalize_spaces(template.select_one('.govuk-link').text),
+            normalize_spaces(template.select_one('.fr-link').text),
             normalize_spaces(template.select_one('.govuk-hint').text),
         )
         for template in page.select('.template-list-item')
@@ -674,7 +674,7 @@ def test_user_with_only_send_and_view_sees_letter_page(
         'Templates Two week reminder'
     )
     assert normalize_spaces(page.select_one('title').text) == (
-        'Two week reminder – Templates – service one – GOV.UK Notify'
+        'Two week reminder – Templates – service one – Beta Notifications'
     )
 
 
@@ -911,7 +911,7 @@ def test_should_be_able_to_view_a_template_with_links(
         'Templates Two week reminder'
     )
     assert normalize_spaces(page.select_one('title').text) == (
-        'Two week reminder – Templates – service one – GOV.UK Notify'
+        'Two week reminder – Templates – service one – Beta Notifications'
     )
 
     assert [
@@ -2753,21 +2753,21 @@ def test_should_not_create_broadcast_template_with_placeholders(
             # Can’t make a 7 fragment text template from content alone
             'sms', False, 'a' * 919,
             'You have 1 character too many',
-            'govuk-error-message',
+            'fr-error-text',
         ),
         (
             # Service name increases content count but character count
             # is based on content alone
             'sms', True, 'a' * 919,
             'You have 1 character too many',
-            'govuk-error-message',
+            'fr-error-text',
         ),
         (
             # Service name increases content count but character count
             # is based on content alone
             'sms', True, 'a' * 920,
             'You have 2 characters too many',
-            'govuk-error-message',
+            'fr-error-text',
         ),
         (
             'sms', False, 'Ẅ' * 70,
@@ -2787,7 +2787,7 @@ def test_should_not_create_broadcast_template_with_placeholders(
         (
             'sms', False, 'Ẅ' * 919,
             'You have 1 character too many',
-            'govuk-error-message',
+            'fr-error-text',
         ),
         (
             'sms', False, 'Hello ((name))',
@@ -2818,12 +2818,12 @@ def test_should_not_create_broadcast_template_with_placeholders(
         (
             'broadcast', False, 'a' * 1396,
             'You have 1 character too many',
-            'govuk-error-message',
+            'fr-error-text',
         ),
         (
             'broadcast', False, 'a' * 1397,
             'You have 2 characters too many',
-            'govuk-error-message',
+            'fr-error-text',
         ),
         (
             'broadcast', False, 'Ẅ' * 615,
@@ -2833,7 +2833,7 @@ def test_should_not_create_broadcast_template_with_placeholders(
         (
             'broadcast', False, 'Ẅ' * 616,
             'You have 1 character too many',
-            'govuk-error-message',
+            'fr-error-text',
         ),
     ),
 )

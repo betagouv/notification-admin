@@ -39,7 +39,7 @@ describe('Register security key', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {})
 
     document.body.innerHTML = `
-      <a href="#" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="register-security-key">
+      <a href="#" role="button" draggable="false" class="fr-btn fr-btn--secondary" data-module="register-security-key">
         Register a key
       </a>`
 

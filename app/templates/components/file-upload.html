@@ -1,4 +1,4 @@
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 
 {% macro file_upload(
   field,
@@ -32,10 +32,10 @@
     }) }}
     {% if alternate_link and alternate_link_text %}
       <span class="file-upload-alternate-link">
-        or <a class="govuk-link govuk-link--no-visited-state" href="{{ alternate_link }}">{{ alternate_link_text }}</a>
+        or <a class="fr-link" href="{{ alternate_link }}">{{ alternate_link_text }}</a>
       </span>
     {% endif %}
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-    {{ govukButton({ "text": "Submit", "classes": "file-upload-submit" }) }}
+    {{ frButton({ "text": "Submit", "classes": "file-upload-submit" }) }}
   </form>
 {% endmacro %}

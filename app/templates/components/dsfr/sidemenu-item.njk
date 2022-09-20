@@ -1,0 +1,10 @@
+{% macro frSidemenuItem(link, label, is_active) %}
+  <li class="fr-sidemenu__item {% if is_active %}fr-sidemenu__item-active{% endif %}">
+    <a
+        class="fr-sidemenu__link"
+        href="{{ link }}"
+        {% if is_active %}aria-current="page"{%endif %}>
+      {{ label }}
+    </a>
+  </li>
+{% endmacro %}

@@ -35,7 +35,7 @@ def test_get_should_render_add_service_template(
         return_value=org_json,
     )
     page = client_request.get('main.add_service')
-    assert page.select_one('h1').text.strip() == 'About your service'
+    assert page.select_one('h1').text.strip() == 'Votre service'
     assert page.select_one('input[name=name]').get('value') is None
     assert [
         label.text.strip() for label in page.select('.govuk-radios__item label')
@@ -72,7 +72,7 @@ def test_get_should_not_render_radios_if_org_type_known(
         return_value=organisation_json(organisation_type='central'),
     )
     page = client_request.get('main.add_service')
-    assert page.select_one('h1').text.strip() == 'About your service'
+    assert page.select_one('h1').text.strip() == 'Votre service'
     assert page.select_one('input[name=name]').get('value') is None
     assert not page.select('.multiple-choice')
 
@@ -88,15 +88,15 @@ def test_show_different_page_if_user_org_type_is_local(
     page = client_request.get('main.add_service')
     assert page.select_one('h1').text.strip() == 'About your service'
     assert page.select_one('input[name=name]').get('value') is None
-    assert page.select_one('main .govuk-body').text.strip() == (
+    assert page.select_one('main p').text.strip() == (
         'Give your service a name that tells users what your '
         'messages are about, as well as who they’re from. For example:')
 
 
 @pytest.mark.parametrize('email_address', (
     # User’s email address doesn’t matter when the organisation is known
-    'test@example.gov.uk',
-    'test@example.nhs.uk',
+    'test@beta.gouv.fr',
+    'test@some.beta.gouv.fr',
 ))
 @pytest.mark.parametrize('inherited, posted, persisted, sms_limit', (
     (None, 'central', 'central', 150_000),
@@ -199,6 +199,7 @@ def test_add_service_has_to_choose_org_type(
     assert mock_create_service_template.called is False
 
 
+@pytest.mark.skip(reason="We don't do NHS")
 @pytest.mark.parametrize('email_address', (
     'test@nhs.net',
     'test@nhs.uk',
@@ -286,7 +287,7 @@ def test_should_add_service_and_redirect_to_dashboard_when_existing_service(
 
 
 @pytest.mark.parametrize('name, error_message', [
-    ('', 'Cannot be empty'),
+    ('', "Ne peut pas être vide"),
     ('.', 'Must include at least two alphanumeric characters'),
     ('a' * 256, 'Service name must be 255 characters or fewer'),
 ])
@@ -301,7 +302,7 @@ def test_add_service_fails_if_service_name_fails_validation(
         _data={"name": name},
         _expected_status=200,
     )
-    assert error_message in page.find("span", {"class": "govuk-error-message"}).text
+    assert error_message in page.find("p", {"class": "fr-error-text"}).text
 
 
 @freeze_time("2021-01-01")
@@ -329,7 +330,7 @@ def test_should_return_form_errors_with_duplicate_service_name_regardless_of_cas
         },
         _expected_status=200,
     )
-    assert 'This service name is already in use' in page.select_one('.govuk-error-message').text.strip()
+    assert 'This service name is already in use' in page.select_one('.fr-error-text').text.strip()
 
 
 def test_non_government_user_cannot_access_create_service_page(
@@ -339,6 +340,9 @@ def test_non_government_user_cannot_access_create_service_page(
     mock_get_organisations,
 ):
     assert is_gov_user(api_nongov_user_active['email_address']) is False
+
+    client_request.login(api_nongov_user_active)
+
     client_request.get(
         'main.add_service',
         _expected_status=403,
@@ -352,6 +356,9 @@ def test_non_government_user_cannot_create_service(
     mock_get_organisations,
 ):
     assert is_gov_user(api_nongov_user_active['email_address']) is False
+
+    client_request.login(api_nongov_user_active)
+
     client_request.post(
         'main.add_service',
         _data={'name': 'SERVICE TWO'},

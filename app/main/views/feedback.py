@@ -76,7 +76,7 @@ def triage(ticket_type=PROBLEM_TICKET_TYPE):
         form=form,
         page_title={
             PROBLEM_TICKET_TYPE: 'Report a problem',
-            GENERAL_TICKET_TYPE: 'Contact GOV.UK Notify support',
+            GENERAL_TICKET_TYPE: 'Contact Beta Notifications support',
         }.get(ticket_type)
     )
 
@@ -152,7 +152,7 @@ def feedback(ticket_type):
         ),
         show_status_page_banner=(ticket_type == PROBLEM_TICKET_TYPE),
         page_title={
-            GENERAL_TICKET_TYPE: 'Contact GOV.UK Notify support',
+            GENERAL_TICKET_TYPE: 'Contact Beta Notifications support',
             PROBLEM_TICKET_TYPE: 'Report a problem',
             QUESTION_TICKET_TYPE: 'Ask a question or give feedback',
         }.get(ticket_type),

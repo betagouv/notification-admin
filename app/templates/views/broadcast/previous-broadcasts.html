@@ -1,5 +1,5 @@
 {% from 'components/ajax-block.html' import ajax_block %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 
 {% extends "withnav_template.html" %}
 
@@ -15,11 +15,11 @@
 
   {% if current_user.has_permissions('create_broadcasts', restrict_admin_usage=True) %}
     <div class="js-stick-at-bottom-when-scrolling">
-      {{ govukButton({
+      {{ frButton({
         "element": "a",
         "text": "New alert",
         "href": url_for('.new_broadcast', service_id=current_service.id),
-        "classes": "govuk-button--secondary"
+        "classes": "fr-btn--secondary"
       }) }}
     </div>
   {% endif %}

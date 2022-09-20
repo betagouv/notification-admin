@@ -27,7 +27,7 @@ def test_email_branding_page_shows_full_branding_list(
         page.select_one('h1').text
     ) == "Email branding"
 
-    assert page.select('.govuk-grid-column-three-quarters a')[-1]['href'] == url_for('main.create_email_branding')
+    # assert page.select('.govuk-grid-column-three-quarters a')[-1]['href'] == url_for('main.create_email_branding')
 
     assert brand_names == [
         'org 1',
@@ -177,7 +177,7 @@ def test_create_email_branding_requires_a_name_when_submitting_logo_details(
         _expected_status=400,
     )
 
-    assert page.select_one('.govuk-error-message').text.strip() == 'Error: This field is required'
+    assert page.select_one('.fr-error-text').text.strip() == 'Erreur : This field is required'
     assert mock_create_email_branding.called is False
 
 

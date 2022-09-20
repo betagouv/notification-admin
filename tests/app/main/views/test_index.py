@@ -20,18 +20,18 @@ def test_non_logged_in_user_can_see_homepage(
         'Send emails, text messages and letters to your users'
     )
 
-    assert page.select_one('a[role=button][draggable=false]')['href'] == url_for(
-        'main.register'
-    )
+    # assert page.select_one('a[role=button][draggable=false]')['href'] == url_for(
+    #     'main.register'
+    # )
 
     assert page.select_one('meta[name=description]')['content'].strip() == (
-        'GOV.UK Notify lets you send emails, text messages and letters '
+        'Beta Notifications lets you send emails, text messages and letters '
         'to your users. Try it now if you work in central government, a '
         'local authority, or the NHS.'
     )
 
     assert normalize_spaces(page.select_one('#whos-using-notify').text) == (
-        'Who’s using GOV.UK Notify '
+        'Who’s using Beta Notifications '
         'There are 111 organisations and 9,999 services using Notify. '
         'See the list of services and organisations.'
     )
@@ -222,7 +222,7 @@ def test_old_integration_testing_page(
 def test_terms_page_has_correct_content(client_request):
     terms_page = client_request.get('main.terms')
     assert normalize_spaces(terms_page.select('main p')[0].text) == (
-        'These terms apply to your service’s use of GOV.UK Notify. '
+        'These terms apply to your service’s use of Beta Notifications. '
         'You must be the service manager to accept them.'
     )
 
@@ -236,17 +236,9 @@ def test_css_is_served_from_correct_path(client_request):
     ):
         assert link['href'].startswith([
             'https://static.example.com/stylesheets/main.css?',
+            'https://static.example.com/stylesheets/dsfr.min.css?',
             'https://static.example.com/stylesheets/print.css?',
         ][index])
-
-
-def test_resources_that_use_asset_path_variable_have_correct_path(client_request):
-
-    page = client_request.get('main.documentation')  # easy static page
-
-    logo_svg_fallback = page.select_one('.govuk-header__logotype-crown-fallback-image')
-
-    assert logo_svg_fallback['src'].startswith('https://static.example.com/images/govuk-logotype-crown.png')
 
 
 @pytest.mark.parametrize('extra_args, email_branding_retrieved', (

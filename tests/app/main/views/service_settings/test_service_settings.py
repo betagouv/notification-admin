@@ -65,7 +65,7 @@ def mock_get_service_settings_page_common(
         'Send emails On Change your settings for sending emails',
         'Reply-to email addresses Not set Manage reply-to email addresses',
         'Email branding GOV.UK Change email branding',
-        'Send files by email contact_us@gov.uk Manage sending files by email',
+        'Send files by email contact_us@beta.gouv.fr Manage sending files by email',
 
         'Label Value Action',
         'Send text messages On Change your settings for sending text messages',
@@ -88,7 +88,7 @@ def mock_get_service_settings_page_common(
         'Send emails On Change your settings for sending emails',
         'Reply-to email addresses Not set Manage reply-to email addresses',
         'Email branding GOV.UK Change email branding',
-        'Send files by email contact_us@gov.uk Manage sending files by email',
+        'Send files by email contact_us@beta.gouv.fr Manage sending files by email',
 
         'Label Value Action',
         'Send text messages On Change your settings for sending text messages',
@@ -133,7 +133,7 @@ def test_should_show_overview(
         users=[api_user_active['id']],
         permissions=['sms', 'email'],
         organisation_id=ORGANISATION_ID,
-        contact_link='contact_us@gov.uk',
+        contact_link='contact_us@beta.gouv.fr',
     )
     mocker.patch('app.service_api_client.get_service', return_value={'data': service_one})
 
@@ -165,7 +165,7 @@ def test_platform_admin_sees_only_relevant_settings_for_broadcast_service(
         permissions=['broadcast'],
         restricted=True,
         organisation_id=ORGANISATION_ID,
-        contact_link='contact_us@gov.uk',
+        contact_link='contact_us@beta.gouv.fr',
     )
     mocker.patch('app.service_api_client.get_service', return_value={'data': service_one})
 
@@ -292,7 +292,7 @@ def test_organisation_name_links_to_org_dashboard(
 
 
 @pytest.mark.parametrize('service_contact_link,expected_text', [
-    ('contact.me@gov.uk', 'Send files by email contact.me@gov.uk Manage sending files by email'),
+    ('contact.me@beta.gouv.fr', 'Send files by email contact.me@beta.gouv.fr Manage sending files by email'),
     (None, 'Send files by email Not set up Manage sending files by email'),
 ])
 def test_send_files_by_email_row_on_settings_page(
@@ -497,7 +497,7 @@ def test_should_show_different_change_service_name_page_for_local_services(
     page = client_request.get('main.service_name_change', service_id=SERVICE_ONE_ID)
     assert page.find('h1').text == 'Change your service name'
     assert page.find('input', attrs={"type": "text"})['value'] == 'service one'
-    assert page.select_one('main .govuk-body').text.strip() == (
+    assert page.select_one('main p').text.strip() == (
         'Your service name should tell users what the message is about as well as who it’s from. For example:'
     )
     # when no organisation on the service object, default org for the user is used for hint
@@ -538,7 +538,7 @@ def test_should_show_service_name_with_no_prefixing(
 
 
 @pytest.mark.parametrize('name, error_message', [
-    ('', 'Cannot be empty'),
+    ('', 'Ne peut pas être vide'),
     ('.', 'Must include at least two alphanumeric characters'),
     ('a' * 256, 'Service name must be 255 characters or fewer'),
 ])
@@ -555,7 +555,7 @@ def test_service_name_change_fails_if_new_name_fails_validation(
         _expected_status=200,
     )
     assert not mock_update_service.called
-    assert error_message in page.find("span", {"class": "govuk-error-message"}).text
+    assert error_message in page.find("p", {"class": "fr-error-text"}).text
 
 
 @pytest.mark.parametrize('user, expected_text, expected_link', [
@@ -941,7 +941,7 @@ def test_should_check_for_sending_things_right(
     invite_one = invite_json(id_=uuid4(),
                              from_user=service_one['users'][0],
                              service_id=service_one['id'],
-                             email_address='invited_user@test.gov.uk',
+                             email_address='invited-user@beta.gouv.fr',
                              permissions='view_activity,send_messages,manage_service,manage_api_keys',
                              created_at=datetime.utcnow(),
                              status='pending',
@@ -1545,7 +1545,7 @@ def test_should_not_default_to_zero_if_some_fields_dont_validate(
     assert page.select('input[type=text]')[2]['value'] == 'aaaaaaaaaaaaa'
     assert normalize_spaces(
         page.select_one('#volume_letter-error').text
-    ) == 'Error: Enter the number of letters you expect to send'
+    ) == 'Erreur : Enter the number of letters you expect to send'
     assert mock_update_service.called is False
 
 
@@ -1624,7 +1624,7 @@ def test_should_redirect_after_request_to_go_live(
         '\n'
         '---\n'
         'Organisation type: Central government\n'
-        'Agreement signed: Can’t tell (domain is user.gov.uk).\n'
+        'Agreement signed: Can’t tell (domain is beta.gouv.fr).\n'
         '\n'
         '{formatted_displayed_volumes}'
         '\n'
@@ -1634,7 +1634,7 @@ def test_should_redirect_after_request_to_go_live(
         'Service reply-to address: test@example.com\n'
         '\n'
         '---\n'
-        'Request sent by test@user.gov.uk\n'
+        'Request sent by test@beta.gouv.fr\n'
         'Requester’s user page: http://localhost/users/{user_id}\n'
     ).format(
         service_id=SERVICE_ONE_ID,
@@ -1721,7 +1721,7 @@ def test_request_to_go_live_displays_go_live_notes_in_zendesk_ticket(
         'Service reply-to address: test@example.com\n'
         '\n'
         '---\n'
-        'Request sent by test@user.gov.uk\n'
+        'Request sent by test@beta.gouv.fr\n'
         'Requester’s user page: http://localhost/users/{user_id}\n'
     ).format(
         service_id=SERVICE_ONE_ID,
@@ -1767,7 +1767,7 @@ def test_request_to_go_live_displays_mou_signatories(
             'Org 1',
             agreement_signed=True,
             agreement_signed_by_id=fake_uuid,
-            agreement_signed_on_behalf_of_email_address='bigdog@example.gov.uk',
+            agreement_signed_on_behalf_of_email_address='bigdog@beta.gouv.fr',
         )
     )
     mocker.patch(
@@ -1784,8 +1784,8 @@ def test_request_to_go_live_displays_mou_signatories(
     assert (
         'Organisation type: Central government\n'
         'Agreement signed: Yes, for Org 1.\n'
-        'Agreement signed by: test@user.gov.uk\n'
-        'Agreement signed on behalf of: bigdog@example.gov.uk\n'
+        'Agreement signed by: test@beta.gouv.fr\n'
+        'Agreement signed on behalf of: bigdog@beta.gouv.fr\n'
         '\n'
         'Emails in next year: 111,111\n'
     ) in mock_create_ticket.call_args[1]['message']
@@ -2257,7 +2257,7 @@ def test_no_senders_message_shows(
 
 
 @pytest.mark.parametrize('reply_to_input, expected_error', [
-    ('', 'Cannot be empty'),
+    ('', 'Ne peut pas être vide'),
     ('testtest', 'Enter a valid email address'),
 ])
 def test_incorrect_reply_to_email_address_input(
@@ -2273,11 +2273,11 @@ def test_incorrect_reply_to_email_address_input(
         _expected_status=200
     )
 
-    assert expected_error in normalize_spaces(page.select_one('.govuk-error-message').text)
+    assert expected_error in normalize_spaces(page.select_one('.fr-error-text').text)
 
 
 @pytest.mark.parametrize('contact_block_input, expected_error', [
-    ('', 'Cannot be empty'),
+    ('', 'Ne peut pas être vide'),
     ('1 \n 2 \n 3 \n 4 \n 5 \n 6 \n 7 \n 8 \n 9 \n 0 \n a', 'Contains 11 lines, maximum is 10')
 ])
 def test_incorrect_letter_contact_block_input(
@@ -2299,7 +2299,7 @@ def test_incorrect_letter_contact_block_input(
 @pytest.mark.parametrize('sms_sender_input, expected_error', [
     ('elevenchars', None),
     ('11 chars', None),
-    ('', 'Cannot be empty'),
+    ('', 'Ne peut pas être vide'),
     ('abcdefghijkhgkg', 'Enter 11 characters or fewer'),
     (r' ¯\_(ツ)_/¯ ', 'Use letters and numbers only'),
     ('blood.co.uk', None),
@@ -2319,7 +2319,7 @@ def test_incorrect_sms_sender_input(
         _expected_status=(200 if expected_error else 302)
     )
 
-    error_message = page.select_one('.govuk-error-message')
+    error_message = page.select_one('.fr-error-text')
     count_of_api_calls = len(mock_add_sms_sender.call_args_list)
 
     if not expected_error:
@@ -2344,10 +2344,10 @@ def test_incorrect_sms_sender_input_with_multiple_errors_only_shows_the_first(
         _expected_status=200
     )
 
-    error_message = page.select_one('.govuk-error-message')
+    error_message = page.select_one('.fr-error-text')
     count_of_api_calls = len(mock_add_sms_sender.call_args_list)
 
-    assert normalize_spaces(error_message.text) == 'Error: Enter 3 characters or more'
+    assert normalize_spaces(error_message.text) == 'Erreur : Enter 3 characters or more'
     assert count_of_api_calls == 0
 
 
@@ -2392,7 +2392,7 @@ def test_service_add_reply_to_email_address_without_verification_for_platform_ad
         'app.service_api_client.get_reply_to_email_addresses',
         return_value=[create_reply_to_email_address(is_default=True)]
     )
-    data = {"is_default": "y", "email_address": "test@example.gov.uk"}
+    data = {"is_default": "y", "email_address": "test@beta.gouv.fr"}
 
     client_request.post(
         'main.service_add_email_reply_to',
@@ -2406,7 +2406,7 @@ def test_service_add_reply_to_email_address_without_verification_for_platform_ad
     )
     mock_update.assert_called_once_with(
         SERVICE_ONE_ID,
-        email_address='test@example.gov.uk',
+        email_address='test@beta.gouv.fr',
         is_default=True)
 
 
@@ -2432,7 +2432,7 @@ def test_service_verify_reply_to_address(
     notification = {
         "id": fake_uuid,
         "status": status,
-        "to": "email@example.gov.uk",
+        "to": "email@beta.gouv.fr",
         "service_id": SERVICE_ONE_ID,
         "template_id": TEMPLATE_ONE_ID,
         "notification_type": "email",
@@ -2481,7 +2481,7 @@ def test_add_reply_to_email_address_fails_if_notification_not_delivered_in_45_se
     notification = {
         "id": fake_uuid,
         "status": "sending",
-        "to": "email@example.gov.uk",
+        "to": "email@beta.gouv.fr",
         "service_id": SERVICE_ONE_ID,
         "template_id": TEMPLATE_ONE_ID,
         "notification_type": "email",
@@ -2664,14 +2664,14 @@ def test_edit_reply_to_email_address_sends_verification_notification_if_address_
         'app.service_api_client.verify_reply_to_email_address', return_value={"data": {"id": "123"}}
     )
     mocker.patch('app.service_api_client.get_reply_to_email_address', return_value=reply_to_address)
-    data['email_address'] = "test@example.gov.uk"
+    data['email_address'] = "test@beta.gouv.fr"
     client_request.post(
         'main.service_edit_email_reply_to',
         service_id=SERVICE_ONE_ID,
         reply_to_email_id=fake_uuid,
         _data=data
     )
-    mock_verify.assert_called_once_with(SERVICE_ONE_ID, "test@example.gov.uk")
+    mock_verify.assert_called_once_with(SERVICE_ONE_ID, "test@beta.gouv.fr")
 
 
 def test_service_edit_email_reply_to_updates_email_address_without_verification_for_platform_admin(
@@ -2689,7 +2689,7 @@ def test_service_edit_email_reply_to_updates_email_address_without_verification_
         'app.service_api_client.get_reply_to_email_address',
         return_value=create_reply_to_email_address(is_default=True)
     )
-    data = {"is_default": "y", "email_address": "test@example.gov.uk"}
+    data = {"is_default": "y", "email_address": "test@beta.gouv.fr"}
 
     client_request.post(
         'main.service_edit_email_reply_to',
@@ -2705,7 +2705,7 @@ def test_service_edit_email_reply_to_updates_email_address_without_verification_
     mock_update.assert_called_once_with(
         SERVICE_ONE_ID,
         reply_to_email_id=fake_uuid,
-        email_address='test@example.gov.uk',
+        email_address='test@beta.gouv.fr',
         is_default=True)
 
 
@@ -2874,7 +2874,7 @@ def test_shows_delete_link_for_error_on_post_request_for_edit_email_reply_to_add
         '.service_email_reply_to',
         service_id=SERVICE_ONE_ID,
     )
-    assert page.select_one('.govuk-error-message').text.strip() == 'Error: Enter a valid email address'
+    assert page.select_one('.fr-error-text').text.strip() == 'Erreur : Enter a valid email address'
     assert page.select_one('input#email_address').get('value') == 'not a valid email address'
 
     if default_choice_and_delete_link_expected:
@@ -3944,7 +3944,7 @@ def test_unknown_channel_404s(
     ),
     (
         'email',
-        'It’s free to send emails through GOV.UK Notify.',
+        'It’s free to send emails through Beta Notifications.',
         'Send emails',
         [],
         'False',
@@ -3953,7 +3953,7 @@ def test_unknown_channel_404s(
     ),
     (
         'email',
-        'It’s free to send emails through GOV.UK Notify.',
+        'It’s free to send emails through Beta Notifications.',
         'Send emails',
         ['email', 'sms', 'letter'],
         'True',
@@ -4279,7 +4279,7 @@ def test_send_files_by_email_contact_details_uses_the_selected_field_when_multip
 @pytest.mark.parametrize(
     'contact_link, subheader, button_selected',
     [
-        ('contact.me@gov.uk', 'Change contact details for the file download page', True),
+        ('contact.me@beta.gouv.fr', 'Change contact details for the file download page', True),
         (None, 'Add contact details to the file download page', False),
     ]
 )
@@ -4340,7 +4340,7 @@ def test_send_files_by_email_contact_details_does_not_update_invalid_contact_det
         _follow_redirects=True
     )
 
-    assert error in page.find('span', class_='govuk-error-message').text
+    assert error in page.find('p', class_='fr-error-text').text
     assert normalize_spaces(page.h1.text) == "Send files by email"
 
 

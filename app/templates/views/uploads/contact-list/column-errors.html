@@ -23,7 +23,7 @@
         <h1 class='banner-title' data-module="track-error" data-error-type="Too many rows" data-error-label="{{ upload_id }}">
           Your file has too many rows
         </h1>
-        <p class="govuk-body">
+        <p>
           Notify can store files up to
           {{ "{:,}".format(recipients.max_rows) }} rows in size. Your
           file has {{ "{:,}".format(recipients|length) }} rows.
@@ -36,8 +36,8 @@
           {{ 'this' if recipients|length == 1 else 'these' }}
           {{ recipients|length|recipient_count_label(recipients.template_type) }}
         </h1>
-        <p class="govuk-body">
-          In <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.trial_mode_new') }}">trial mode</a> you can only
+        <p>
+          In <a class="fr-link" href="{{ url_for('.trial_mode_new') }}">trial mode</a> you can only
           send to yourself and members of your team
         </p>
 
@@ -55,7 +55,7 @@
         button_text='Upload your file again'
       ) }}
     </div>
-    <a href="#content" class="govuk-link govuk-link--no-visited-state back-to-top-link">Back to top</a>
+    <a href="#content" class="fr-link back-to-top-link">Back to top</a>
   </div>
 
     <h2 class="heading-medium" id="file-preview">{{ original_file_name }}</h2>

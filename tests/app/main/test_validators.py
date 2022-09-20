@@ -16,22 +16,8 @@ def _gen_mock_field(x):
 
 
 @pytest.mark.parametrize("email", [
-    'test@gov.uk',
-    'test@GOV.UK',
-    'test@gov.uK',
-    'test@test.test.gov.uk',
-    'test@test.gov.uk',
-    'test@nhs.uk',
-    'test@gov.nhs.uk',
-    'test@nhs.net',
-    'test@gov.nhs.net',
-    'test@nhs.scot',
-    'test@police.uk',
-    'test@gov.police.uk',
-    'test@GOV.PoliCe.uk',
-    'test@cjsm.net',
-    'test@example.ac.uk',
-    'test@example.sch.uk',
+    'test@beta.gouv.fr',
+    'test@coucou.beta.gouv.fr',
 ])
 def test_valid_list_of_white_list_email_domains(
     client_request,
@@ -42,31 +28,8 @@ def test_valid_list_of_white_list_email_domains(
 
 
 @pytest.mark.parametrize("email", [
-    'test@ukgov.uk',
-    'test@gov.uk.uk',
-    'test@gov.test.uk',
-    'test@ukmod.uk',
-    'test@mod.uk.uk',
-    'test@mod.test.uk',
-    'test@ukddc-mod.org',
-    'test@ddc-mod.org.uk',
-    'test@ddc-mod.uk.org',
-    'test@ukgov.scot',
-    'test@gov.scot.uk',
-    'test@gov.test.scot',
-    'test@ukparliament.uk',
-    'test@parliament.uk.uk',
-    'test@parliament.test.uk',
-    'test@uknhs.uk',
-    'test@nhs.uk.uk',
-    'test@uknhs.net',
-    'test@nhs.net.uk',
-    'test@nhs.test.net',
-    'test@ukpolice.uk',
-    'test@police.uk.uk',
-    'test@police.test.uk',
-    'test@ucds.com',
-    'test@123bl.uk',
+    'test@nhs.net',
+    'test@somewhere.com',
 ])
 def test_invalid_list_of_white_list_email_domains(
     client_request,

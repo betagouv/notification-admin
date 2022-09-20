@@ -19,17 +19,17 @@
 
   {{ page_header('Check your new branding') }}
 
-  <p class="govuk-body">
+  <p>
     Emails from {{ current_service.name }} will look like this.
   </p>
   {{ email_branding_preview(nhs_branding_id) }}
 
   <h2 class="heading-medium">Before you continue</h2>
 
-  <p class="govuk-body">Make sure you’re allowed to use NHS branding.</p>
+  <p>Make sure you’re allowed to use NHS branding.</p>
 
-  <p class="govuk-body">
-    If you’re not sure, <a class="govuk-link govuk-link--no-visited-state" href="https://www.england.nhs.uk/nhsidentity/identity-guidelines/who-can-use-the-nhs-identity/">check the guidance on the NHS website</a>.
+  <p>
+    If you’re not sure, <a class="fr-link" href="https://www.england.nhs.uk/nhsidentity/identity-guidelines/who-can-use-the-nhs-identity/">check the guidance on the NHS website</a>.
   </p>
 
   {% call form_wrapper() %}

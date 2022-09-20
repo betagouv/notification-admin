@@ -3,7 +3,7 @@
 {% from "components/status-box.html" import status_box %}
 {% from "components/form.html" import form_wrapper %}
 {% from "components/details/macro.njk" import govukDetails %}
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/dsfr/button.njk" import frButton %}
 
 {% block per_page_title %}
   Summary
@@ -20,7 +20,7 @@
       {{ form.start_date(param_extensions={"hint": {"text":"Enter start date in format YYYY-MM-DD"}}) }}
       {{ form.end_date(param_extensions={"hint": {"text":"Enter end date in format YYYY-MM-DD"}}) }}
       </br>
-      {{ govukButton({ "text": "Filter" }) }}
+      {{ frButton({ "text": "Filter" }) }}
     {% endcall %}
   {% endset %}
 
