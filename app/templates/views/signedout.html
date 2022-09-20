@@ -1,16 +1,14 @@
 {% extends "fullwidth_template.html" %}
-{% from "components/button/macro.njk" import govukButton %}
 
 {% block meta %}
   <meta name="description" content="GOV.UK Notify lets you send emails, text messages and letters to your users. Try it now if you work in central government, a local authority, or the NHS.">
 {% endblock %}
 
 {% block pageTitle %}
-  GOV.UK Notify
+  Beta Notifications
 {% endblock %}
 
 {% block content %}
-
   <div class="product-page-intro">
     <div class="product-page-intro-wrapper" data-module="homepage">
       <nav class="breadcrumbs breadcrumbs--inverse" aria-label="Breadcrumbs">
@@ -32,12 +30,6 @@
             Try GOV.UK Notify now if you work in central government, a&nbsp;local authority, or the NHS.
           </p>
           <div class="button-container">
-            {{ govukButton({
-              "element": "a",
-              "text": "Create an account",
-              "classes": "product-page-button button-container__button govuk-!-margin-right-3",
-              "href": url_for('main.register' )
-            }) }}
             or <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('.sign_in' )}}">sign in</a> if you’ve used
             it before
           </div>

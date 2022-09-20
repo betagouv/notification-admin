@@ -1,0 +1,13 @@
+.env*
+.git
+.github
+.devcontainer
+.dockerignore
+.github
+.gitignore
+.mypy_cache
+.pytest_cache
+__pycache__
+README.md
+node_modules
+app/static

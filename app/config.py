@@ -107,7 +107,6 @@ class Development(Config):
     PRECOMPILED_ORIGINALS_BACKUP_LETTERS = 'development-letters-precompiled-originals-backup'
 
     ADMIN_CLIENT_SECRET = 'dev-notify-secret-key'
-    API_HOST_NAME = 'http://localhost:6011'
     DANGEROUS_SALT = 'dev-notify-salt'
     SECRET_KEY = 'dev-notify-secret-key'
     ANTIVIRUS_API_HOST = 'http://localhost:6016'

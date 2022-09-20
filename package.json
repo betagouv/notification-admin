@@ -10,15 +10,16 @@
     "test-watch": "jest --watch --config tests/javascripts/jest.config.js tests/javascripts",
     "build": "gulp",
     "watch": "gulp watch",
+    "lint": "gulp lint",
     "audit": "better-npm-audit audit --production --level high"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alphagov/notifications-admin.git"
+    "url": "git+https://github.com/betagouv/notifications-admin.git"
   },
-  "author": "Government Digital Service",
+  "author": "BetaGouv",
   "license": "MIT",
-  "homepage": "https://github.com/alphagov/notifications-admin#readme",
+  "homepage": "https://github.com/betagouv/notifications-admin#readme",
   "dependencies": {
     "cbor-js": "0.1.0",
     "govuk_frontend_toolkit": "8.1.0",

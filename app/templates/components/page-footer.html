@@ -1,4 +1,4 @@
-{% from "components/button/macro.njk" import govukButton %}
+{% from "components/button.html" import fr_button, fr_button_secondary %}
 
 {% macro page_footer(
   button_text=None,
@@ -35,7 +35,7 @@
         }) %}
       {% endif %}
 
-      {{ govukButton(button_data) }}
+      {{ fr_button(button_data) }}
 
     {% endif %}
     {% if delete_link %}
@@ -47,11 +47,5 @@
       <a class="govuk-link govuk-link--no-visited-state page-footer-secondary-link" href="{{ secondary_link }}">{{ secondary_link_text }}</a>
     {% endif %}
 
-  </div>
-{% endmacro %}
-
-{% macro sticky_page_footer(button_text=None) %}
-  <div class="js-stick-at-bottom-when-scrolling">
-    {{ page_footer(button_text) }}
   </div>
 {% endmacro %}
