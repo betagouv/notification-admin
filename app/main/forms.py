@@ -81,6 +81,10 @@ from app.utils.user_permissions import (
 )
 
 
+VALIDATOR_STRINGS = {
+    "empty": "Ne peut pas être vide"
+}
+
 def get_time_value_and_label(future_time):
     return (
         future_time.replace(tzinfo=None).isoformat(),
@@ -164,7 +168,7 @@ def email_address(label='Email address', gov_user=True, required=True):
         validators.append(ValidGovEmail())
 
     if required:
-        validators.append(DataRequired(message='Cannot be empty'))
+        validators.append(DataRequired(message=VALIDATOR_STRINGS['empty']))
 
     return GovukEmailField(label, validators)
 
@@ -198,7 +202,7 @@ class InternationalPhoneNumber(TelField):
     # 2. calls field.widget
     # this bypasses that by making self.widget a method with the same interface as widget.__call__
     def widget(self, field, param_extensions=None, **kwargs):
-        return govuk_text_input_field_widget(self, field, type="tel", param_extensions=param_extensions, **kwargs)
+        return fr_text_input_field_widget(self, field, type="tel", param_extensions=param_extensions, **kwargs)
 
     def pre_validate(self, form):
         try:
@@ -210,13 +214,13 @@ class InternationalPhoneNumber(TelField):
 
 def uk_mobile_number(label='Mobile number'):
     return UKMobileNumber(label,
-                          validators=[DataRequired(message='Cannot be empty')])
+                          validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])])
 
 
 def international_phone_number(label='Mobile number'):
     return InternationalPhoneNumber(
         label,
-        validators=[DataRequired(message='Cannot be empty')]
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])]
     )
 
 
@@ -224,12 +228,50 @@ def password(label='Password'):
     return GovukPasswordField(
         label,
         validators=[
-            DataRequired(message='Cannot be empty'),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             Length(8, 255, message='Must be at least 8 characters'),
             CommonlyUsedPassword(message='Choose a password that’s harder to guess')
         ]
     )
 
+
+def fr_text_input_field_widget(self, field, type=None, param_extensions=None, **kwargs):
+    value = kwargs["value"] if "value" in kwargs else field.data
+    value = str(value) if isinstance(value, Number) else value
+
+    # error messages
+    error_message = None
+    if field.errors:
+        error_message_format = "html" if kwargs.get("error_message_with_html") else "text"
+        error_message = {
+            "attributes": {
+                "data-module": "track-error",
+                "data-error-type": field.errors[0],
+                "data-error-label": field.name
+            },
+            error_message_format: field.errors[0]
+        }
+
+    # convert to parameters that govuk understands
+    params = {
+        "classes": "govuk-!-width-two-thirds",
+        "errorMessage": error_message,
+        "id": field.id,
+        "label": {"text": field.label.text},
+        "name": field.name,
+        "value": value
+    }
+
+    if type:
+        params["type"] = type
+
+    # extend default params with any sent in
+    merge_jsonlike(params, self.param_extensions)
+    # add any sent in through use in templates
+    merge_jsonlike(params, param_extensions)
+
+    return Markup(
+        render_template('components/dsfr/input.njk', params=params))
 
 def govuk_text_input_field_widget(self, field, type=None, param_extensions=None, **kwargs):
     value = kwargs["value"] if "value" in kwargs else field.data
@@ -280,7 +322,7 @@ class GovukTextInputField(StringField):
     # 2. calls field.widget
     # this bypasses that by making self.widget a method with the same interface as widget.__call__
     def widget(self, field, **kwargs):
-        return govuk_text_input_field_widget(self, field, **kwargs)
+        return fr_text_input_field_widget(self, field, **kwargs)
 
 
 class GovukPasswordField(PasswordField):
@@ -293,7 +335,7 @@ class GovukPasswordField(PasswordField):
     # 2. calls field.widget
     # this bypasses that by making self.widget a method with the same interface as widget.__call__
     def widget(self, field, param_extensions=None, **kwargs):
-        return govuk_text_input_field_widget(self, field, type="password", param_extensions=param_extensions, **kwargs)
+        return fr_text_input_field_widget(self, field, type="password", param_extensions=param_extensions, **kwargs)
 
 
 class GovukEmailField(EmailField):
@@ -310,7 +352,7 @@ class GovukEmailField(EmailField):
         params = {"attributes": {"spellcheck": "false"}}  # email addresses don't need to be spellchecked
         merge_jsonlike(params, param_extensions)
 
-        return govuk_text_input_field_widget(self, field, type="email", param_extensions=params, **kwargs)
+        return fr_text_input_field_widget(self, field, type="email", param_extensions=params, **kwargs)
 
 
 class GovukSearchField(SearchField):
@@ -358,7 +400,7 @@ class GovukIntegerField(IntegerField):
 
 class SMSCode(GovukTextInputField):
     validators = [
-        DataRequired(message='Cannot be empty'),
+        DataRequired(message=VALIDATOR_STRINGS['empty']),
         Regexp(regex=r'^\d+$', message='Numbers only'),
         Length(min=5, message='Not enough numbers'),
         Length(max=5, message='Too many numbers'),
@@ -600,7 +642,7 @@ class PostalAddressField(TextAreaField):
 class LoginForm(StripWhitespaceForm):
     email_address = GovukEmailField('Email address', validators=[
         Length(min=5, max=255),
-        DataRequired(message='Cannot be empty'),
+        DataRequired(message=VALIDATOR_STRINGS['empty']),
         ValidEmail()
     ])
     password = GovukPasswordField('Password', validators=[
@@ -611,7 +653,7 @@ class LoginForm(StripWhitespaceForm):
 class RegisterUserForm(StripWhitespaceForm):
     name = GovukTextInputField(
         'Full name',
-        validators=[DataRequired(message='Cannot be empty')]
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])]
     )
     email_address = email_address()
     mobile_number = international_phone_number()
@@ -638,7 +680,7 @@ class RegisterUserFromInviteForm(RegisterUserForm):
 
     def validate_mobile_number(self, field):
         if self.auth_type.data == 'sms_auth' and not field.data:
-            raise ValidationError('Cannot be empty')
+            raise ValidationError(VALIDATOR_STRINGS['empty'])
 
 
 class RegisterUserFromOrgInviteForm(StripWhitespaceForm):
@@ -650,10 +692,10 @@ class RegisterUserFromOrgInviteForm(StripWhitespaceForm):
 
     name = GovukTextInputField(
         'Full name',
-        validators=[DataRequired(message='Cannot be empty')]
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])]
     )
 
-    mobile_number = InternationalPhoneNumber('Mobile number', validators=[DataRequired(message='Cannot be empty')])
+    mobile_number = InternationalPhoneNumber('Mobile number', validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])])
     password = password()
     organisation = HiddenField('organisation')
     email_address = HiddenField('email_address')
@@ -1175,7 +1217,7 @@ class RenameServiceForm(StripWhitespaceForm):
     name = GovukTextInputField(
         u'Service name',
         validators=[
-            DataRequired(message='Cannot be empty'),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             MustContainAlphanumericCharacters(),
             Length(max=255, message='Service name must be 255 characters or fewer')
         ])
@@ -1185,7 +1227,7 @@ class RenameOrganisationForm(StripWhitespaceForm):
     name = GovukTextInputField(
         u'Organisation name',
         validators=[
-            DataRequired(message='Cannot be empty'),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             MustContainAlphanumericCharacters(),
             Length(max=255, message='Organisation name must be 255 characters or fewer')
         ])
@@ -1218,7 +1260,7 @@ class AddGPOrganisationForm(StripWhitespaceForm):
     def validate_name(self, field):
         if self.same_as_service_name.data is False:
             if not field.data:
-                raise ValidationError('Cannot be empty')
+                raise ValidationError(VALIDATOR_STRINGS['empty'])
         else:
             field.data = ''
 
@@ -1294,7 +1336,7 @@ class CreateServiceForm(StripWhitespaceForm):
     name = GovukTextInputField(
         "What’s your service called?",
         validators=[
-            DataRequired(message='Cannot be empty'),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             MustContainAlphanumericCharacters(),
             Length(max=255, message='Service name must be 255 characters or fewer')
         ])
@@ -1323,7 +1365,7 @@ class AdminServiceSMSAllowanceForm(StripWhitespaceForm):
     free_sms_allowance = GovukIntegerField(
         'Numbers of text message fragments per year',
         validators=[
-            InputRequired(message='Cannot be empty')
+            InputRequired(message=VALIDATOR_STRINGS['empty'])
         ]
     )
 
@@ -1332,7 +1374,7 @@ class AdminServiceMessageLimitForm(StripWhitespaceForm):
     message_limit = GovukIntegerField(
         'Number of messages the service is allowed to send each day',
         validators=[
-            DataRequired(message='Cannot be empty')
+            DataRequired(message=VALIDATOR_STRINGS['empty'])
         ]
     )
 
@@ -1341,7 +1383,7 @@ class AdminServiceRateLimitForm(StripWhitespaceForm):
     rate_limit = GovukIntegerField(
         'Number of messages the service can send in a rolling 60 second window',
         validators=[
-            DataRequired(message='Cannot be empty')
+            DataRequired(message=VALIDATOR_STRINGS['empty'])
         ]
     )
 
@@ -1422,12 +1464,12 @@ class ConfirmBroadcastForm(StripWhitespaceForm):
 class BaseTemplateForm(StripWhitespaceForm):
     name = GovukTextInputField(
         "Template name",
-        validators=[DataRequired(message="Cannot be empty")])
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])])
 
     template_content = TextAreaField(
         "Message",
         validators=[
-            DataRequired(message="Cannot be empty"),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             NoCommasInPlaceHolders()
         ]
     )
@@ -1462,7 +1504,7 @@ class LetterAddressForm(StripWhitespaceForm):
 
     address = PostalAddressField(
         'Address',
-        validators=[DataRequired(message="Cannot be empty")]
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])]
     )
 
     def validate_address(self, field):
@@ -1504,18 +1546,18 @@ class LetterAddressForm(StripWhitespaceForm):
 class EmailTemplateForm(BaseTemplateForm):
     subject = TextAreaField(
         u'Subject',
-        validators=[DataRequired(message="Cannot be empty")])
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])])
 
 
 class LetterTemplateForm(EmailTemplateForm):
     subject = TextAreaField(
         u'Main heading',
-        validators=[DataRequired(message="Cannot be empty")])
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])])
 
     template_content = TextAreaField(
         u'Body',
         validators=[
-            DataRequired(message="Cannot be empty"),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             NoCommasInPlaceHolders()
         ]
     )
@@ -1686,7 +1728,7 @@ class SupportRedirect(StripWhitespaceForm):
 class FeedbackOrProblem(StripWhitespaceForm):
     name = GovukTextInputField('Name (optional)')
     email_address = email_address(label='Email address', gov_user=False, required=True)
-    feedback = TextAreaField('Your message', validators=[DataRequired(message="Cannot be empty")])
+    feedback = TextAreaField('Your message', validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])])
 
 
 class Triage(StripWhitespaceForm):
@@ -1830,7 +1872,7 @@ class ServiceSmsSenderForm(StripWhitespaceForm):
     sms_sender = GovukTextInputField(
         'Text message sender',
         validators=[
-            DataRequired(message="Cannot be empty"),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             Length(max=11, message="Enter 11 characters or fewer"),
             Length(min=3, message="Enter 3 characters or more"),
             LettersNumbersSingleQuotesFullStopsAndUnderscoresOnly(),
@@ -1859,7 +1901,7 @@ class AdminBillingDetailsForm(StripWhitespaceForm):
 class ServiceLetterContactBlockForm(StripWhitespaceForm):
     letter_contact_block = TextAreaField(
         validators=[
-            DataRequired(message="Cannot be empty"),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             NoCommasInPlaceHolders()
         ]
     )
@@ -2132,12 +2174,12 @@ class AdminServiceInboundNumberForm(StripWhitespaceForm):
 class CallbackForm(StripWhitespaceForm):
     url = GovukTextInputField(
         "URL",
-        validators=[DataRequired(message='Cannot be empty'),
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty']),
                     Regexp(regex="^https.*", message='Must be a valid https URL')]
     )
     bearer_token = GovukPasswordField(
         "Bearer token",
-        validators=[DataRequired(message='Cannot be empty'),
+        validators=[DataRequired(message=VALIDATOR_STRINGS['empty']),
                     Length(min=10, message='Must be at least 10 characters')]
     )
 
@@ -2171,7 +2213,7 @@ def get_placeholder_form_instance(
             field = uk_mobile_number(label=placeholder_name)
     else:
         field = GovukTextInputField(placeholder_name, validators=[
-            DataRequired(message='Cannot be empty')
+            DataRequired(message=VALIDATOR_STRINGS['empty'])
         ])
 
     PlaceholderForm.placeholder_value = field
@@ -2260,7 +2302,7 @@ class ChooseLetterBrandingForm(ChooseBrandingForm):
             self.something_else_is_only_option
             or self.options.data == self.FALLBACK_OPTION_VALUE
         ) and not field.data:
-            raise ValidationError('Cannot be empty')
+            raise ValidationError(VALIDATOR_STRINGS['empty'])
 
         if self.options.data != self.FALLBACK_OPTION_VALUE:
             field.data = ''
@@ -2269,7 +2311,7 @@ class ChooseLetterBrandingForm(ChooseBrandingForm):
 class SomethingElseBrandingForm(StripWhitespaceForm):
     something_else = GovukTextareaField(
         'Describe the branding you want',
-        validators=[DataRequired('Cannot be empty')],
+        validators=[DataRequired(VALIDATOR_STRINGS['empty'])],
         param_extensions={
             "label": {
                 "isPageHeading": True,
@@ -2310,7 +2352,7 @@ class AdminReturnedLettersForm(StripWhitespaceForm):
     references = TextAreaField(
         u'Letter references',
         validators=[
-            DataRequired(message="Cannot be empty"),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
         ]
     )
 
@@ -2327,7 +2369,7 @@ class TemplateFolderForm(StripWhitespaceForm):
     users_with_permission = GovukCollapsibleCheckboxesField(
         'Team members who can see this folder',
         field_label='team member')
-    name = GovukTextInputField('Folder name', validators=[DataRequired(message='Cannot be empty')])
+    name = GovukTextInputField('Folder name', validators=[DataRequired(message=VALIDATOR_STRINGS['empty'])])
 
 
 def required_for_ops(*operations):
@@ -2338,7 +2380,7 @@ def required_for_ops(*operations):
             # super weird
             raise validators.StopValidation('Must be empty')
         if form.op in operations and not any(field.raw_data):
-            raise validators.StopValidation('Cannot be empty')
+            raise validators.StopValidation(VALIDATOR_STRINGS['empty'])
     return validate
 
 
@@ -2606,7 +2648,7 @@ class AcceptAgreementForm(StripWhitespaceForm):
     def __validate_if_nominating(self, field):
         if self.who.data == 'someone-else':
             if not field.data:
-                raise ValidationError('Cannot be empty')
+                raise ValidationError(VALIDATOR_STRINGS['empty'])
         else:
             field.data = ''
 
@@ -2661,7 +2703,7 @@ class ChangeSecurityKeyNameForm(StripWhitespaceForm):
     security_key_name = GovukTextInputField(
         'Name of key',
         validators=[
-            DataRequired(message='Cannot be empty'),
+            DataRequired(message=VALIDATOR_STRINGS['empty']),
             MustContainAlphanumericCharacters(),
             Length(max=255, message='Name of key must be 255 characters or fewer')
         ])
