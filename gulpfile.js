@@ -32,7 +32,8 @@ const paths = {
   templates: 'app/templates/',
   npm: 'node_modules/',
   toolkit: 'node_modules/govuk_frontend_toolkit/',
-  govuk_frontend: 'node_modules/govuk-frontend/'
+  govuk_frontend: 'node_modules/govuk-frontend/',
+  dsfr: 'node_modules/@gouvfr/dsfr/dist/',
 };
 // Rewrite /static prefix for URLs in CSS files
 let staticPathMatcher = new RegExp('^\/static\/');
@@ -48,7 +49,25 @@ if (process.env.NOTIFY_ENVIRONMENT == 'development') { // pass through if on dev
 const copy = {
   error_pages: () => {
     return src(paths.src + 'error_pages/**/*')
-      .pipe(dest(paths.dist + 'error_pages/'))
+      .pipe(dest(paths.dist + 'error_pages/'));
+  },
+  dsfr: {
+    fonts: () => {
+      return src([
+        paths.dsfr + "fonts/*"
+      ]).pipe(dest(paths.dist + "stylesheets/fonts/"));
+    },
+    icons: () => {
+      return src([
+        paths.dsfr + "icons/**/*"
+      ]).pipe(dest(paths.dist + "/icons"));
+    },
+    css: () => {
+      return src([
+        paths.dsfr + "dsfr.min.css",
+        paths.dsfr + "utility/utility.min.css"
+      ]).pipe(dest(paths.dist + "stylesheets/"));
+    }
   },
   govuk_frontend: {
     fonts: () => {
@@ -212,6 +231,7 @@ const sass = () => {
         paths.npm + 'govuk-elements-sass/public/sass/',
         paths.toolkit + 'stylesheets/',
         paths.govuk_frontend,
+        paths.dsfr,
         paths.npm
       ]
     }))
@@ -287,6 +307,9 @@ const defaultTask = parallel(
   parallel(
     copy.govuk_frontend.fonts,
     copy.govuk_frontend.templates,
+    copy.dsfr.fonts,
+    copy.dsfr.icons,
+    copy.dsfr.css,
     images,
     copy.leaflet.js
   ),

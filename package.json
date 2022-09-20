@@ -21,6 +21,7 @@
   "license": "MIT",
   "homepage": "https://github.com/betagouv/notifications-admin#readme",
   "dependencies": {
+    "@gouvfr/dsfr": "^1.7.2",
     "cbor-js": "0.1.0",
     "govuk_frontend_toolkit": "8.1.0",
     "govuk-frontend": "2.13.0",
