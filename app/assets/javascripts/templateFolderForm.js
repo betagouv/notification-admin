@@ -82,7 +82,7 @@
         this.render();
       }
 
-      this.$form.on('click', 'button.govuk-button--secondary', (event) => this.actionButtonClicked(event));
+      this.$form.on('click', 'button.fr-btn--secondary', (event) => this.actionButtonClicked(event));
       this.$form.on('change', 'input[type=checkbox]', () => this.templateFolderCheckboxChanged());
     };
 
