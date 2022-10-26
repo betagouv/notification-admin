@@ -76,7 +76,7 @@ typing-extensions = "*"
 govuk-frontend-jinja = {ref = "v0.5.8-alpha", git = "https://github.com/Crown-Commercial-Service/govuk-frontend-jinja.git"}
 
 [requires]
-python_version = "3.9"
+python_version = "3.9.15"
 
 [dev-packages]
 isort = "==5.10.1"
