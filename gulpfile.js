@@ -37,7 +37,7 @@ const paths = {
 };
 // Rewrite /static prefix for URLs in CSS files
 let staticPathMatcher = new RegExp('^\/static\/');
-if (process.env.NOTIFY_ENVIRONMENT == 'development') { // pass through if on development
+if (true || process.env.NOTIFY_ENVIRONMENT == 'development') { // pass through if on development
   staticPathMatcher = url => url;
 }
 
