@@ -182,7 +182,8 @@ class Live(Config):
     PRECOMPILED_ORIGINALS_BACKUP_LETTERS = 'production-letters-precompiled-originals-backup'
     NOTIFY_ENVIRONMENT = 'live'
     CHECK_PROXY_HEADER = False
-    ASSET_DOMAIN = 'notifications-admin-prod.osc-secnum-fr1.scalingo.io'
+    # ASSET_DOMAIN = 'notifications-admin-prod.osc-secnum-fr1.scalingo.io'
+    # ASSET_PATH = 'https://notifications-admin-prod.osc-secnum-fr1.scalingo.io'
 
 
 class CloudFoundryConfig(Config):
