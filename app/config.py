@@ -182,8 +182,7 @@ class Live(Config):
     PRECOMPILED_ORIGINALS_BACKUP_LETTERS = 'production-letters-precompiled-originals-backup'
     NOTIFY_ENVIRONMENT = 'live'
     CHECK_PROXY_HEADER = False
-    ASSET_DOMAIN = 'static.notifications.service.gov.uk'
-    ASSET_PATH = 'https://static.notifications.service.gov.uk/'
+    ASSET_DOMAIN = 'notifications-admin-prod.osc-secnum-fr1.scalingo.io'
 
 
 class CloudFoundryConfig(Config):
