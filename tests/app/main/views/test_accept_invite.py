@@ -162,7 +162,7 @@ def test_if_existing_user_accepts_twice_they_redirect_to_sign_in(
         page.h1.string,
         page.select('main p')[0].text.strip(),
     ) == (
-        'You need to sign in again',
+        'Vous devez vous reconnecter',
         'We signed you out because you have not used Notify for a while.',
     )
     # We don’t let people update `email_access_validated_at` using an
@@ -270,7 +270,7 @@ def test_existing_user_of_service_get_redirected_to_signin(
         page.h1.string,
         page.select('main p')[0].text.strip(),
     ) == (
-        'You need to sign in again',
+        'Vous devez vous reconnecter',
         'We signed you out because you have not used Notify for a while.',
     )
     assert mock_accept_invite.call_count == 1
@@ -347,7 +347,7 @@ def test_existing_signed_out_user_accept_invite_redirects_to_sign_in(
         page.h1.string,
         page.select('main p')[0].text.strip(),
     ) == (
-        'You need to sign in again',
+        'Vous devez vous reconnecter',
         'We signed you out because you have not used Notify for a while.',
     )
 

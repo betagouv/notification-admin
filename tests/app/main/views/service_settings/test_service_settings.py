@@ -3277,6 +3277,7 @@ def test_inbound_sms_sender_is_not_editable(
         ) == "GOVUK This phone number receives replies and cannot be changed"
 
 
+@pytest.mark.skip("FR: we've killed the indicator in the footer")
 def test_shows_research_mode_indicator(
     client_request,
     service_one,

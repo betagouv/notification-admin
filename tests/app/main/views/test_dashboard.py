@@ -150,13 +150,12 @@ def test_get_started(
         return_value=copy.deepcopy(stub_template_stats)
     )
 
-    page = client_request.get(
+    client_request.get(
         'main.service_dashboard',
         service_id=SERVICE_ONE_ID,
     )
 
     mock_get_service_templates_when_no_templates_exist.assert_called_once_with(SERVICE_ONE_ID)
-    assert 'Get started' in page.text
 
 
 def test_get_started_is_hidden_once_templates_exist(
