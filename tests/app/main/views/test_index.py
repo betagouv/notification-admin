@@ -349,6 +349,7 @@ def test_font_preload(
         assert element['href'].endswith('.woff2')
 
 
+@pytest.mark.skip("FR: we haven't decided on pricing yet and the homepage is a WIP")
 @pytest.mark.parametrize('current_date, expected_rate', (
     ('2022-05-01', '1.72'),
 ))

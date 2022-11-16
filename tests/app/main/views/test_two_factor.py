@@ -391,7 +391,7 @@ def test_valid_two_factor_email_link_shows_interstitial(
     page = client_request.get_url(token_url)
 
     assert normalize_spaces(page.select_one('main .js-hidden').text) == (
-        'Sign in '
+        'Connexion '
         'Continue to dashboard'
     )
 

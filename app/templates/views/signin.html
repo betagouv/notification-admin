@@ -4,9 +4,9 @@
 
 {% block per_page_title %}
   {% if again %}
-    You need to sign in again
+    Vous devez vous reconnecter
   {% else %}
-    Sign in
+    Connexion
   {% endif %}
 {% endblock %}
 
@@ -16,7 +16,7 @@
   <div class="govuk-grid-column-two-thirds">
 
     {% if again %}
-      <h1 class="heading-large">You need to sign in again</h1>
+      <h1 class="heading-large">Vous devez vous reconnecter</h1>
       {% if other_device %}
         <p>
           We signed you out because you logged in to Notify on another device.
@@ -27,10 +27,10 @@
         </p>
       {% endif %}
     {% else %}
-      <h1 class="heading-large">Sign in</h1>
+      <h1 class="heading-large">Connexion</h1>
       <p>
-        If you do not have an account, you can
-        <a class="fr-link" href="{{ url_for('.register') }}">create one now</a>.
+        Si vous ne possédez pas de compte vous pouvez
+        <a class="fr-link" href="{{ url_for('.register') }}">en créer un maintenant</a>.
       </p>
     {% endif %}
 

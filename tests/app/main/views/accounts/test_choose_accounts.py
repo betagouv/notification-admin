@@ -261,7 +261,7 @@ def test_choose_account_should_not_show_back_to_service_link_if_not_signed_in(
         session['service_id'] = SERVICE_ONE_ID
     page = client_request.get('main.sign_in')
 
-    assert page.select_one('h1').text == 'Sign in'  # We’re not signed in
+    assert page.select_one('h1').text == 'Connexion'  # We’re not signed in
     assert page.select_one('.navigation-service a') is None
 
 

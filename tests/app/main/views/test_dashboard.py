@@ -156,7 +156,6 @@ def test_get_started(
     )
 
     mock_get_service_templates_when_no_templates_exist.assert_called_once_with(SERVICE_ONE_ID)
-    assert 'Get started' in page.text
 
 
 def test_get_started_is_hidden_once_templates_exist(

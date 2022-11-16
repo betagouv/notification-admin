@@ -182,7 +182,7 @@ def test_verify_email_redirects_to_sign_in_if_user_active(
 
     page = client_request.get('main.verify_email', token='notreal', _follow_redirects=True)
 
-    assert page.h1.text == 'Sign in'
+    assert page.h1.text == 'Connexion'
     flash_banner = page.find('div', class_='banner-dangerous').string.strip()
     assert flash_banner == "That verification link has expired."
 
