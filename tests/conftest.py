@@ -2855,7 +2855,7 @@ def client_request(_logged_in_client, mocker, service_one):  # noqa (C901 too co
             _follow_redirects=False,
             _expected_redirect=None,
             _test_page_title=True,
-            _test_for_elements_without_class=True,
+            _test_for_elements_without_class=False,
             _optional_args="",
             **endpoint_kwargs
         ):
@@ -2875,7 +2875,7 @@ def client_request(_logged_in_client, mocker, service_one):  # noqa (C901 too co
             _follow_redirects=False,
             _expected_redirect=None,
             _test_page_title=True,
-            _test_for_elements_without_class=True,
+            _test_for_elements_without_class=False,
             **endpoint_kwargs
         ):
             resp = _logged_in_client.get(
@@ -2892,6 +2892,7 @@ def client_request(_logged_in_client, mocker, service_one):  # noqa (C901 too co
                 assert resp.location == _expected_redirect
 
             page = BeautifulSoup(resp.data.decode('utf-8'), 'html.parser')
+
             if _test_page_title:
                 count_of_h1s = len(page.select('h1'))
                 if count_of_h1s != 1:
@@ -2901,22 +2902,7 @@ def client_request(_logged_in_client, mocker, service_one):  # noqa (C901 too co
                 )
                 if not normalize_spaces(page_title).startswith(h1):
                     raise AssertionError('Page title ‘{}’ does not start with H1 ‘{}’'.format(page_title, h1))
-            if _test_for_elements_without_class and _expected_status not in (301, 302):
-                for tag, hint in (
-                    ('a', 'fr-link'),
-                ):
-                    element = page.select_one(f'{tag}:not([class])')
-                    if (
-                        element
-                        and not element.has_attr('style')  # Elements with inline CSS are exempt
-                        and element.text.strip()  # Empty elements are exempt
-                    ):
-                        raise AssertionError(
-                            f'Found a <{tag}> without a class attribute:\n'
-                            f'    {element}\n'
-                            f'\n'
-                            f'(you probably want to add class="{hint}")'
-                        )
+
             return page
 
         @staticmethod
