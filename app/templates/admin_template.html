@@ -132,7 +132,7 @@
 
   {{ frHeader({
       "homepageUrl": url_for('main.show_accounts_or_dashboard'),
-      "productName": "Notify",
+      "serviceName": "Notifications",
       "navigation": navigation,
       "navigationClasses": "govuk-header__navigation--end",
       "assetsPath": asset_path + "images",
@@ -143,133 +143,9 @@
   }) }}
 {% endblock %}
 
+
 {% block footer %}
-  {% set meta_items = [
-      {
-          "href": url_for("main.privacy"),
-          "text": "Privacy"
-      },
-      {
-          "href": url_for("main.cookies"),
-          "text": "Cookies"
-      },
-      {
-          "href": url_for("main.accessibility_statement"),
-          "text": "Accessibility statement"
-      }
-  ] %}
-
-  {% if current_service and current_service.research_mode %}
-    {% set meta_suffix = 'Built by the <a href="https://www.gov.uk/government/organisations/government-digital-service" class="govuk-footer__link">Government Digital Service</a><span id="research-mode" class="research-mode">research mode</span>' %}
-  {% else %}
-    {% set meta_suffix = 'Built by the <a href="https://www.gov.uk/government/organisations/government-digital-service" class="govuk-footer__link">Government Digital Service</a>' %}
-  {% endif %}
-
-  {{ govukFooter({
-      "classes": "js-footer",
-      "navigation": [
-          {
-              "title": "Support",
-              "columns": 1,
-              "items": [
-                  {
-                      "href": url_for('main.support'),
-                      "text": "Contact support"
-                  },
-                  {
-                      "href": "https://status.notifications.service.gov.uk",
-                      "text": "System status"
-                  },
-                  {
-                      "href": url_for('main.performance'),
-                      "text": "Performance data"
-                  },
-                  {
-                      "href": "https://ukgovernmentdigital.slack.com/messages/C0E1ADVPC",
-                      "text": "Chat to us on Slack"
-                  }
-              ]
-          },
-          {
-              "title": "About Notify",
-              "columns": 1,
-              "items": [
-                  {
-                      "href": url_for("main.features"),
-                      "text": "Features"
-                  },
-                  {
-                      "href": url_for("main.roadmap"),
-                      "text": "Roadmap"
-                  },
-                  {
-                      "href": url_for("main.who_can_use_notify"),
-                      "text": "Who can use Notify",
-                  },
-                  {
-                      "href": url_for("main.security"),
-                      "text": "Security"
-                  },
-                  {
-                      "href": url_for("main.terms"),
-                      "text": "Terms of use"
-                  },
-                  {
-                      "href": "https://gds.blog.gov.uk/category/gov-uk-notify/",
-                      "text": "Blog"
-                  }
-              ]
-          },
-          {
-              "title": "Pricing and payment",
-              "columns": 1,
-              "items": [
-                  {
-                      "href": url_for("main.pricing"),
-                      "text": "Pricing"
-                  },
-                  {
-                      "href": url_for("main.how_to_pay"),
-                      "text": "How to pay"
-                  },
-                  {
-                      "href": url_for("main.billing_details"),
-                      "text": "Billing details"
-                  }
-              ]
-          },
-          {
-              "title": "Using Notify",
-              "columns": 1,
-              "items": [
-                  {
-                      "href": url_for("main.get_started"),
-                      "text": "Get started"
-                  },
-                  {
-                      "href": url_for("main.trial_mode_new"),
-                      "text": "Trial mode"
-                  },
-                  {
-                      "href": url_for("main.message_status"),
-                      "text": "Delivery status"
-                  },
-                  {
-                      "href": url_for("main.guidance_index"),
-                      "text": "Guidance"
-                  },
-                  {
-                      "href": url_for("main.documentation"),
-                      "text": "API documentation"
-                  }
-              ]
-          }
-      ],
-      "meta": {
-          "items": meta_items,
-          "html": meta_suffix
-      }
-  }) }}
+  {% include "footer.html" %}
 {% endblock %}
 
 {% block bodyEnd %}
